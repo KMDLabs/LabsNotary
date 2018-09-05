@@ -25,4 +25,5 @@ echo "[KMD] : $(./validateaddress.sh KMD)"
 done
 echo "Building Iguana"
 ./build_iguana
+echo "pubkey=$pubkey" > iguana/pubkey.txt
 echo "Finished: Please check ALL your chains are synced before running start_iguana.sh"
