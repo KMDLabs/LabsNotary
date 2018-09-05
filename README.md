@@ -27,7 +27,7 @@ After this we are ready to launch KMD and any chains that happen to be in `asset
 ./start.sh
 ```
 
-Once this is done, you have all the required things to launch iguana, there are some coins files in `iguana/coins` and iguana binary has been built from the SuperNET repo in your home folder and copied to `iguana` folder. Also the staked.json file containing all the info for the Notary Network has been fetched from github.
+Once this is done, you have all the required things to launch iguana, there are some coins files in `iguana/coins` and iguana binary has been built from the SuperNET repo in your home folder and copied to `iguana` folder. Also the 'staked.json' file containing all the info for the Notary Network has been fetched from github.
 
 To start your notary node and connect to the network simply run:
 ```shell
