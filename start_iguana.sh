@@ -14,7 +14,6 @@ curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"iguana\",\"method\":\"ad
 #
 
 # external coins.
-iguana/coins/btc_7776
 iguana/coins/kmd_7776
 
 # Unlock wallet.
