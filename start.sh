@@ -7,7 +7,7 @@ echo "[KMD] : Starting KMD"
 komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
-if [[ $(./assetchains = "finished") ]]; then
+if [[ $(./assetchains) = "finished" ]]; then
   echo "Started Assetchains"
 else
   echo "Starting Assetchains Failed: help human!"
