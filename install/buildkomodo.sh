@@ -17,3 +17,5 @@ echo "daemon=1" >> komodo.conf
 echo "server=1" >> komodo.conf
 echo "txindex=1" >> komodo.conf
 chmod 0600 komodo.conf
+sudo ln -sf /home/$USER/komodo/src/komodo-cli /usr/local/bin/komodo-cli
+sudo ln -sf /home/$USER/komodo/src/komodod /usr/local/bin/komodod
