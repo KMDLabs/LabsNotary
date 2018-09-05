@@ -1,0 +1,21 @@
+#!/bin/bash
+wget -qO staked https://raw.githubusercontent.com/StakedChain/StakedNotary/master/staked.json
+../agents/iguana staked & #> iguana.log 2> error.log  &
+myip=`curl -s4 checkip.amazonaws.com`
+sleep 4
+curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"
+sleep 3
+
+#
+#ADD NOTARY AREA
+curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"iguana\",\"method\":\"addnotary\",\"ipaddr\":\"$myip\"}"
+#ADD NOTARY AREA
+#
+
+# external coins.
+coins/btc_7776
+coins/kmd_7776
+
+# Unlock wallet.
+passphrase=$(/home$USER/StakedNotary/printkey.py wif)
+curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"

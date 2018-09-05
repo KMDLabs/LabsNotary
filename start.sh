@@ -1,6 +1,7 @@
 #!/bin/bash
 # Fetch pubkey
 pubkey=$(./printkey.py pub)
+cp m_notary_blank m_notary_staked
 
 # Start KMD
 echo "[KMD] : Starting KMD"
@@ -21,8 +22,15 @@ echo "[KMD] : $(./validateaddress.sh KMD)"
   # Move our auto generated coins file to the iguana coins dir
   chmod +x "$chain"_7776
   mv "$chain"_7776 iguana/coins
+  cat iguana/coins/"$chain"_7776 >> m_notary_staked
+  echo $'\n' >> m_notary_staked
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
+echo "sleep 3" >> m_notary_staked
+echo "cd /home$USER/StakedNotary" >> m_notary_staked
+echo "./dpowassets.py" >> m_notary_staked
+mv m_notary_staked /home/$USER/SuperNET/iguana
+
 echo "Building Iguana"
 ./build_iguana
 echo "pubkey=$pubkey" > iguana/pubkey.txt
