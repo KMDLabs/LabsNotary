@@ -23,5 +23,6 @@ echo "[KMD] : $(./validateaddress.sh KMD)"
   mv "$chain"_7776 iguana/coins
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
+echo "Building Iguana"
 ./build_iguana
-echo "Finished: Please check chains are synced before running start_iguana.sh"
+echo "Finished: Please check ALL your chains are synced before running start_iguana.sh"
