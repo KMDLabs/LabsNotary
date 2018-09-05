@@ -19,3 +19,5 @@ echo "txindex=1" >> komodo.conf
 chmod 0600 komodo.conf
 sudo ln -sf /home/$USER/komodo/src/komodo-cli /usr/local/bin/komodo-cli
 sudo ln -sf /home/$USER/komodo/src/komodod /usr/local/bin/komodod
+sudo ln -sf /home/$USER/StakedNotary/assets-cli /usr/local/bin/assets-cli
+sudo ln -sf /home/$USER/StakedNotary/asset-cli /usr/local/bin/asset-cli
