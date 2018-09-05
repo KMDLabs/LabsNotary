@@ -18,6 +18,7 @@ cd install
 Now you need to copy the config file and edit it with our pubkey/Raddress and WIF key for KMD.
 
 ```shell
+cd ..
 cp config_example.ini config.ini
 nano config.ini
 ```
