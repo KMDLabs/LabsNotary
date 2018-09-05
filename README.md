@@ -22,7 +22,7 @@ cp config_example.ini config.ini
 nano config.ini
 ```
 
-After this we are ready to launch KMD and any chains that happen to be in `assetchains.json`. If KMD is not already synced this will take many hours, I wold advise syncing KMD first to make the process a bit faster.
+After this we are ready to launch KMD and any chains that happen to be in `assetchains.json`. If KMD is not already synced this will take many hours, I would advise syncing KMD first to make the process a bit faster.
 ```shell
 ./start.sh
 ```

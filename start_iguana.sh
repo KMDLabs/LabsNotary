@@ -1,6 +1,6 @@
 #!/bin/bash
 cd iguana
-wget -qO staked https://raw.githubusercontent.com/blackjok3rtt/ScaleTestV2/master/scale.json
+wget -qO staked https://raw.githubusercontent.com/StakedChain/StakedNotary/master/staked.json
 ./iguana_nosplit staked & #> iguana.log 2> error.log  &
 myip=`curl -s4 checkip.amazonaws.com`
 sleep 4
