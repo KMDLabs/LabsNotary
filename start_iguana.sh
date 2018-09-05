@@ -24,7 +24,7 @@ curl --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"pa
 
 # Loop through assetchains.json and build the path to the approptiate coins file and run it.
 ./listassetchains.py | while read chain; do
-  coin="coins/$chain_7776"
+  coin="coins/$chain"_7776
   $coin
 done
 
