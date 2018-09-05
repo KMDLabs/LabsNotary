@@ -16,6 +16,7 @@ while [[ ${started} -eq 0 ]]; do
   outcome=$(echo $?)
   if [[ ${outcome} -eq 0 ]]; then
     started=1
+    echo "[$1] : Started"
   fi
 done
 

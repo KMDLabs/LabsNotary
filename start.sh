@@ -3,6 +3,7 @@
 pubkey=$(./printkey.py pub)
 
 # Start KMD
+echo "[KMD] : Starting KMD"
 komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
@@ -14,9 +15,10 @@ else
 fi
 
 # Validate Address on KMD + AC, will poll deamon until started then check if address is imported, if not import it.
+echo "[KMD] : Checking your address and importing it if required."
 echo "[KMD] : $(./validateaddress.sh KMD)"
 ./listassetchains.py | while read chain; do
-  # Move out auto generated coins file to the iguana coins dir
+  # Move our auto generated coins file to the iguana coins dir
   mv "$chain_7776" iguana/coins
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
