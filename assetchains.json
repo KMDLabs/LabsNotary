@@ -1,0 +1,22 @@
+[
+  {
+    "ac_name": "TXSCLSTAKED1",
+    "ac_supply": "200000000",
+    "ac_end": "1",
+    "ac_cc": "777",
+    "addressindex": "1",
+    "spentindex": "1",
+    "addnode": "172.6.6.105",
+    "freq": 10
+  },
+  {
+    "ac_name": "TXSCLSTAKED2",
+    "ac_supply": "200000000",
+    "ac_end": "1",
+    "ac_cc": "777",
+    "addressindex": "1",
+    "spentindex": "1",
+    "addnode": "172.6.6.105",
+    "freq": 10
+  }
+]

@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eo pipefail
+pubkey=$(./printkey.py pub)
+overide_args="$@"
+
+./listassetchainparams.py | while read args; do
+  komodod $args $overide_args -pubkey=$pubkey > /dev/null 2>&1 &
+  sleep 2
+done
+echo "finished"
