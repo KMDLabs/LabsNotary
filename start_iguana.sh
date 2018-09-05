@@ -1,7 +1,7 @@
 #!/bin/bash
 cd iguana
 wget -qO staked https://raw.githubusercontent.com/StakedChain/StakedNotary/master/staked.json
-./iguana_nosplit staked & #> iguana.log 2> error.log  &
+./iguana staked_nosplit & #> iguana.log 2> error.log  &
 myip=`curl -s4 checkip.amazonaws.com`
 sleep 4
 curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"
