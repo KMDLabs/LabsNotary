@@ -1,18 +1,22 @@
 [
   {
-    "ac_name": "TXSCLSTAKED001",
-    "ac_supply": "5000",
-    "ac_reward": "10000000000",
+    "ac_name": "TXSCLSTAKED1",
+    "ac_supply": "200000000",
+    "ac_end": "1",
     "ac_cc": "777",
-    "addnode": "195.201.167.37",
+    "addressindex": "1",
+    "spentindex": "1",
+    "addnode": "172.6.6.105",
     "freq": 10
   },
   {
-    "ac_name": "TXSCLSTAKED002",
-    "ac_supply": "5000",
-    "ac_reward": "10000000000",
+    "ac_name": "TXSCLSTAKED2",
+    "ac_supply": "200000000",
+    "ac_end": "1",
     "ac_cc": "777",
-    "addnode": "195.201.167.37",
+    "addressindex": "1",
+    "spentindex": "1",
+    "addnode": "172.6.6.105",
     "freq": 10
   }
 ]
