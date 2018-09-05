@@ -18,7 +18,7 @@ iguana/coins/kmd_7776
 
 # Unlock wallet.
 passphrase=$(./printkey.py wif)
-curl --url "http://127.0.0.1:7778" --data "{\"agent\":\"bitcoinrpc\",\"method\":\"encryptwallet\",\"passphrase\":\"$passphrase\"}" > /dev/null
+curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"bitcoinrpc\",\"method\":\"encryptwallet\",\"passphrase\":\"$passphrase\"}" > /dev/null
 curl --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
 
 # Loop through assetchains.json and build the path to the approptiate coins file and run it.
