@@ -7,10 +7,11 @@ git clone https://github.com/StakedChain/StakedNotary.git
 cd StakedNotary
 ```
 
-You need to build our special repo of `komodo` thanks to @libbscott and nanomsg for iguana. Both these scripts cover all required deps on debian based distros.
+You need to build our special repo of `komodo` thanks to @libbscott and nanomsg and SuperNET for iguana. Both these scripts cover all required deps on debian based distros.
 
 ```shell
 cd install
+./installSuperNET.sh
 ./buildkomodo.sh
 ./installnanomsg.sh
 ```
