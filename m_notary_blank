@@ -20,5 +20,5 @@ coins/kmd_7776
 currdir=$(pwd)
 cd /home/$USER/StakedNotary
 passphrase=$(./printkey.py wif)
-cd currdir
+cd $currdir
 curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
