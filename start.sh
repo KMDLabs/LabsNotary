@@ -19,7 +19,8 @@ echo "[KMD] : Checking your address and importing it if required."
 echo "[KMD] : $(./validateaddress.sh KMD)"
 ./listassetchains.py | while read chain; do
   # Move our auto generated coins file to the iguana coins dir
-  mv "$chain_7776" iguana/coins
+  chmod +x "$chain"_7776
+  mv "$chain"_7776 iguana/coins
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
 ./build_iguana
