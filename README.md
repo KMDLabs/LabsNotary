@@ -68,14 +68,22 @@ pkill -15 iguana
 ./start_iguana.sh
 ```
 Make sure some funds have been sent and everything *should* just work. :D
+
 NOTE: *freq is the frequency of notarizations anything less than 10 is unlikley to work without changes to iguana*
 
 ### Using some of the Scripts
 To get a list of coins: `./listcoins.sh`
+
 To issue commands to a coin: `asset-cli <COINS_NAME> <COMMAND>`
+
 To issue commands to all assetchains: `assets-cli <COMMAND>`
+
 To kill everything: `./stop.sh`
+
 The install scripts come with the tools:
+
 `htop`: To monitor system load
+
 `slurm`: To monitor network load
+
 `tmux`: To make panes, so you can run these tools and iguana console logs at he same time and detach/reattach when you login/out of the notary node. Google is your friend.
