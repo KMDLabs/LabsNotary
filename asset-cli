@@ -1,0 +1,7 @@
+#!/bin/bash
+cd ~/StakedNotary
+if [[ -z $1 ]]; then
+  echo "asset-cli <ASSETCHAIN_NAME> commands"
+  exit
+fi
+echo "komodo-cli -ac_name=${@}"
