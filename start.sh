@@ -3,7 +3,7 @@
 pubkey=$(./printkey.py pub)
 
 # Start KMD
-komodod -notary -pubkey=$pubkey /dev/null 2>&1
+komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
 if [[ $(./assetchains = "finished") ]]; then
