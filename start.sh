@@ -27,7 +27,7 @@ echo "[KMD] : $(./validateaddress.sh KMD)"
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
 echo "sleep 3" >> m_notary_staked
-echo "cd /home$USER/StakedNotary" >> m_notary_staked
+echo "cd /home/$USER/StakedNotary" >> m_notary_staked
 echo "./dpowassets.py" >> m_notary_staked
 mv m_notary_staked /home/$USER/SuperNET/iguana
 
