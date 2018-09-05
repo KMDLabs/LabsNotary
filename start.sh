@@ -26,6 +26,8 @@ echo "[KMD] : $(./validateaddress.sh KMD)"
   echo $'\n' >> m_notary_staked
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
+passphrase=$(./printkey.py wif)
+echo "passphrase=$passphrase" > /home/$USER/SuperNET/iguanas
 echo "sleep 3" >> m_notary_staked
 echo "cd /home/$USER/StakedNotary" >> m_notary_staked
 echo "./dpowassets.py" >> m_notary_staked

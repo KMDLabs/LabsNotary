@@ -17,8 +17,4 @@ coins/btc_7776
 coins/kmd_7776
 
 # Unlock wallet.
-currdir=$(pwd)
-cd /home/$USER/StakedNotary
-passphrase=$(./printkey.py wif)
-cd $currdir
-curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
+./wp_7776
