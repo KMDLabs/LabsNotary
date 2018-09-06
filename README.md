@@ -46,7 +46,7 @@ crontab -e
 Enter this into the cron tab:
 ```
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
-*/15 * * * * /home/<your_username>/scripts/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
+*/15 * * * * /home/<your_username>/StakedNotary/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
 ```
 
 ## Alright's instructions
