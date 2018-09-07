@@ -1,19 +1,19 @@
 [
   {
-    "ac_name": "STAKEDT1",
+    "ac_name": "STAKEDF0",
     "ac_supply": "1000000",
-    "ac_reward" : "100000000",
-    "ac_cc": "123",
+    "ac_reward" : "1000000000",
+    "ac_cc": "125",
     "addnode": "195.201.137.5",
     "addnode": "195.201.20.230",
     "addnode": "45.63.14.153",
     "freq": 10
   },
   {
-    "ac_name": "STAKEDT0",
+    "ac_name": "STAKEDF1",
     "ac_supply": "1000000",
-    "ac_reward" : "100000000",
-    "ac_cc": "123",
+    "ac_reward" : "1000000000",
+    "ac_cc": "125",
     "addnode": "195.201.137.5",
     "addnode": "195.201.20.230",
     "addnode": "45.63.14.153",
