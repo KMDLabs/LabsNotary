@@ -28,7 +28,7 @@ curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\
 # addcoin method for assetchains
 for chain in `ls iguana/coins/*`
 do
-  echo $chain
+    $chain
 done
 
 sleep 10
