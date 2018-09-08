@@ -25,10 +25,10 @@ iguana/coins/kmd_7776
 passphrase=$(./printkey.py wif)
 curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
 
-# Loop through assetchains.json and build the path to the approptiate coins file and run it.
-./listassetchains.py | while read chain; do
-  coin="iguana/coins/$chain"_7776
-  $coin
+# addcoin method for assetchains
+for chain in `ls iguana/coins/*`
+do
+  echo $chain
 done
 
 sleep 10
