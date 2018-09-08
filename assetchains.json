@@ -1,17 +1,17 @@
 [
   {
-    "ac_name": "STAKEDF0",
+    "ac_name": "STAKEDG0",
     "ac_supply": "1000000",
-    "ac_reward" : "1000000000",
+    "ac_reward" : "10000000000",
     "ac_cc": "125",
     "addnode": "195.201.137.5",
     "addnode": "195.201.20.230",
     "freq": 10
   },
   {
-    "ac_name": "STAKEDF1",
+    "ac_name": "STAKEDG1",
     "ac_supply": "1000000",
-    "ac_reward" : "1000000000",
+    "ac_reward" : "10000000000",
     "ac_cc": "125",
     "addnode": "195.201.137.5",
     "addnode": "195.201.20.230",
