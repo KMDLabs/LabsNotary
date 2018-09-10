@@ -22,9 +22,9 @@ passphrase=$(./printkey.py wif)
 curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
 
 # addcoin method for assetchains
-for chain in `ls iguana/coins/*`
-do
-    $chain
+./listassetchains.py | while read chain; do
+  coin="iguana/coins/$chain"_7776
+  $coin
 done
 
 sleep 10
