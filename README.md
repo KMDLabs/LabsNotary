@@ -37,11 +37,12 @@ cp config_example.ini config.ini
 nano config.ini
 ```
 
-After this we are ready to launch KMD and any chains that happen to be in `assetchains.json`. If KMD is not already synced this will take many hours, just let it run. To check if komodo did indeed start and is syncing do: `tail -f ~/$USER/.komodo/debug.log` in another pane/terminal.
+After this we are ready to launch KMD and any chains that happen to be in `assetchains.json` and import our private keys to them all.
 
 ```shell
 ./start.sh
 ```
+To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 2-3H maybe longer.
 
 Once this is done, you have all the required things to launch iguana, there are some coins files in `iguana/coins` and iguana binary has been built from the SuperNET repo in your home folder and copied to `iguana` folder. Also the `staked.json` file containing all the info for the Notary Network has been fetched from github.
 
