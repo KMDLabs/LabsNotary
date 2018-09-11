@@ -64,17 +64,6 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 */15 * * * * /home/<your_username>/StakedNotary/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
 ```
 
-## Alright's instructions
-There is the file `staked.json` in this repo, the pubkeys and IP's of our selected notaries need to go in this file. If you change it everyone needs to update. The `minsigs` parameter is how many notaries a notarization requires. The number of IP's in this file must always be exactly 8 or iguana will crash, you can use some more than once if needed.
-
-The file `start_iguana.sh` contains an area called `ADD NOTARY AREA` you need to add every notaries IP to this part, copy paste the curl call and change the IP. Its not great having to have everyones IP recorded in a central place, but the network seems to break otherwise, especially if they are changed at some point.
-
-I have set the port to `9999` this is the only port that NEEDS to be open on the notary node's unless you want them to seed the assetchains aswell. I would advise having seperate seeds if possibe.
-
-Of couse each pubkey will need some KMD and some of the AC being notarized. Make sure you send some, if they have UTXO splitter on cron, it will take car of everything, as soon as funds arrive the node will split and start notarizing.
-
-I advise we also change the pubkey from the 4 I have for scaletest, we should have new ones. Iguana can use a WIF, I tested it. No need for a passphrase.
-
 ### Adding New Coins
 This is the coolest part, super happy about it. Simply add the coins params to `assetchains.json` (make sure you have the `freq` param it is required!) and submit a PR and merge it. Then have ALL operators:
 ```shell
@@ -82,9 +71,9 @@ pkill -15 iguana
 ./start.sh
 ./start_iguana.sh
 ```
-Make sure some funds have been sent and everything *should* just work. :D
+There is no need to stop any deamons at this point, if they are already running, they will not start again.
 
-NOTE: *freq is the frequency of notarizations.
+Make sure some funds have been sent and everything *should* just work. :D
 
 ### Using some of the Scripts
 To get a list of coins: `./listcoins.sh`
