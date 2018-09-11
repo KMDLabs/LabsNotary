@@ -27,7 +27,9 @@ cd install
 ./installnanomsg.sh
 ```
 
-Now you need to copy the config file and edit it with our pubkey/Raddress and WIF key for KMD.
+Now you need to copy the config file and edit it with our pubkey/Raddress and WIF key for KMD. There needs to be a space after the `=` sign on each line.
+
+e.g ` btcpubkey = 02.....`
 
 ```shell
 cd ..
