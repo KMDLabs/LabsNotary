@@ -37,7 +37,8 @@ cp config_example.ini config.ini
 nano config.ini
 ```
 
-After this we are ready to launch KMD and any chains that happen to be in `assetchains.json`. If KMD is not already synced this will take many hours, I wold advise syncing KMD first to make the process a bit faster.
+After this we are ready to launch KMD and any chains that happen to be in `assetchains.json`. If KMD is not already synced this will take many hours, just let it run. To check if komodo did indeed start and is syncing do: `tail -f ~/$USER/.komodo/debug.log` in another pane/terminal.
+
 ```shell
 ./start.sh
 ```
@@ -82,7 +83,7 @@ pkill -15 iguana
 ```
 Make sure some funds have been sent and everything *should* just work. :D
 
-NOTE: *freq is the frequency of notarizations anything less than 10 is unlikley to work without changes to iguana*
+NOTE: *freq is the frequency of notarizations.
 
 ### Using some of the Scripts
 To get a list of coins: `./listcoins.sh`
