@@ -1,5 +1,13 @@
 # Staked Notary Control Scripts
 
+# Setting up your VPS
+You need a new user, you cannot use `root`
+For ubuntu 16.04 login as root and create a user: `adduser`
+Add your user to sudo: `gpasswd -a <user> sudo`
+Its reccomended to install an SSH key to this user. addlinkk here
+
+Logout of root and login to your user to continue installing the notary repo.
+
 ## Install instructions
 ```shell
 cd ~
