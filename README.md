@@ -2,9 +2,12 @@
 
 # Setting up your VPS
 You need a new user, you cannot use `root`
+
 For ubuntu 16.04 login as root and create a user: `adduser`
+
 Add your user to sudo: `gpasswd -a <user> sudo`
-Its reccomended to install an SSH key to this user. addlinkk here
+
+Its reccomended to install an SSH key to this user. https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 
 Logout of root and login to your user to continue installing the notary repo.
 
