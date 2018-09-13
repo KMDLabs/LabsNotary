@@ -1,5 +1,5 @@
 #!/bin/bash
-wget -qO staked https://raw.githubusercontent.com/StakedChain/StakedNotary/master/staked.json
+wget -qO staked https://raw.githubusercontent.com/blackjok3rtt/StakedNotary/master/staked.json
 iguana/iguana staked & #> iguana.log 2> error.log  &
 myip=`curl -s4 checkip.amazonaws.com`
 sleep 4
