@@ -6,21 +6,22 @@ sleep 4
 curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"
 sleep 3
 
-#
-#ADD NOTARY AREA
-curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"iguana\",\"method\":\"addnotary\",\"ipaddr\":\"145.239.204.33\"}"
-#ADD NOTARY AREA
-#
+# addnotary method
+for i in `cat peer_ips.txt`
+do
+    echo "Adding notary: $i"
+    curl -s --url "http://127.0.0.1:7776" \
+        --data "{\"agent\":\"iguana\",\"method\":\"addnotary\",\"ipaddr\":\"$i\"}"
+done
 
 # external coins.
-iguana/coins/btc_7776
 iguana/coins/kmd_7776
 
 # Unlock wallet.
 passphrase=$(./printkey.py wif)
 curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
 
-# Loop through assetchains.json and build the path to the approptiate coins file and run it.
+# addcoin method for assetchains
 ./listassetchains.py | while read chain; do
   coin="iguana/coins/$chain"_7776
   $coin
