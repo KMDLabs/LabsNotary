@@ -1,7 +1,7 @@
 [
   {
-    "ac_name": "STKD5W2",
-    "ac_supply": "333542",
+    "ac_name": "STKDW",
+    "ac_supply": "17146",
     "ac_reward" : "500000000",
     "ac_cc": "123",
     "ac_end": "8768",
@@ -13,7 +13,7 @@
     "freq": 3
   },
   {
-    "ac_name": "STAKED5S2",
+    "ac_name": "STKDS",
     "ac_supply": "17146",
     "ac_reward" : "500000000",
     "ac_cc": "123",
