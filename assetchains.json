@@ -31,5 +31,42 @@
       "159.69.195.70"
     ],
     "freq": 5
-  }
+  },
+  {
+    "ac_name": "STAKEDUH",
+    "ac_supply": "1000000",
+    "ac_reward" : "1000000000",
+    "ac_cc": "667",
+    "ac_perc": "10000000",
+    "ac_pubkey": "03bd221868abc063b54a3fceafb9898b1931ed767298a17ac0c9923500a7c60e4b",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq": 5
+  },
+  {
+    "ac_name": "STAKEDUHS1",
+    "ac_supply": "1000000",
+    "ac_reward" : "1000000000",
+    "ac_cc": "667",
+    "ac_staked": "10",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq": 5
+  },
+  {
+    "ac_name": "STAKEDUHS9",
+    "ac_supply": "1000000",
+    "ac_reward" : "1000000000",
+    "ac_cc": "667",
+    "ac_staked": "90",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq": 5
+   }
 ]
