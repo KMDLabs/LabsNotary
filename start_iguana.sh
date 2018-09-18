@@ -1,4 +1,6 @@
 #!/bin/bash
+# unlock any locked utxos before restarting
+komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .` 
 wget -qO staked https://raw.githubusercontent.com/blackjok3rtt/StakedNotary/master/staked.json
 iguana/iguana staked & #> iguana.log 2> error.log  &
 myip=`curl -s4 checkip.amazonaws.com`
