@@ -50,7 +50,7 @@ To start your notary node and connect to the network simply run:
 ```shell
 ./start_iguana.sh
 ```
-There is one thing that notary nodes depend on more than anything else and that is the UTXO's. Once iguana has started we need to run @LukeChilds excellent UTXO splitter.
+There is one thing that notary nodes depend on more than anything else and that is the UTXO's. Once iguana has started we need to run @lukechilds excellent UTXO splitter.
 ```shell
 ./utxosplitter.sh
 ```
