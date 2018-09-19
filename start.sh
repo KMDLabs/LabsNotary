@@ -4,7 +4,7 @@ pubkey=$(./printkey.py pub)
 
 # Start KMD
 echo "[KMD] : Starting KMD"
-komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
+/home/$USER/staked_master/src/komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
 if [[ $(./assetchains) = "finished" ]]; then
