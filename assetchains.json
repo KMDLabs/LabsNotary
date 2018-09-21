@@ -1,6 +1,6 @@
 [
   {
-    "ac_name": "STAKEDBB",
+    "ac_name": "STAKEDB1",
     "ac_supply": "100000",
     "ac_reward" : "1000000000",
     "ac_cc": "667",
@@ -11,7 +11,7 @@
     "freq": 5
   },
   {
-    "ac_name": "STAKEDWW",
+    "ac_name": "STAKEDW1",
     "ac_supply": "100000",
     "ac_reward" : "1000000000",
     "ac_cc": "667",
@@ -22,18 +22,7 @@
     "freq": 5
   },
   {
-    "ac_name": "STAKEDCF",
-    "ac_supply": "100000",
-    "ac_reward" : "1000000000",
-    "ac_cc": "667",
-    "addnode": [
-      "139.180.201.15",
-      "207.148.124.108"
-    ],
-    "freq": 5
-  },
-  {
-    "ac_name": "STAKEDUH",
+    "ac_name": "STAKEDPERC",
     "ac_supply": "1000000",
     "ac_reward" : "1000000000",
     "ac_cc": "667",
@@ -46,7 +35,7 @@
     "freq": 5
   },
   {
-    "ac_name": "STAKEDUHS1",
+    "ac_name": "STAKEDS1",
     "ac_supply": "1000000",
     "ac_reward" : "1000000000",
     "ac_cc": "667",
@@ -58,7 +47,7 @@
     "freq": 5
   },
   {
-    "ac_name": "STAKEDUHS9",
+    "ac_name": "STAKEDS9",
     "ac_supply": "1000000",
     "ac_reward" : "1000000000",
     "ac_cc": "667",
