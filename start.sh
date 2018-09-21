@@ -41,7 +41,7 @@ else
 fi
 
 
-ac_json=$(curl https://raw.githubusercontent.com/blackjok3rtt/StakedNotary/master/assetchains.json 2>/dev/null)
+ac_json=$(curl https://raw.githubusercontent.com/StakedChain/StakedNotary/master/assetchains.json 2>/dev/null)
 for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
 	let numchains=numchains+1;
 	chain=$(echo $row)
