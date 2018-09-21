@@ -1,6 +1,8 @@
 #!/bin/bash
-wget -qO staked https://raw.githubusercontent.com/StakedChain/StakedNotary/master/staked.json
-iguana/iguana staked & #> iguana.log 2> error.log  &
+# unlock any locked utxos before restarting
+komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .` 
+git pull
+iguana/iguana staked.json & #> iguana.log 2> error.log  &
 myip=`curl -s4 checkip.amazonaws.com`
 sleep 4
 curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"
