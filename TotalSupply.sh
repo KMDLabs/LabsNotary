@@ -24,9 +24,11 @@ total=0
 ./listassetchains.py | while read coin; do
   supply=$(komodo-cli -ac_name=$coin coinsupply | jq -r .total)
   if [[ $supply != "" ]]; then
-    cecho g "[$coin] : "; cecho b "$supply\n"
+    cecho g "[$coin] : "; cecho c "$supply\n"
     total=$(calc "${total}+${supply}")
+    echo $total > total
   fi
 done
+total=$(printf '%.0f' $(cat total))
 
-cecho r "[TOTAL]"; cecho c "$total\n"
+cecho r "[TOTAL] : "; cecho b "$total \n"
