@@ -16,7 +16,7 @@ cecho() {
 }
 
 calc() {
-  awk "BEGIN { print "$*" }"
+  awk "BEGIN { printf "$*" }"
 }
 
 total=0
@@ -24,7 +24,7 @@ total=0
 ./listassetchains.py | while read coin; do
   supply=$(komodo-cli -ac_name=$coin coinsupply | jq -r .total)
   if [[ $supply != "" ]]; then
-    cecho g "[$coin]"; cecho b "$supply\n"
+    cecho g "[$coin] : "; cecho b "$supply\n"
     total=$(calc "${total}+${supply}")
   fi
 done
