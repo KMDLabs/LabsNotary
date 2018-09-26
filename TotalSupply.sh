@@ -22,9 +22,11 @@ calc() {
 total=0
 
 ./listassetchains.py | while read coin; do
-  supply=$(komodo-cli -ac_name=$coin coinsupply | jq -r .total)
-  cecho g "[$coin]"; cecho b "$supply\n"
-  total=$(calc "${total}+${supply}")
+  supply=$(komodo-cli -ac_name=$coin coinsupply > 2 /dev/null | jq -r .total > 2 /dev/null)
+  if [[ $supply != "" ]]; then
+    cecho g "[$coin]"; cecho b "$supply\n"
+    total=$(calc "${total}+${supply}")
+  fi
 done
 
 cecho r "[TOTAL]"; cecho c "$total"
