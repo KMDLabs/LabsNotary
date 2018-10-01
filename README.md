@@ -98,6 +98,8 @@ To issue commands to all assetchains: `assets-cli <COMMAND>`
 
 To kill everything: `./stop.sh`
 
+To reset your wallets: `./resetALLwallets.sh`
+
 The install scripts come with the tools:
 
 `htop`: To monitor system load
