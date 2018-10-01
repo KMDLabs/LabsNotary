@@ -53,7 +53,7 @@ HEIGHT=$(${cli} getblockcount)
 echo "[${coin}] Current block count: $HEIGHT"
 
 # Send the entire balance to ourself
-txid=$(${cli} sendtoaddress ${address} $(${cli} getbalance) "" true)
+txid=$(${cli} sendtoaddress ${address} $(${cli} getbalance) "" "" true)
 if [[ ${#txid} != 64 ]]; then
   echo "[${coin}] Sending the balance to ourself failed: ABORT"
   # We should add some new logic here to keep sending in chuncks if for some reaons the wallet is too many utxo (or use z_mergetoaddress)

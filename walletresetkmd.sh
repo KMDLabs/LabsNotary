@@ -9,6 +9,8 @@ daemon_process_regex="komodod.*\-notary"
 cli="komodo-cli"
 wallet_file="${HOME}/.komodo/wallet.dat"
 
+komodo-cli lockunspent true $(komodo-cli listlockunspent | jq -c .)
+
 ./walletreset.sh \
   "${coin}" \
   "${deamon}" \
