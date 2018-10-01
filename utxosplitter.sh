@@ -45,7 +45,7 @@ fi
     if [[ "${listunspent}" = "" ]]; then
       echo "[$coin] Listuspent call failed aborting!"
     else
-      utxo_count=$(echo ${listunspent} | jq -r '.[].amount' | grep ${amount} | wc -l)
+      utxo_count=$(echo ${listunspent} | jq '[.[] | select (.scriptPubKey | length > 60 )]' | grep 0.0001 | wc -l)
       echo "[${coin}] Current UTXO count is ${utxo_count}"
 
       utxo_required=$(calc ${target_utxo_count}-${utxo_count})
