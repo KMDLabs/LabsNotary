@@ -1,8 +1,13 @@
 #!/bin/bash
-# unlock any locked utxos before restarting
-komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .` 
-git pull
-iguana/iguana staked.json & #> iguana.log 2> error.log  &
+pgrep -af iguana | grep -v "$0" > /dev/null 2>&1
+outcome=$(echo $?)
+if [[ $outcome != 0 ]]; then
+  echo "Starting iguana"
+  # unlock any locked utxos before restarting
+  komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
+  iguana/iguana staked.json & #> iguana.log 2> error.log &
+fi
+
 myip=`curl -s4 checkip.amazonaws.com`
 sleep 4
 curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"

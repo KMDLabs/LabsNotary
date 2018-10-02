@@ -1,6 +1,7 @@
 #!/bin/bash
 # Fetch pubkey
 cd /home/$USER/StakedNotary
+git pull
 pubkey=$(./printkey.py pub)
 
 # Start KMD
@@ -24,8 +25,17 @@ echo "[KMD] : $(./validateaddress.sh KMD)"
   mv "$chain"_7776 iguana/coins
   echo "[$chain] : $(./validateaddress.sh $chain)"
 done
-echo "Building Iguana"
-./build_iguana
+
+cd ~/SuperNET
+returnstr=$(git pull)
+cd /home/$USER/StakedNotary
+if [[ $returnstr = "Already up-to-date." ]]; then
+  echo "No Iguana update detected"
+else
+  echo "Building Iguana"
+  ./build_iguana
+  pkill -15 iguana  
+fi
 
 echo "Finished: Checking chains are in sync..."
 
@@ -65,4 +75,5 @@ for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
 done
 
 echo "[ ALL CHAINS SYNC'd Starting Iguana... ]"
+
 ./start_iguana.sh
