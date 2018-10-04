@@ -8,7 +8,7 @@ addr=$(./printkey.py Radd)
     outcome=$(echo $?)
     if [[ $outcome = 6 ]]; then
       clean=1
-    elif [[ $outcome = 0 ]]
+    elif [[ $outcome = 0 ]]; then
       echo "[$coin] $(echo $result | jq -r .remainingUTXOs) utxo remaining"
     else
       echo "[$coin] Some error happened!"
