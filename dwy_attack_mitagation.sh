@@ -11,7 +11,8 @@ addr=$(./printkey.py Radd)
     elif [[ $outcome = 0 ]]; then
       echo "[$coin] $(echo $result | jq -r .remainingUTXOs) utxo remaining"
     else
-      echo "[$coin] Some error happened!"
+      echo "[$coin] ABORTING - Some error happened!"
+      clean=1
     fi
   done
   echo "[$coin] Wallet Clean!"
