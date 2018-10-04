@@ -1,5 +1,41 @@
 #!/bin/bash
-# Fetch pubkey
+longestchain () {
+  chain=$1
+  if [[ $chain == "KMD" ]]; then
+    chain=""
+  fi
+  tries=0
+  longestchain=0
+  while [[ $longestchain -eq 0 ]]; do
+    info=$(komodo-cli -ac_name=$chain getinfo)
+    longestchain=$(echo ${info} | jq -r '.longestchain')
+    tries=$(( $tries +1 ))
+    if (( $tries > 240)); then
+      echo "0"
+      return 0
+    fi
+    sleep 1
+  done
+  echo $longestchain
+}
+
+checksync () {
+  chain=$1
+  if [[ $chain == "KMD" ]]; then
+    chain=""
+  fi
+  lc=$(longestchain $chain)
+  blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
+  while (( $blocks < $lc )); do
+    sleep 30
+    lc=$(longestchain $chain)
+    blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
+    progress=$(echo "scale=3;$blocks/$lc" | bc -l)
+    echo "[$1] $(echo $progress*100|bc)% $blocks of $lc"
+  done
+  echo "[$1] Synced on block: $lc"
+}
+
 cd /home/$USER/StakedNotary
 git pull
 pubkey=$(./printkey.py pub)
@@ -38,46 +74,18 @@ fi
 if [[ ! -f iguana/iguana ]]; then
   echo "Building iguana"
   ./build_iguana
-  pkill -15 iguana  
+  pkill -15 iguana
 fi
 
-echo "Finished: Checking chains are in sync..."
+echo "Checking chains are in sync..."
 
-kmdinfo=$(echo $(komodo-cli getinfo))
-kmd_blocks=$(echo ${kmdinfo} | jq -r '.blocks')
-kmd_longestchain=$(echo ${kmdinfo} | jq -r '.longestchain')
+checksync KMD
 
-# yet to test version checking - "longest chain can get lost quite easily on early chains, might need some extra check 
-# @webworker01 has some code that checks explorers heights, which might be a good way to go, but we have to have explorers up first.
-if [[ $kmd_longestchain == 0 ]]; then
-        echo -e "\e[91m ** [Incompatible Komodo version. Join #staked on discord at https://discord.gg/tKRzWe to get latest version. ** \e[39m"
-        exit 0;
-fi
-
-while [[ $kmd_blocks < $kmd_longestchain ]]; do
-	kmd_progress=$(echo $kmd_blocks/$kmd_longestchain|bc)
-	echo "[Komodo chain not syncronised. On block ${kmd_blocks} of ${kmd_longestchain}] $(echo $progress*100|bc)%"
-        echo "will check again in 30 seconds"
-	sleep 30
-done
-echo "[Komodo chain syncronised on block ${kmd_blocks}]"
-
-ac_json=$(curl https://raw.githubusercontent.com/StakedChain/StakedNotary/master/assetchains.json 2>/dev/null)
+ac_json=$(cat assetchains.json)
 for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
-	chain=$(echo $row)
-	info=$(echo $(komodo-cli -ac_name=${chain} getinfo))
-	blocks=$(echo ${info} | jq -r '.blocks')
-	longestchain=$(echo ${info} | jq -r '.longestchain')
-
-	while [[ $blocks < $longestchain ]]; do
-		progress=$(echo blocks/longestchain|bc)
-	        echo "[${chain} chain not syncronised. On block ${blocks} of ${longestchain}] $(echo $progress*100 | bc)%"
-		echo "will check again in 30 seconds"
-        	sleep 30
-	done
-	echo "[${chain} chain syncronised on block ${blocks}]"
+	checksync $row
 done
 
-echo "[ ALL CHAINS SYNC'd Starting Iguana... ]"
+echo "[ ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... ]"
 
 ./start_iguana.sh
