@@ -115,9 +115,9 @@ for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
 done
 
 if [[ $abort = 0 ]]; then
-  echo "[ ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... ]"
+  echo -e "\033[1;32m ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... \033[0m"
 else
-  echo "[ Something went wrong, please check error messages above requiring human help and manually rectify them before starting iguana! ]"
+  echo -e "\033[1;31m Something went wrong, please check error messages above requiring human help and manually rectify them before starting iguana! \033[0m"
   exit
 fi
 
