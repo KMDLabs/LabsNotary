@@ -10,7 +10,7 @@ longestchain () {
     info=$(komodo-cli -ac_name=$chain getinfo)
     longestchain=$(echo ${info} | jq -r '.longestchain')
     tries=$(( $tries +1 ))
-    if (( $tries > 900)); then
+    if (( $tries > 120)); then
       echo "0"
       return 0
     fi
@@ -26,8 +26,16 @@ checksync () {
   fi
   lc=$(longestchain $chain)
   if [[ $lc = "0" ]]; then
-    echo "[$1] ABORTING! Longest chain has returned 0 for 15mins please check your chain params and/or network connection!"
-    return "0"
+    connections=$(komodo-cli -ac_name=$chain getinfo | jq -r .connections)
+    if [[ $connections = "0" ]]; then
+      echo "[$1] ABORTING - You have no network connections, Help Human!"
+      return "0"
+    else
+      lc=$(longestchain $chain)
+    fi
+  fi
+  if [[ $lc = "0" ]]; then
+    echo "[$1] You have ${connections} network connections but have returned longestchain 0 for 4 minutes. This chain my have forks or you may be on the wrong version of komodo. Help Human!"
   fi
   blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
   while (( $blocks < $lc )); do
