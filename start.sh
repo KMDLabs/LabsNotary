@@ -17,6 +17,7 @@ longestchain () {
     sleep 1
   done
   echo $longestchain
+  return 1
 }
 
 checksync () {
@@ -29,14 +30,14 @@ checksync () {
     connections=$(komodo-cli -ac_name=$chain getinfo | jq -r .connections)
     if [[ $connections = "0" ]]; then
       echo "[$1] ABORTING - $1 has no network connections, Help Human!"
-      exit
+      return 0
     else
       lc=$(longestchain $chain)
     fi
   fi
   if [[ $lc = "0" ]]; then
     echo "[$1] You have ${connections} network connections but have returned longestchain 0 for 4 minutes. This chain my have forks or you may be on the wrong version of komodo. Help Human!"
-    exit
+    return 0
   fi
   blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
   while (( $blocks < $lc )); do
@@ -47,6 +48,7 @@ checksync () {
     echo "[$1] $(echo $progress*100|bc)% $blocks of $lc"
   done
   echo "[$1] Synced on block: $lc"
+  return 1
 }
 
 cd /home/$USER/StakedNotary
@@ -96,13 +98,27 @@ fi
 
 echo "Checking chains are in sync..."
 
+abort=0
 checksync KMD
+outcome=$(echo $?)
+if [[ $outcome = 0 ]]; then
+  abort=1
+fi
 
 ac_json=$(cat assetchains.json)
 for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
 	checksync $row
+  outcome=$(echo $?)
+  if [[ $outcome = 0 ]]; then
+    abort=1
+  fi
 done
 
-echo "[ ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... ]"
+if [[ $abort = 0 ]]; then
+  echo "[ ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... ]"
+else
+  echo "[ Something went wrong, please check error messages above requiring human help and manually rectify them before starting iguana! ]"
+  exit
+fi
 
 ./start_iguana.sh
