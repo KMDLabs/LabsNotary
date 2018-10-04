@@ -28,14 +28,15 @@ checksync () {
   if [[ $lc = "0" ]]; then
     connections=$(komodo-cli -ac_name=$chain getinfo | jq -r .connections)
     if [[ $connections = "0" ]]; then
-      echo "[$1] ABORTING - You have no network connections, Help Human!"
-      return "0"
+      echo "[$1] ABORTING - $1 has no network connections, Help Human!"
+      exit
     else
       lc=$(longestchain $chain)
     fi
   fi
   if [[ $lc = "0" ]]; then
     echo "[$1] You have ${connections} network connections but have returned longestchain 0 for 4 minutes. This chain my have forks or you may be on the wrong version of komodo. Help Human!"
+    exit
   fi
   blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
   while (( $blocks < $lc )); do
