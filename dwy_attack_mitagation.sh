@@ -8,13 +8,11 @@ addr=$(./printkey.py Radd)
     outcome=$(echo $?)
     if [[ $outcome = 6 ]]; then
       clean=1
-    elif [[ $outcome = 5 ]]; then
-      clean=1
-      echo "[$coin] Private Chain Requires Z-Address to be used!"
-    else
+    elif [[ $outcome = 0 ]]
       echo "[$coin] $(echo $result | jq -r .remainingUTXOs) utxo remaining"
+    else
+      echo "[$coin] Some error happened!"
     fi
   done
   echo "[$coin] Wallet Clean!"
 done
-

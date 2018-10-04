@@ -40,6 +40,10 @@ cd /home/$USER/StakedNotary
 git pull
 pubkey=$(./printkey.py pub)
 
+if [[ ${#pubkey} != 66 ]]; then
+  echo "ABORTING!!! pubkey invalid: Please check your config.ini"
+fi
+
 # Start KMD
 echo "[KMD] : Starting KMD"
 komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
