@@ -32,7 +32,11 @@ cd /home/$USER/StakedNotary
 if [[ $returnstr = "Already up-to-date." ]]; then
   echo "No Iguana update detected"
 else
-  echo "Building Iguana"
+  rm iguana/iguana
+fi
+
+if [[ ! -f iguana/iguana ]]; then
+  echo "Building iguana"
   ./build_iguana
   pkill -15 iguana  
 fi
