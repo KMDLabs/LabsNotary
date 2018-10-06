@@ -10,7 +10,7 @@ longestchain () {
     info=$(komodo-cli -ac_name=$chain getinfo)
     longestchain=$(echo ${info} | jq -r '.longestchain')
     tries=$(( $tries +1 ))
-    if (( $tries > 120)); then
+    if (( $tries > 60)); then
       echo "0"
       return 0
     fi
@@ -25,25 +25,51 @@ checksync () {
   if [[ $chain == "KMD" ]]; then
     chain=""
   fi
-  lc=$(longestchain $chain)
+  lc=$(longestchain $1)
   if [[ $lc = "0" ]]; then
     connections=$(komodo-cli -ac_name=$chain getinfo | jq -r .connections)
     if [[ $connections = "0" ]]; then
-      echo "[$1] ABORTING - $1 has no network connections, Help Human!"
+      echo -e "\033[1;31m  [$1] ABORTING - $1 has no network connections, Help Human! \033[0m"
+      komodo-cli -ac_name=$chain stop
       return 0
     else
-      lc=$(longestchain $chain)
+      lc=$(longestchain $1)
     fi
   fi
   if [[ $lc = "0" ]]; then
-    echo "[$1] You have ${connections} network connections but have returned longestchain 0 for 4 minutes. This chain my have forks or you may be on the wrong version of komodo. Help Human!"
-    return 0
+    blocks=$(komodo-cli -ac_name=$chain getblockcount)
+    tries=0
+    while (( $blocks < 128 )) && (( $tries < 90 )); do
+      echo "[$1] $blocks blocks"
+      blocks=$(komodo-cli -ac_name=$chain getblockcount)
+      tries=$(( $tries +1 ))
+      lc=$(longestchain $1)
+      if (( $blocks = $lc )); then
+        echo "[$1] Synced on block: $lc"
+        return 1
+      fi
+    done
+    if (( $blocks = 0 )) && (( $lc = 0 )); then
+      # this chain is just not syncing even though it has network connections we will stop its deamon and abort for now. Myabe next time it will work.
+      komodo-cli -ac_name=$chain stop
+      echo -e "\033[1;31m  [$1] ABORTING no blocks or longest chain found, Help Human! \033[0m"
+      return 0
+    elif (( $blocks = 0 )) && (( $lc != 0 )); then
+      # This chain has connections and knows longest chain, but will not sync, we will kill it. Maybe next time it will work.
+      echo -e "\033[1;31m [$1] ABORTING - No blocks synced of $lc. Help Human! \033[0m"
+      komodo-cli -ac_name=$chain stop
+      return 0
+    elif (( $blocks > 128 )) && (( $lc = 0 )); then
+      # This chain is syncing but does not have longest chain. Myabe next time the prcess runs it will work, so we will leave it running but not add it to iguana.
+      echo -e "\033[1;31m [$1] ABORTING - Synced to $blocks, but no longest chain is found. Help Human! \033[0m"
+      return 0
+    fi
   fi
-  blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
+  blocks=$(komodo-cli -ac_name=$chain getblockcount)
   while (( $blocks < $lc )); do
-    sleep 30
-    lc=$(longestchain $chain)
-    blocks=$(komodo-cli -ac_name=$chain getinfo | jq -r .blocks)
+    sleep 60
+    lc=$(longestchain $1)
+    blocks=$(komodo-cli -ac_name=$chain getblockcount)
     progress=$(echo "scale=3;$blocks/$lc" | bc -l)
     echo "[$1] $(echo $progress*100|bc)% $blocks of $lc"
   done
