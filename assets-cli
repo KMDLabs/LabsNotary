@@ -7,5 +7,5 @@ fi
 
 ./listassetchains.py | while read coin; do
   echo $coin
-  komodo-cli -ac_name=$coin ${@}
+  komodo-cli -ac_name=$coin "${@}"
 done

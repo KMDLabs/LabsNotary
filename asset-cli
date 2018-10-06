@@ -4,4 +4,10 @@ if [[ -z $1 ]]; then
   echo "asset-cli <ASSETCHAIN_NAME> commands"
   exit
 fi
-komodo-cli -ac_name=${@}
+
+branch=$(cat assetchains.json | jq -r --arg chain $1 '.[] | select (.ac_name == $chain) | .branch')
+if [[ $branch = "null" ]]; then
+  komodo-cli -ac_name="${@}"
+else
+  komodo/$branch/komodo-cli -ac_name="${@}"
+fi

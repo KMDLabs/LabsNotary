@@ -7,6 +7,9 @@ git clone https://github.com/stakedchain/komodo.git
 cd komodo
 ./zcutil/fetch-params.sh
 ./zcutil/build.sh -j$(nproc)
+mkdir -p $HOME/StakedNotary/komodo/master
+localrev=$(git rev-parse HEAD)
+echo $localrev > $HOME/StakedNotary/komodo/master/lastbuildcommit
 cd ~
 mkdir .komodo
 cd .komodo

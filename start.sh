@@ -49,17 +49,17 @@ checksync () {
         return 1
       fi
     done
-    if (( $blocks = 0 )) && (( $lc = 0 )); then
+    if (( blocks = 0 )) && (( lc = 0 )); then
       # this chain is just not syncing even though it has network connections we will stop its deamon and abort for now. Myabe next time it will work.
       komodo-cli -ac_name=$chain stop
       echo -e "\033[1;31m  [$1] ABORTING no blocks or longest chain found, Help Human! \033[0m"
       return 0
-    elif (( $blocks = 0 )) && (( $lc != 0 )); then
+    elif (( blocks = 0 )) && (( lc != 0 )); then
       # This chain has connections and knows longest chain, but will not sync, we will kill it. Maybe next time it will work.
       echo -e "\033[1;31m [$1] ABORTING - No blocks synced of $lc. Help Human! \033[0m"
       komodo-cli -ac_name=$chain stop
       return 0
-    elif (( $blocks > 128 )) && (( $lc = 0 )); then
+    elif (( blocks > 128 )) && (( lc = 0 )); then
       # This chain is syncing but does not have longest chain. Myabe next time the prcess runs it will work, so we will leave it running but not add it to iguana.
       echo -e "\033[1;31m [$1] ABORTING - Synced to $blocks, but no longest chain is found. Help Human! \033[0m"
       return 0

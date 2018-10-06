@@ -22,6 +22,8 @@ with open(script_dir + '/assetchains.json') as file:
         for param, value in chain.items():
             if param == 'freq':
                 continue
+            if param == 'branch':
+                continue
             if isinstance(value, list):
                 for dupe_value in value:
                     params.append(format_param(param, dupe_value))
