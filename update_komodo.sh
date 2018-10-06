@@ -14,7 +14,7 @@ checkRepo () {
       cd $prevdir
     fi
     localrev=$(cat komodo/$1/lastbuildcommit)
-    eval cd "$2"
+    eval cd "$HOME/komodo"
     git remote update > /dev/null 2>&1
     remoterev=$(git rev-parse origin/$1)
     cd $prevdir
