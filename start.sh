@@ -89,14 +89,44 @@ if [[ ${#pubkey} != 66 ]]; then
 fi
 
 if [[ ${#Radd} != 34 ]]; then
-  echo "\033[1;31m [$1] ABORTING!!! R-address invalid: Please check your config.ini \033[0m"
+  echo -e "\033[1;31m [$1] ABORTING!!! R-address invalid: Please check your config.ini \033[0m"
   exit
 fi
 
 if [[ ${#privkey} != 52 ]]; then
-  echo "\033[1;31m [$1] ABORTING!!! WIF-key invalid: Please check your config.ini \033[0m"
+  echo -e "\033[1;31m [$1] ABORTING!!! WIF-key invalid: Please check your config.ini \033[0m"
   exit
 fi
+
+assetchains_json=$(cat assetchains.json | jq > /dev/null 2>&1)
+outcome=$(echo $?)
+if [[ $outcome != 0 ]]; then
+  echo -e "\033[1;31m ABORTING!!! assetchains.json is invalid, Help Human! \033[0m"
+fi
+
+# Here we will update/add the master branch of StakedNotary/komodo StakedNotary/komodo/<branch>
+result=$(./update_komodo.sh master)
+if [[ $result = "updated" ]]; then
+  echo "[master] Updated to latest"
+elif [[ $result = "update_failed" ]]; then
+  echo "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
+  exit
+else
+  echo "[master] No update required"
+fi
+
+# Here we will extract all branches in assetchain.json and build them and move them to StakedNotary/komodo/<branch>
+./listbranches.py | while read branch; do
+  result=$(./update_komodo.sh $branch)
+  if [[ $result = "updated" ]]; then
+    echo "[$branch] Updated to latest"
+  elif [[ $result = "update_failed" ]]; then
+    echo "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
+    exit
+  else
+    echo "[$branch] No update required"
+  fi
+done
 
 # Start KMD
 echo "[KMD] : Starting KMD"
