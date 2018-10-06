@@ -66,6 +66,7 @@ if [[ $outcome = 1 ]]; then
     echo "updated"
   else
     echo "update_failed"
+  fi
 else
   echo "no_update"
 fi
