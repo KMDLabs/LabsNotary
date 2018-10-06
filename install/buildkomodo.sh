@@ -10,6 +10,8 @@ cd komodo
 mkdir -p $HOME/StakedNotary/komodo/master
 localrev=$(git rev-parse HEAD)
 echo $localrev > $HOME/StakedNotary/komodo/master/lastbuildcommit
+mv src/komodod $HOME/StakedNotary/komodo/master
+mv src/komodo-cli $HOME/StakedNotary/komodo/master
 cd ~
 mkdir .komodo
 cd .komodo
@@ -20,7 +22,7 @@ echo "daemon=1" >> komodo.conf
 echo "server=1" >> komodo.conf
 echo "txindex=1" >> komodo.conf
 chmod 0600 komodo.conf
-sudo ln -sf /home/$USER/komodo/src/komodo-cli /usr/local/bin/komodo-cli
-sudo ln -sf /home/$USER/komodo/src/komodod /usr/local/bin/komodod
+sudo ln -sf /home/$USER/StakedNotary/komodo/master/komodo-cli /usr/local/bin/komodo-cli
+sudo ln -sf /home/$USER/StakedNotary/komodo/master/komodod /usr/local/bin/komodod
 sudo ln -sf /home/$USER/StakedNotary/assets-cli /usr/local/bin/assets-cli
 sudo ln -sf /home/$USER/StakedNotary/asset-cli /usr/local/bin/asset-cli
