@@ -45,8 +45,8 @@ buildkomodo () {
   localrev=$(git rev-parse HEAD)
   mkdir -p $HOME/StakedNotary/komodo/$1
   echo $localrev > $HOME/StakedNotary/komodo/$1/lastbuildcommit
-  mv src/komodod $HOME/StakedNotary/$1
-  mv src/komodo-cli $HOME/StakedNotary/$1
+  mv src/komodod $HOME/StakedNotary/komodo/$1
+  mv src/komodo-cli $HOME/StakedNotary/komodo/$1
   return 1
 }
 
