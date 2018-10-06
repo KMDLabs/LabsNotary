@@ -102,6 +102,7 @@ assetchains_json=$(cat assetchains.json | jq > /dev/null 2>&1)
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo -e "\033[1;31m ABORTING!!! assetchains.json is invalid, Help Human! \033[0m"
+  exit
 fi
 
 # Here we will update/add the master branch of StakedNotary/komodo StakedNotary/komodo/<branch>
