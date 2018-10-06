@@ -77,6 +77,18 @@ checksync () {
   return 1
 }
 
+daemon_stopped () {
+  stopped=0
+  while [[ ${stopped} -eq 0 ]]; do
+    pgrep -af "$1" > /dev/null 2>&1
+    outcome=$(echo $?)
+    if [[ ${outcome} -ne 0 ]]; then
+      stopped=1
+    fi
+    sleep 2
+  done
+}
+
 cd /home/$USER/StakedNotary
 git pull
 pubkey=$(./printkey.py pub)
@@ -98,7 +110,8 @@ if [[ ${#privkey} != 52 ]]; then
   exit
 fi
 
-assetchains_json=$(cat assetchains.json | jq .[])
+ac_json=$(cat assetchains.json)
+echo $ac_json | jq .[] > /dev/null 2>&1
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo -e "\033[1;31m ABORTING!!! assetchains.json is invalid, Help Human! \033[0m"
@@ -106,9 +119,13 @@ if [[ $outcome != 0 ]]; then
 fi
 
 # Here we will update/add the master branch of StakedNotary/komodo StakedNotary/komodo/<branch>
+# and stop komodo if it was updated
 result=$(./update_komodo.sh master)
 if [[ $result = "updated" ]]; then
   echo "[master] Updated to latest"
+  master_updated=1
+  komodo-cli stop
+  daemon_stopped "komodod.*\-notary"
 elif [[ $result = "update_failed" ]]; then
   echo "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
   exit
@@ -117,16 +134,27 @@ else
 fi
 
 # Here we will extract all branches in assetchain.json and build them and move them to StakedNotary/komodo/<branch>
+# and stop any staked chains that use master branch if it was updated
 ./listbranches.py | while read branch; do
-  result=$(./update_komodo.sh $branch)
-  if [[ $result = "updated" ]]; then
-    echo "[$branch] Updated to latest"
-  elif [[ $result = "update_failed" ]]; then
-    echo "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
-    exit
-  else
-    echo "[$branch] No update required"
+  if [[ $branch != "master" ]]; then
+    result=$(./update_komodo.sh $branch)
+    if [[ $result = "updated" ]]; then
+      echo "[$branch] Updated to latest"
+      updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
+      komodo-cli -ac_name=$updated_chain stop
+      daemon_stopped "komodod.*\-ac_name=${updated_chain}"
+    elif [[ $result = "update_failed" ]]; then
+      echo "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
+      exit
+    else
+      echo "[$branch] No update required"
+    fi
+  elif [[ $master_updated = 1 ]]; then
+    updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
+    komodo-cli -ac_name=$updated_chain stop
+    daemon_stopped "komodod.*\-ac_name=${updated_chain}"
   fi
+  i=$(( $i +1 ))
 done
 
 # Start KMD
@@ -175,7 +203,6 @@ if [[ $outcome = 0 ]]; then
   abort=1
 fi
 
-ac_json=$(cat assetchains.json)
 for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
 	checksync $row
   outcome=$(echo $?)

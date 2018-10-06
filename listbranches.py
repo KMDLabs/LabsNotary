@@ -10,4 +10,4 @@ for chain in assetchains:
     try:
         print(chain['branch'])
     except Exception as e:
-        continue
+        print("master")
