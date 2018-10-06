@@ -98,7 +98,7 @@ if [[ ${#privkey} != 52 ]]; then
   exit
 fi
 
-assetchains_json=$(cat assetchains.json | jq > /dev/null 2>&1)
+assetchains_json=$(cat assetchains.json | jq .[])
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo -e "\033[1;31m ABORTING!!! assetchains.json is invalid, Help Human! \033[0m"

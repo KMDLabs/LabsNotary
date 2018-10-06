@@ -7,7 +7,7 @@ checkRepo () {
     prevdir=${PWD}
     if [[ ! -f komodo/$1/lastbuildcommit ]]; then
       eval cd "$HOME/komodo"
-      git pull
+      git pull > /dev/null 2>&1
       git checkout $1 > /dev/null 2>&1
       localrev=$(git rev-parse HEAD)
       mkdir -p $HOME/StakedNotary/komodo/$1
