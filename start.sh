@@ -54,9 +54,22 @@ checksync () {
 cd /home/$USER/StakedNotary
 git pull
 pubkey=$(./printkey.py pub)
+Radd=$(./printkey.py Radd)
+privkey=$(./printkey.py wif)
 
 if [[ ${#pubkey} != 66 ]]; then
-  echo "ABORTING!!! pubkey invalid: Please check your config.ini"
+  echo -e "\033[1;31m ABORTING!!! pubkey invalid: Please check your config.ini \033[0m"
+  exit
+fi
+
+if [[ ${#Radd} != 34 ]]; then
+  echo "\033[1;31m [$1] ABORTING!!! R-address invalid: Please check your config.ini \033[0m"
+  exit
+fi
+
+if [[ ${#privkey} != 52 ]]; then
+  echo "\033[1;31m [$1] ABORTING!!! WIF-key invalid: Please check your config.ini \033[0m"
+  exit
 fi
 
 # Start KMD
@@ -67,7 +80,7 @@ komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
 if [[ $(./assetchains) = "finished" ]]; then
   echo "Started Assetchains"
 else
-  echo "Starting Assetchains Failed: help human!"
+  echo -e "\033[1;31m Starting Assetchains Failed: help human! \033[0m"
   exit
 fi
 

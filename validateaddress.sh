@@ -3,14 +3,6 @@
 Radd=$(./printkey.py Radd)
 privkey=$(./printkey.py wif)
 
-if [[ ${#Radd} != 34 ]]; then
-  echo "[$1] ABORTING!!! R-address invalid: Please check your config.ini"
-fi
-
-if [[ ${#privkey} != 52 ]]; then
-  echo "[$1] ABORTING!!! WIF-key invalid: Please check your config.ini"
-fi
-
 if [[ $1 = "KMD" ]]; then
   chain="komodo-cli"
 else
