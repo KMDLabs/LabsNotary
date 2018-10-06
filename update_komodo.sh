@@ -58,7 +58,7 @@ branch=$1
 checkRepo $branch
 outcome=$(echo $?)
 
-if [[ $outcome = 1 ]] || [[ ! -f komdodo/$1/komodod ]] || [[ ! -f komdodo/$1/komodo-cli ]]; then
+if [[ $outcome = 1 ]] || [[ ! -f komodo/$1/komodod ]] || [[ ! -f komodo/$1/komodo-cli ]]; then
   buildkomodo $branch
   outcome=$(echo $?)
   if [[ $outcome = 1 ]]; then
