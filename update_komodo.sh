@@ -29,7 +29,6 @@ buildkomodo () {
   if [ -z $1 ]; then
     return
   fi
-  branch=$1
   cd $HOME/komodo
   git pull > /dev/null 2>&1
   git checkout $1  > /dev/null 2>&1
@@ -59,7 +58,7 @@ branch=$1
 checkRepo $branch
 outcome=$(echo $?)
 
-if [[ $outcome = 1 ]]; then
+if [[ $outcome = 1 ]] || [[ ! -f komdodo/$1/komodod ]] || [[ ! -f komdodo/$1/komodo-cli ]]; then
   buildkomodo $branch
   outcome=$(echo $?)
   if [[ $outcome = 1 ]]; then
@@ -67,6 +66,4 @@ if [[ $outcome = 1 ]]; then
   else
     echo "update_failed"
   fi
-else
-  echo "no_update"
 fi
