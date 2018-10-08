@@ -141,7 +141,7 @@ fi
     if [[ $result = "updated" ]]; then
       echo "[$branch] Updated to latest"
       updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
-      komodo-cli -ac_name=$updated_chain stop /dev/null 2>&1
+      komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
       daemon_stopped "komodod.*\-ac_name=${updated_chain}"
     elif [[ $result = "update_failed" ]]; then
       echo "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
@@ -151,7 +151,7 @@ fi
     fi
   elif [[ $master_updated = 1 ]]; then
     updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
-    komodo-cli -ac_name=$updated_chain stop /dev/null 2>&1
+    komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
     daemon_stopped "komodod.*\-ac_name=${updated_chain}"
   fi
   i=$(( $i +1 ))
