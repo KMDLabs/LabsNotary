@@ -71,8 +71,8 @@
     "freq": 5
   },
   {
-    "ac_name": "STAKEDTROLL",
-    "ac_supply": "1000000000",
+    "ac_name": "STKDTROLL",
+    "ac_supply": "77662796314",
     "ac_cc": "2",
     "genproclimit": "1 -gen",
     "addnode": [
