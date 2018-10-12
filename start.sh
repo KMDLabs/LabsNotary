@@ -130,7 +130,7 @@ if [[ $result = "updated" ]]; then
   daemon_stopped "komodod.*\-notary"
   echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
-  echo "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
+  echo -e "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
   exit
 else
   echo "[master] No update required"
@@ -151,7 +151,7 @@ i=0
       daemon_stopped "komodod.*\-ac_name=${updated_chain}"
       echo "[$updated_chain] Stopped."
     elif [[ $result = "update_failed" ]]; then
-      echo "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
+      echo -e "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
       exit
     else
       echo "[$branch] No update required"
@@ -180,12 +180,23 @@ fi
 
 # Validate Address on KMD + AC, will poll deamon until started then check if address is imported, if not import it.
 echo "[KMD] : Checking your address and importing it if required."
-echo "[KMD] : $(./validateaddress.sh KMD)"
+varesult=$(./validateaddress.sh KMD)
+if [[ $varesult = "not_started" ]]; then
+  echo -e "\033[1;31m Starting KMD Failed: help human! \033[0m"
+  exit
+fi
+echo "[KMD] : $varesult"
+
 ./listassetchains.py | while read chain; do
   # Move our auto generated coins file to the iguana coins dir
   chmod +x "$chain"_7776
   mv "$chain"_7776 iguana/coins
-  echo "[$chain] : $(./validateaddress.sh $chain)"
+  varesult=$(./validateaddress.sh $chain)
+  if [[ $varesult = "not_started" ]]; then
+    echo -e "\033[1;31m Starting $chain Failed: help human! \033[0m"
+    exit
+  fi
+  echo "[$chain] : $varesult"
 done
 
 cd ~/SuperNET
