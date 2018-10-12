@@ -120,12 +120,15 @@ fi
 
 # Here we will update/add the master branch of StakedNotary/komodo StakedNotary/komodo/<branch>
 # and stop komodo if it was updated
+echo "[master] Checking for updates and building if required..."
 result=$(./update_komodo.sh master)
 if [[ $result = "updated" ]]; then
   echo "[master] Updated to latest"
   master_updated=1
+  echo "[KMD] Stopping ..."
   komodo-cli stop > /dev/null 2>&1
   daemon_stopped "komodod.*\-notary"
+  echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
   echo "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
   exit
@@ -138,12 +141,15 @@ fi
 i=0
 ./listbranches.py | while read branch; do
   if [[ $branch != "master" ]]; then
+    echo "[$branch] Checking for updates and building if required..."
     result=$(./update_komodo.sh $branch)
     if [[ $result = "updated" ]]; then
       echo "[$branch] Updated to latest"
       updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
+      echo "[$updated_chain] Stopping ..."
       komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
       daemon_stopped "komodod.*\-ac_name=${updated_chain}"
+      echo "[$updated_chain] Stopped."
     elif [[ $result = "update_failed" ]]; then
       echo "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
       exit
@@ -152,8 +158,10 @@ i=0
     fi
   elif [[ $master_updated = 1 ]]; then
     updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
+    echo "[$updated_chain] Stopping ..."
     komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
     daemon_stopped "komodod.*\-ac_name=${updated_chain}"
+    echo "[$updated_chain] Stopped."
   fi
   i=$(( $i +1 ))
 done
