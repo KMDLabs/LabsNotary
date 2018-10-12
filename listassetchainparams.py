@@ -24,6 +24,11 @@ with open(script_dir + '/assetchains.json') as file:
                 continue
             if param == 'branch':
                 continue
+            if param == 'bools':
+                if isinstance(value, list):
+                    for dupe_value in value:
+                        params.append(dupe_value)
+                continue
             if isinstance(value, list):
                 for dupe_value in value:
                     params.append(format_param(param, dupe_value))

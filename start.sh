@@ -135,6 +135,7 @@ fi
 
 # Here we will extract all branches in assetchain.json and build them and move them to StakedNotary/komodo/<branch>
 # and stop any staked chains that use master branch if it was updated
+i=0
 ./listbranches.py | while read branch; do
   if [[ $branch != "master" ]]; then
     result=$(./update_komodo.sh $branch)
