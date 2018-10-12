@@ -74,7 +74,6 @@
     "ac_name": "STKDTROLL",
     "ac_supply": "77662796314",
     "ac_cc": "2",
-    "genproclimit": "1 -gen",
     "addnode": [
       "103.6.12.112",
       "45.63.3.143"
