@@ -78,9 +78,7 @@
       "103.6.12.112",
       "45.63.3.143"
     ],
-    "bools": [
-      "-gen"
-    ],
+    "gen": true,
     "freq": 5,
     "branch": "kvtroll"
   },

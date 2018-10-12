@@ -11,6 +11,9 @@ else:
 def format_param(param, value):
     return '-' + param + '=' + value
 
+def format_bool(param):
+    return '-' + param
+
 script_dir = os.getcwd()
 with open(script_dir + '/assetchains.json') as file:
     assetchains = json.load(file)
@@ -24,10 +27,8 @@ with open(script_dir + '/assetchains.json') as file:
                 continue
             if param == 'branch':
                 continue
-            if param == 'bools':
-                if isinstance(value, list):
-                    for dupe_value in value:
-                        params.append(dupe_value)
+            if type(value) is bool:
+                params.append(format_bool(param))
                 continue
             if isinstance(value, list):
                 for dupe_value in value:
