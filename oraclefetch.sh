@@ -13,6 +13,7 @@ for i in $(seq 0 $(( $len - 1 )))
 do
 if [ $sub = ${pubsarray[$i]} ]
 then
-komodo-cli -ac_name=STAKEDB1 oraclessamples $orclid ${batonarray[$i]} 1 | jq -r '.samples[0][0]' | jq . > $HOME/StakedNotary/assetchains.json
+komodo-cli -ac_name=STAKEDB1 oraclessamples $orclid ${batonarray[$i]} 1 | jq -r '.samples[0][0]' | jq . > $HOME/.komodo/assetchains.json
 fi
 done
+echo $HOME/.komodo/assetchains.json
