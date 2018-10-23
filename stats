@@ -12,7 +12,7 @@ kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 txscanamount=77777
 
 format="%-10s %7s %6s %7s %12s\n"
-ac_json=$(curl https://raw.githubusercontent.com/StakedChain/StakedNotary/master/assetchains.json 2>/dev/null)
+ac_json=$(cat assetchains.json)
 outputstats ()
 {
 IFS=

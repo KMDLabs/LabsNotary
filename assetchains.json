@@ -35,18 +35,6 @@
     "freq": 5
   },
   {
-    "ac_name": "STAKEDS1",
-    "ac_supply": "1000000",
-    "ac_reward": "1000000000",
-    "ac_cc": "667",
-    "ac_staked": "10",
-    "addnode": [
-      "195.201.137.5",
-      "195.201.20.230"
-    ],
-    "freq": 5
-  },
-  {
     "ac_name": "STAKEDED",
     "ac_supply": "1072452",
     "ac_reward": "1000000000",
@@ -71,18 +59,6 @@
     "freq": 5
   },
   {
-    "ac_name": "STKDTROLL",
-    "ac_supply": "77662796314",
-    "ac_cc": "2",
-    "addnode": [
-      "103.6.12.112",
-      "45.63.3.143"
-    ],
-    "gen": true,
-    "freq": 5,
-    "branch": "kvtroll"
-  },
-  {
     "ac_name": "STAKEDARB",
     "ac_supply": "10000",
     "ac_reward": "100000000",
@@ -92,5 +68,38 @@
       "195.201.20.230"
     ],
     "freq": 5
+  },
+  {
+    "ac_name": "STKDABLE",
+    "ac_supply": "999999",
+    "ac_reward": "1000000000",
+    "ac_cc": "667",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq": 15
+  },
+  {
+    "ac_name": "STKDDUST",
+    "ac_supply": "999999",
+    "ac_reward": "1000000000",
+    "ac_cc": "666",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq": 15
+  },
+  {
+    "ac_name": "STKDPIXY",
+    "ac_supply": "999999",
+    "ac_reward": "1000000000",
+    "ac_cc": "666",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq": 15
   }
 ]
