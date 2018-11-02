@@ -25,7 +25,17 @@ done
 
 mine=$(echo $validateaddress | jq -r .ismine)
 if [[ $mine = "false" ]]; then
-  $chain importprivkey $privkey
+  $chain importprivkey $privkey "" false
+  getinfo=$($chain getinfo)
+  lc=$(echo $getinfo | jq -r .longestchain)
+  height=$(echo $getinfo | jq -r .blocks)
+  diff=$(( longestchain - height ))
+  scanto=$(( longestchain - 50000 ))
+  if [[ $diff -le 50000 ]]; then
+    zadd=$($chain z_getnewaddress)
+    priv=$($chain z_exportkey)
+    $chain z_importkey $priv \"yes\" $scanto > /dev/null
+  fi
 else
   echo $Radd
 fi
