@@ -127,7 +127,7 @@ if [[ $result = "updated" ]]; then
   master_updated=1
   echo "[KMD] Stopping ..."
   komodo-cli stop > /dev/null 2>&1
-  daemon_stopped "komodod.*\-notary"
+  daemon_stopped "komodod.*\-notary "
   echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
   echo -e "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
@@ -148,7 +148,7 @@ i=0
       updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
       echo "[$updated_chain] Stopping ..."
       komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
-      daemon_stopped "komodod.*\-ac_name=${updated_chain}"
+      daemon_stopped "komodod.*\-ac_name=${updated_chain} "
       echo "[$updated_chain] Stopped."
     elif [[ $result = "update_failed" ]]; then
       echo -e "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
