@@ -9,7 +9,7 @@ kmd_target_utxo_count=50
 kmd_split_threshold=25
 
 other_target_utxo_count=20
-other_split_threshold=20
+other_split_threshold=10
 
 date=$(date +%Y-%m-%d:%H:%M:%S)
 
