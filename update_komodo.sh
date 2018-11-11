@@ -67,8 +67,4 @@ if [[ $outcome = 1 ]] || [[ ! -f komodo/$1/komodod ]] || [[ ! -f komodo/$1/komod
   else
     echo "update_failed"
   fi
-  if [[ $branch = "master" ]]; then
-    sudo ln -sf /home/$USER/StakedNotary/komodo/master/komodo-cli /usr/local/bin/komodo-cli
-    sudo ln -sf /home/$USER/StakedNotary/komodo/master/komodod /usr/local/bin/komodod
-  fi
 fi
