@@ -164,7 +164,7 @@ done
 
 # Start KMD
 echo "[KMD] : Starting KMD"
-komodod -stakednotary=1 -pubkey=$pubkey > /dev/null 2>&1 &
+$HOME/StakedNotary/komodo/master/komodod -stakednotary=1 -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
 if [[ $(./assetchains) = "finished" ]]; then
