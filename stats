@@ -1,58 +1,94 @@
 #!/bin/bash
+#Stats script for Komodo Notary Nodes
+#
+#Requires jq v1.5+ and bitcoin-cli, komodo-cli, chips-cli and gamecredits-cli installed (e.g. symlinked to /usr/local/bin)
 
+#==Options - Only Change These==
 
-#Change to sleepytime=false if you don't want it to loop
+#Seconds in display loop, change to false if you don't want it to loop
 sleepytime=false
-utxoamt=0.00010000
-ntrzdamt=-0.00083600
-
-kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 
 #How many transactions back to scan for notarizations
 txscanamount=77777
 
-format="%-10s %7s %6s %7s %12s\n"
-ac_json=$(cat assetchains.json)
-outputstats ()
-{
-IFS=
-    count=0
-    now=$(date +"%Y-%m-%d %T%z")
+#==End Options==
 
-    printf "\n\n%-10s %7s %6s %7s %12s\n" "-ASSET-" "-NTRZd-" "-UTXO-" "-BLOX-" "-BALANCE-";
+timeSince () {
+    local currentimestamp=$(date +%s)
+    local timecompare=$1
 
-    kmdinfo=$(komodo-cli getinfo)
-    printf "$format" "KMD" \
-            "$(komodo-cli listtransactions "" $txscanamount | grep $kmdntrzaddr | wc -l)" \
-            "$(komodo-cli listunspent | grep $utxoamt | wc -l)" \
-            "$(echo $kmdinfo | awk ' /\"blocks\"/ {printf $2}' | sed 's/,//')" \
-            "$(echo $kmdinfo | awk ' /\"balance\"/ {printf $2}' | sed 's/,//')"
+    if [ ! -z $timecompare ] && [[ $timecompare != "null" ]]
+    then
+        local t=$((currentimestamp-timecompare))
 
-unset IFS
-for name in $(echo $ac_json | jq  -r '.[].ac_name'); do
+        local d=$((t/60/60/24))
+        local h=$((t/60/60%24))
+        local m=$((t/60%60))
+        local s=$((t%60))
 
+        if [[ $d > 0 ]]; then
+            echo -n "${d}d"
+        fi
+        if [[ $h > 0 ]]; then
+            echo -n "${h}h"
+        fi
+        if [[ $d = 0 && $m > 0 ]]; then
+            echo -n "${m}m"
+        fi
+        if [[ $d = 0 && $h = 0 && $m = 0 ]]; then
+            echo -n "${s}s"
+        fi
 
-            info=$(komodo-cli -ac_name=$name getinfo)
-            #txinfo=$(komodo-cli -ac_name=$name listtransactions "" $txscanamount)
-	    printf "$format" "$name" \
-                    "$(komodo-cli -ac_name=$name listtransactions "" $txscanamount | grep -- $kmdntrzaddr | wc -l
-)" \
-                    "$(komodo-cli -ac_name=$name listunspent | grep $utxoamt | wc -l)" \
-                    "$(echo $info | awk ' /\"blocks\"/ {printf $27}' | sed 's/,//')" \
-"$(echo $info | awk ' /\"balance\"/ {printf $25}' | sed 's/,//')"
-done
-
-	printf "$now";
+    fi
 }
 
-if [ "$sleepytime" != "false" ]
-then
-    while true
-    do
-        outputstats
-        sleep $sleepytime
+#Do not change below for any reason!
+#The BTC and KMD address here must remain the same. Do not need to enter yours!
+utxoamt=0.00010000
+ntrzdamt=-0.00083600
+kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
+timefilter2=1525513998
+
+format="%-11s %6s %6s %7s %.12s %6s %6s %6s"
+
+outputstats ()
+{
+    count=0
+    totalntrzd=0
+    now=$(date +"%H:%M")
+
+    printf "\n\n"
+    printf "%-11s %6s %6s %7s %12s %6s %6s %6s\n" "-ASSET-" "-NOTR-" "-UTXO-" "-BLOX-" "-BALANCE-" "-LAST-" "-CNCT-";
+
+    kmdinfo=$(komodo-cli getinfo)
+    kmdtxinfo=$(komodo-cli listtransactions "" $txscanamount)
+    kmdlastntrztime=$(echo $kmdtxinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
+    printf "$format\n" "KMD" \
+            " " \
+            "$(komodo-cli listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
+            "$(echo $kmdinfo | jq .blocks)" \
+            "$(printf "%12.8f" $(echo $kmdinfo | jq .balance))" \
+            "$(timeSince $kmdlastntrztime)" \
+            "$(echo $kmdinfo | jq .connections)" 
+
+    ./listassetchains.py | while read coins; do    
+        coin=($coins)
+
+            info=$(komodo-cli -ac_name=${coin} getinfo)
+            txinfo=$(komodo-cli -ac_name=${coin} listtransactions "" $txscanamount)
+            lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
+            acntrzd=$(echo $txinfo | jq --arg address "$kmdntrzaddr" --arg timefilter $timefilter2 '[.[] | select(.time>=($timefilter|tonumber) and .address==$address and .category=="send")] | length')
+            totalntrzd=$(( $totalntrzd + $acntrzd ))
+
+            printf "$format" "${coin[0]}" \
+                    "$acntrzd" \
+                    "$(komodo-cli -ac_name=${coin[0]} listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
+                    "$(echo $info | jq .blocks)" \
+                    "$(printf "%12.8f" $(echo $info | jq .balance))" \
+                    "$(timeSince $lastntrztime)" \
+                    "$(echo $info | jq .connections)" 
+	    echo ""
     done
-else
-    outputstats
-    echo
-fi
+}
+
+outputstats
