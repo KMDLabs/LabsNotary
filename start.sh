@@ -44,7 +44,7 @@ checksync () {
       blocks=$(komodo-cli -ac_name=$chain getblockcount)
       tries=$(( $tries +1 ))
       lc=$(longestchain $1)
-      if (( $blocks = $lc )); then
+      if (( $blocks == $lc )); then
         echo "[$1] Synced on block: $lc"
         return 1
       fi
@@ -238,7 +238,7 @@ if [ "$iguanajson" != "$newiguanajson" ]; then
     echo $newiguanajson > staked.json
     pkill -15 iguana
     sleep 2
-fi 
+fi
 
 if [[ $abort = 0 ]]; then
   echo -e "\033[1;32m ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... \033[0m"
