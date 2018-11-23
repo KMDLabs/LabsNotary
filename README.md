@@ -56,14 +56,8 @@ After this we are ready to launch KMD and any chains that happen to be in `asset
 ```shell
 ./start.sh
 ```
-To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 2-3H maybe longer.
+To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 2-3H maybe longer. Also the progress of sync is printed to the ternimal you started start.sh from.
 
-Once this is done, you have all the required things to launch iguana, there are some coins files in `iguana/coins` and iguana binary has been built from the SuperNET repo in your home folder and copied to `iguana` folder. Also the `staked.json` file containing all the info for the Notary Network has been fetched from github.
-
-To start your notary node and connect to the network simply run:
-```shell
-./start_iguana.sh
-```
 There is one thing that notary nodes depend on more than anything else and that is the UTXO's. Once iguana has started we need to run @lukechilds excellent UTXO splitter.
 ```shell
 ./utxosplitter.sh
@@ -81,9 +75,7 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 ### Adding New Coins
 This is the coolest part, super happy about it. Simply add the coins params to `assetchains.json` (make sure you have the `freq` param it is required!) and submit a PR and merge it. Then have ALL operators:
 ```shell
-pkill -15 iguana
 ./start.sh
-./start_iguana.sh
 ```
 There is no need to stop any deamons at this point, if they are already running, they will not start again.
 
@@ -97,8 +89,6 @@ To issue commands to a coin: `asset-cli <COINS_NAME> <COMMAND>`
 To issue commands to all assetchains: `assets-cli <COMMAND>`
 
 To kill everything: `./stop.sh`
-
-To reset your wallets: `./resetALLwallets.sh`
 
 The install scripts come with the tools:
 
