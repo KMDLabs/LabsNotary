@@ -8,7 +8,7 @@ overide_args="$@"
   ac=$(echo "${ac#*=}")
   branch=$(cat assetchains.json | jq -r --arg chain $ac '.[] | select (.ac_name == $chain) | .branch')
   if [[ $branch = "null" ]]; then
-    komodod $args $overide_args -pubkey=$pubkey > /dev/null 2>&1 &
+    $HOME/StakedNotary/komodo/master/komodod $args $overide_args -pubkey=$pubkey > /dev/null 2>&1 &
   else
     $HOME/StakedNotary/komodo/$branch/komodod $args $overide_args -pubkey=$pubkey > /dev/null 2>&1 &
   fi

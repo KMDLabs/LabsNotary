@@ -78,13 +78,7 @@ checksync () {
 }
 
 daemon_stopped () {
-  stopped=0
-  while [[ ${stopped} -eq 0 ]]; do
-    pgrep -af "$1" > /dev/null 2>&1
-    outcome=$(echo $?)
-    if [[ ${outcome} -ne 0 ]]; then
-      stopped=1
-    fi
+  while [[ -f $HOME/.komodo/$1/komodod.pid ]]; do
     sleep 2
   done
 }
@@ -127,7 +121,9 @@ if [[ $result = "updated" ]]; then
   master_updated=1
   echo "[KMD] Stopping ..."
   komodo-cli stop > /dev/null 2>&1
-  daemon_stopped "komodod.*\-notary"
+  while [[ -f $HOME/.komodo/komodod.pid ]]; do
+    sleep 2
+  done
   echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
   echo -e "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
@@ -148,7 +144,7 @@ i=0
       updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
       echo "[$updated_chain] Stopping ..."
       komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
-      daemon_stopped "komodod.*\-ac_name=${updated_chain}"
+      daemon_stopped "${updated_chain}"
       echo "[$updated_chain] Stopped."
     elif [[ $result = "update_failed" ]]; then
       echo -e "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
@@ -160,7 +156,7 @@ i=0
     updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
     echo "[$updated_chain] Stopping ..."
     komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
-    daemon_stopped "komodod.*\-ac_name=${updated_chain}"
+    daemon_stopped "${updated_chain}"
     echo "[$updated_chain] Stopped."
   fi
   i=$(( $i +1 ))
@@ -168,7 +164,7 @@ done
 
 # Start KMD
 echo "[KMD] : Starting KMD"
-komodod -notary -pubkey=$pubkey > /dev/null 2>&1 &
+$HOME/StakedNotary/komodo/master/komodod -stakednotary=1 -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
 if [[ $(./assetchains) = "finished" ]]; then
@@ -187,6 +183,7 @@ if [[ $varesult = "not_started" ]]; then
 fi
 echo "[KMD] : $varesult"
 
+abort=0
 ./listassetchains.py | while read chain; do
   # Move our auto generated coins file to the iguana coins dir
   chmod +x "$chain"_7776
@@ -194,10 +191,14 @@ echo "[KMD] : $varesult"
   varesult=$(./validateaddress.sh $chain)
   if [[ $varesult = "not_started" ]]; then
     echo -e "\033[1;31m Starting $chain Failed: help human! \033[0m"
-    exit
+    abort=1
   fi
   echo "[$chain] : $varesult"
 done
+
+if [[ $abort = 1 ]]; then
+  exit
+fi
 
 cd ~/SuperNET
 returnstr=$(git pull)
@@ -224,7 +225,7 @@ if [[ $outcome = 0 ]]; then
 fi
 
 for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
-	checksync $row
+  checksync $row
   outcome=$(echo $?)
   if [[ $outcome = 0 ]]; then
     abort=1

@@ -48,21 +48,6 @@
       "195.201.137.5",
       "195.201.20.230"
     ],
-    "freq": 5,
-    "branch": "libscottFIX"
-  },
-  {
-    "ac_name": "CFEKMLT",
-    "ac_supply": "1000",
-    "ac_end": "1",
-    "ac_reward": "1",
-    "ac_staked": "1",
-    "ac_cc": "102",
-    "addnode": [
-      "195.201.137.5",
-      "195.201.20.230"
-    ],
-    "freq": 5,
-    "branch": "FSM_mempooltest"
+    "freq": 5
   }
 ]
