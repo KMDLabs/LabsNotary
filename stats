@@ -67,7 +67,7 @@ outputstats ()
             " " \
             "$(komodo-cli listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
             "$(echo $kmdinfo | jq .blocks)" \
-            "$(printf "%12.8f" $(echo $kmdinfo | jq .balance))" \
+            "$(printf "%.12s" $(echo $kmdinfo | jq .balance))" \
             "$(timeSince $kmdlastntrztime)" \
             "$(echo $kmdinfo | jq .connections)" 
 
@@ -84,7 +84,7 @@ outputstats ()
                     "$acntrzd" \
                     "$(komodo-cli -ac_name=${coin[0]} listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
                     "$(echo $info | jq .blocks)" \
-                    "$(printf "%12.8f" $(echo $info | jq .balance))" \
+                    "$(printf "%.12s" $(echo $info | jq .balance))" \
                     "$(timeSince $lastntrztime)" \
                     "$(echo $info | jq .connections)" 
 	    echo ""
