@@ -38,16 +38,11 @@ nano config.ini
 ```
 We also need to unblock the iguana port. To find this:
 ```shell
-cat staked.json
-```
-Then look for the port number, eg. `{"port":9997` (port 22 is for your SSH, you must open it or you will be locked out of your server)
-
-```shell
 sudo ufw allow 9997
 sudo ufw allow 22
 sudo ufw enable
 ```
-There is a KMD bootstrap here if you want to use this first before starting it will save a lot of time, also some VPS providers seem to be skimmping on RAM, and will crash trying to sync KMD, in this case you need to use hte bootstrap. Its not ideal, but it works. 
+There is a KMD bootstrap here if you want to use this first before starting it will save a lot of time, also some VPS providers seem to be skimmping on RAM, and will crash trying to sync KMD, in this case you need to use the bootstrap. Its not ideal, but it works. 
 
 https://bootstrap.0x03.services/komodo/KMD.html
 
@@ -56,7 +51,7 @@ After this we are ready to launch KMD and any chains that happen to be in `asset
 ```shell
 ./start.sh
 ```
-To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 2-3H maybe longer. Also the progress of sync is printed to the ternimal you started start.sh from.
+To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 2-3H maybe longer. Also the progress of sync is printed to the terminal you started `start.sh` from.
 
 There is one thing that notary nodes depend on more than anything else and that is the UTXO's. Once iguana has started we need to run @lukechilds excellent UTXO splitter.
 ```shell
@@ -89,6 +84,14 @@ To issue commands to a coin: `asset-cli <COINS_NAME> <COMMAND>`
 To issue commands to all assetchains: `assets-cli <COMMAND>`
 
 To kill everything: `./stop.sh`
+
+To HARD reset a coins wallet: `./walletreset.sh <coin>`
+
+Hard reset will send the entire balance to yourself, then remove all transactions that are not this transaction from the wallet after it has been confirmed. Might look at changing this to after it has been notarised?
+
+To SOFT reset a KMDs wallet (works with ac by specifying -ac_name=): `komodo-cli cleanwallettransactions`
+
+Soft reset is generally what you will use. This mode, simply removes all txs from that wallet database that are all spent. It means you lose transaction history, but also keeps the node able to build txs in a speedy manner, very important for notarisaions. :) 
 
 The install scripts come with the tools:
 
