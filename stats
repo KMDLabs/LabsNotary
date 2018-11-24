@@ -49,7 +49,7 @@ ntrzdamt=-0.00083600
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 timefilter2=1525513998
 
-format="%-11s %6s %6s %7s %.12s %6s %6s %6s"
+format="%-13s %6s %6s %7s %.12s %6s %6s %6s"
 
 outputstats ()
 {
@@ -58,7 +58,7 @@ outputstats ()
     now=$(date +"%H:%M")
 
     printf "\n\n"
-    printf "%-11s %6s %6s %7s %12s %6s %6s %6s\n" "-ASSET-" "-NOTR-" "-UTXO-" "-BLOX-" "-BALANCE-" "-LAST-" "-CNCT-";
+    printf "%-13s %6s %6s %7s %12s %6s %6s %6s\n" "-ASSET-" "-NOTR-" "-UTXO-" "-BLOX-" "-BALANCE-" "-LAST-" "-CNCT-";
 
     kmdinfo=$(komodo-cli getinfo)
     kmdtxinfo=$(komodo-cli listtransactions "" $txscanamount)
