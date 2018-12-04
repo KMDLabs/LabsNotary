@@ -67,6 +67,28 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 */15 * * * * /home/<your_username>/StakedNotary/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
 ```
 
+## Using features of StakedNotary komodod.
+### Wallet filter 
+`-stakednotary=1` : This is pointless for staked chains, but needed for staked notary nodes on KMD to activate the filter, amoung other things.
+
+`-mintxvalue=<amount in sats>`
+This defualts to 1 coin (to make it lower on KMD to fund smaller amounts, set it to a lower amount of sats.
+How it works:
+-> Takes all the vouts in a transaction and counts which ones are to the notary nodes address (set with -pubkey=) 
+-> Adds the value of these together (total in sats) 
+-> Divides by the number of vouts, 
+-> If the amount is less than this number the transacion is ignored, not added to wallet. This filter does not work with -rescan  so you can add them to wallet by doing a rescan if you need to.
+-> If this number is 0, the wallet accetpts NO transactions, once a notary is funded, likely this should be the setting you use. Only allowing to send from yourself, for iguana utxo split txs. You should not set this to 0, if you need to fund your node. Likely setting this value to a low value on KMD is good idea.
+
+
+`-whitelistaddress=RTVti13NP4eeeZaCCmQxc2bnPdHxCJFP9x`
+-> No matter what the setting of the above setting is set to, this address can send you coins. You can use this to have a trusted address either from another notary, or a wallet owned by yourself to fund your node any amount at any time.
+
+`cleanwallettransactions` RPC
+-> Provide a txid to delete all tx in the wallet except the tx specified. The walletreset.sh script does this all for you.
+-> Running without a txid specified will clean all transaction history in the wallet older than the last unspent utxo. 
+
+
 ### Adding New Coins
 This is the coolest part, super happy about it. Simply add the coins params to `assetchains.json` (make sure you have the `freq` param it is required!) and submit a PR and merge it. Then have ALL operators:
 ```shell
