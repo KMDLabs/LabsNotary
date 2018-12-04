@@ -71,7 +71,7 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 ### Wallet filter 
 `-stakednotary=1`
 
-This is needed on KMD, to activate our features amoung other things, add the flags below in `start.sh` to customise it.
+This is needed on KMD, to activate our features amoung other things. Add the flags below in `start.sh` to customise the filter.
 
 `-mintxvalue=<amount in sats>`
 
