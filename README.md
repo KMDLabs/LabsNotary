@@ -71,11 +71,11 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 ### Wallet filter 
 `-stakednotary=1`
 
-This is pointless for staked chains, but needed for staked notary nodes on KMD to activate the filter, amoung other things.
+This is needed on KMD, to activate our features amoung other things, add the flags below in `start.sh` to customise it.
 
 `-mintxvalue=<amount in sats>`
 
-This defualts to 1 coin (to make it lower on KMD to fund smaller amounts, set it to a lower amount of sats.
+This defualts to 1 coin (to make it lower on KMD to fund smaller amounts, set it to a lower amount of sats.) eg. 0.2KMD would be `2000000`
 
 How it works:
 
@@ -95,6 +95,7 @@ so you can add them to wallet by doing a rescan if you need to.
 
 -> No matter what the setting of the above setting is set to, this address can send you coins. You can use this to have a trusted address either from another notary, or a wallet owned by yourself to fund your node any amount at any time.
 
+### Wallet cleaner
 `cleanwallettransactions` RPC
 
 -> Provide a txid to delete all tx in the wallet except the tx specified. The walletreset.sh script does this all for you.
