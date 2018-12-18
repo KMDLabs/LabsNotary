@@ -8,6 +8,7 @@ fi
 
 coin=$1
 cli=$(./listclis.sh ${coin})
+address=$(./printkey.py Radd)
 
 echo "[${coin}] Resetting ${coin} wallet - ${date}"
 

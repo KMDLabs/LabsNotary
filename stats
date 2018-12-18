@@ -13,6 +13,9 @@ txscanamount=77777
 
 #==End Options==
 
+# Just to be sure printf doesn't reject with "invalid number" error because of decimal separator
+LC_NUMERIC="en_US.UTF-8"
+
 timeSince () {
     local currentimestamp=$(date +%s)
     local timecompare=$1
@@ -49,7 +52,7 @@ ntrzdamt=-0.00083600
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 timefilter2=1525513998
 
-format="%-11s %6s %6s %7s %.12s %6s %6s %6s"
+format="%-13s %6s %6s %7s %12.4f %6s %6s %6s"
 
 outputstats ()
 {
@@ -58,7 +61,7 @@ outputstats ()
     now=$(date +"%H:%M")
 
     printf "\n\n"
-    printf "%-11s %6s %6s %7s %12s %6s %6s %6s\n" "-ASSET-" "-NOTR-" "-UTXO-" "-BLOX-" "-BALANCE-" "-LAST-" "-CNCT-";
+    printf "%-13s %6s %6s %7s %12s %6s %6s %6s\n" "-ASSET-" "-NOTR-" "-UTXO-" "-BLOX-" "-BALANCE-" "-LAST-" "-CNCT-";
 
     kmdinfo=$(komodo-cli getinfo)
     kmdtxinfo=$(komodo-cli listtransactions "" $txscanamount)
@@ -67,7 +70,7 @@ outputstats ()
             " " \
             "$(komodo-cli listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
             "$(echo $kmdinfo | jq .blocks)" \
-            "$(printf "%12.8f" $(echo $kmdinfo | jq .balance))" \
+            "$(printf "%12.4f" $(echo $kmdinfo | jq .balance))" \
             "$(timeSince $kmdlastntrztime)" \
             "$(echo $kmdinfo | jq .connections)" 
 
@@ -84,7 +87,7 @@ outputstats ()
                     "$acntrzd" \
                     "$(komodo-cli -ac_name=${coin[0]} listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
                     "$(echo $info | jq .blocks)" \
-                    "$(printf "%12.8f" $(echo $info | jq .balance))" \
+                    "$(printf "%12.4f" $(echo $info | jq .balance))" \
                     "$(timeSince $lastntrztime)" \
                     "$(echo $info | jq .connections)" 
 	    echo ""
