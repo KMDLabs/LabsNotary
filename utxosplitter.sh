@@ -42,7 +42,7 @@ fi
     satoshis=10000
     amount=$(calc $satoshis/100000000)
     listunspent=$(${cli} listunspent)
-    numtotal=$($(echo ${listunspent} | jq length)
+    numtotal=$(echo ${listunspent} | jq length)
     if [[ "${listunspent}" = "" ]] || [[ ${numtotal} = 0 ]]; then
       echo "[$coin] Listuspent call failed aborting!"
     else
