@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#temporary
+sudo apt-get install dc
+
 longestchain () {
   chain=$1
   if [[ $chain == "KMD" ]]; then
