@@ -14,16 +14,10 @@
 #duplicates=$2
 #curl http://127.0.0.1:7776 --silent --data "{\"coin\":\"${coin}\",\"agent\":\"iguana\",\"method\":\"splitfunds\",\"satoshis\":10000,\"sendflag\":1,\"duplicates\":${duplicates}}"
 
-#==Options - Only Change These==
-
-#Your local notary address that has funds to split
-#NN_ADDRESS=RGsQiArk5sTmjXZV9UzGMW5njyvtSnsTN8
 NN_ADDRESS=$(./printkey.py Radd)
 
 #Full path to komodo-cli
 komodoexec=/usr/local/bin/komodo-cli
-
-#==End Options==
 
 #Do not change below for any reason!
 
