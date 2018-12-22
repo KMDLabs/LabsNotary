@@ -8,12 +8,6 @@
 # e.g.   ./splitfunds KMD 50
 # e.g.   ./splitfunds OOT 50 0
 
-#cd "${BASH_SOURCE%/*}" || exit
-
-#coin=$1
-#duplicates=$2
-#curl http://127.0.0.1:7776 --silent --data "{\"coin\":\"${coin}\",\"agent\":\"iguana\",\"method\":\"splitfunds\",\"satoshis\":10000,\"sendflag\":1,\"duplicates\":${duplicates}}"
-
 NN_ADDRESS=$(./printkey.py Radd)
 
 #Full path to komodo-cli
@@ -107,7 +101,7 @@ if [[ $utxo != "null" ]]; then
 
     #change=$(echo "$amount*100000000-$SPLIT_TOTAL_SATOSHI/1*1" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
     #change=$(jq -n "(${amount}-${SPLIT_TOTAL})*100000000")
-    change=$(echo "($amount-$SPLIT_TOTAL)*100000000" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+    change=$(echo "scale=0; (($amount-$SPLIT_TOTAL)*100000000)/1*1" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
 
     value=$(printf "%016x" $change | dd conv=swab 2> /dev/null | rev)
 
