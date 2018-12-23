@@ -93,7 +93,8 @@ if [[ $utxo != "null" ]]; then
     outbits=$(eval printf "%0.s$outbits" {1..$SPLIT_COUNT})
     rawtx=$rawtx$outbits
 
-    change=$(echo "scale=0; (($amount-$SPLIT_TOTAL)*100000000)/1*1" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+    change=$( printf "%0.8f" $(bc -l <<< "($amount-$SPLIT_TOTAL)") )
+    change=${change//./}
 
     value=$(printf "%016x" $change | dd conv=swab 2> /dev/null | rev)
 
