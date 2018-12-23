@@ -68,12 +68,12 @@ utxo=$($komodoexec $asset listunspent | jq -r --arg minsize $SPLIT_TOTAL '[.[] |
 
 if [[ $utxo != "null" ]]; then
 
-    txid=$(echo "$utxo" | jq -r .txid)
-    vout=$(echo "$utxo" | jq -r .vout)
-    amount=$(echo "$utxo" | jq -r .amount)
+    txid=$(jq -r .txid <<< $utxo)
+    vout=$(jq -r .vout <<< $utxo)
+    amount=$(jq -r .amount <<< $utxo)
 
-    rev_txid=$(echo $txid | dd conv=swab 2> /dev/null | rev)
-    vout_hex=$(printf "%08x" $vout | dd conv=swab 2> /dev/null | rev)
+    rev_txid=$(dd conv=swab 2>/dev/null <<< $txid | rev)
+    vout_hex=$(printf "%08x" $vout | dd conv=swab 2>/dev/null | rev)
 
     if (( sapling > 0 )); then
         rawtx="04000080" # tx version
@@ -85,18 +85,14 @@ if [[ $utxo != "null" ]]; then
     rawtx=$rawtx"01" # number of inputs (1, as we take one utxo from listunspent)
     rawtx=$rawtx$rev_txid$vout_hex"00ffffffff"
 
-    oc=$((SPLIT_COUNT+1))
-    outputCount=$(printf "%02x" $oc)
-
+    outputCount=$(printf "%02x" $((SPLIT_COUNT+1)) )
     rawtx=$rawtx$outputCount
-    for (( i=1; i<=$SPLIT_COUNT; i++ )); do
-        value=$(printf "%016x" $SPLIT_VALUE_SATOSHI | dd conv=swab 2> /dev/null | rev)
-        rawtx=$rawtx$value
-        rawtx=$rawtx"2321"$NN_PUBKEY"ac"
-    done
 
-    #change=$(echo "$amount*100000000-$SPLIT_TOTAL_SATOSHI/1*1" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
-    #change=$(jq -n "(${amount}-${SPLIT_TOTAL})*100000000")
+    value=$(printf "%016x" $SPLIT_VALUE_SATOSHI | dd conv=swab 2>/dev/null | rev)
+    outbits=$value"2321"$NN_PUBKEY"ac"
+    outbits=$(eval printf "%0.s$outbits" {1..$SPLIT_COUNT})
+    rawtx=$rawtx$outbits
+
     change=$(echo "scale=0; (($amount-$SPLIT_TOTAL)*100000000)/1*1" | bc -l | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
 
     value=$(printf "%016x" $change | dd conv=swab 2> /dev/null | rev)
@@ -122,4 +118,3 @@ if [[ $utxo != "null" ]]; then
 else
   echo '{"error":"No UTXOs to split :(("}'
 fi
-
