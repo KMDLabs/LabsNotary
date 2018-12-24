@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#temporary
-type dc>/dev/null 2>&1 || sudo apt-get install dc
-
 longestchain () {
   chain=$1
   if [[ $chain == "KMD" ]]; then

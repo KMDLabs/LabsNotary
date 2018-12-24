@@ -1,4 +1,8 @@
 #!/bin/bash
+
+#temporary
+type dc>/dev/null 2>&1 || sudo apt-get install dc
+
 cd $HOME/StakedNotary
 checkRepo () {
     if [ -z $1 ]; then
