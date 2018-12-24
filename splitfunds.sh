@@ -92,12 +92,11 @@ if [[ $utxo != "null" ]]; then
     outbits=$(eval printf "%0.s$outbits" {1..$SPLIT_COUNT})
     rawtx=$rawtx$outbits
 
-    change=$( printf "%0.8f" $(bc -l <<< "($amount-$SPLIT_TOTAL)") )
-    change=${change//./}
+    change=$( printf "%.8f" $(bc -l <<< "($amount-$SPLIT_TOTAL)") )
+    change=$( sed 's/^0*//' <<< ${change//./} )
+    change=$( printf "%016x" $change | dd conv=swab 2> /dev/null | rev )
+    rawtx=$rawtx$change
 
-    value=$(printf "%016x" $change | dd conv=swab 2> /dev/null | rev)
-
-    rawtx=$rawtx$value
     rawtx=$rawtx"1976a914"$NN_HASH160"88ac" # len OP_DUP OP_HASH160 len hash OP_EQUALVERIFY OP_CHECKSIG
 
     nlocktime=$(printf "%08x" $(date +%s) | dd conv=swab 2> /dev/null | rev)
