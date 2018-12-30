@@ -2,7 +2,7 @@
 date=$(date +%Y-%m-%d:%H:%M:%S)
 
 if [[ -z "$1" ]]; then
-  echo "Specify a coin!"
+  echo "Specify a coin, fool!"
   exit
 fi
 
