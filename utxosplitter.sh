@@ -48,16 +48,6 @@ fi
     else
       utxo_count=$(echo ${listunspent} | jq '[.[] | select (.scriptPubKey | length > 60 )]' | grep 0.0001 | wc -l)
       echo "[${coin}] Current UTXO count is ${utxo_count}"
-      if [[ ${utxo_count} = 0 ]]; then
-        Radd=$(./printkey.py Radd)
-        sendself=$(${cli} sendtoaddress ${Radd} $(${cli} getbalance) "" "" true)
-        confirmations=0
-        while [[ ${confirmations} -lt 1 ]]; do
-          sleep 1
-          confirmations=$(${cli} gettransaction $sendself 2> /dev/null | jq -r .confirmations) > /dev/null 2>&1
-          ${cli} sendrawtransaction $(${cli} getrawtransaction $sendself 2> /dev/null) > /dev/null 2>&1
-        done
-      fi
       utxo_required=$(calc ${target_utxo_count}-${utxo_count})
 
       if [[ ${utxo_required} -gt ${split_threshold} ]]; then
