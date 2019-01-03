@@ -1,20 +1,21 @@
 [
   {
-    "ac_name": "CFEKC",
+    "ac_name": "CFEKX",
     "ac_supply": "1000000",
     "ac_reward": "1000000000000",
     "ac_cc": "105",
     "addnode": [
+      "159.69.29.30",
       "103.6.12.112"
     ],
     "freq": 5
   },
-  {
-    "ac_name": "CFEKD",
+  } "ac_name": "CFEKY",
     "ac_supply": "1000000",
     "ac_reward": "1000000000000",
     "ac_cc": "105",
     "addnode": [
+      "159.69.29.30",
       "103.6.12.112"
     ],
     "freq": 5
