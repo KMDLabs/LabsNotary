@@ -13,31 +13,29 @@
     "freq": 5
   },
   {
-    "ac_name": "CFEKING",
-    "ac_supply": "1000",
-    "ac_end": "1",
-    "ac_reward": "1",
+    "ac_name": "CFEKC",
+    "ac_supply": "1000000",
+    "ac_reward": "1000000000000",
     "ac_staked": "1",
-    "ac_cc": "102",
-    "addnode": [
-      "195.201.137.5",
-      "195.201.20.230",
-      "103.6.12.112"
-    ],
-    "freq": 10
-  },
-  {
-    "ac_name": "CFEKLF",
-    "ac_supply": "1000",
-    "ac_end": "1",
-    "ac_reward": "1",
-    "ac_staked": "1",
-    "ac_cc": "102",
+    "ac_cc": "105",
     "addnode": [
       "195.201.137.5",
       "195.201.20.230",
       "103.6.12.112"
     ],
     "freq": 5
-  }
+  },
+  {
+    "ac_name": "CFEKD",
+    "ac_supply": "1000000",
+    "ac_reward": "1000000000000",
+    "ac_staked": "1",
+    "ac_cc": "105",
+    "addnode": [
+      "195.201.137.5",
+      "195.201.20.230",
+      "103.6.12.112"
+    ],
+    "freq": 5
+  },
 ]
