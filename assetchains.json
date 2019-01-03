@@ -10,7 +10,7 @@
     ],
     "freq": 5
   },
-  } "ac_name": "CFEKY",
+  { "ac_name": "CFEKY",
     "ac_supply": "1000000",
     "ac_reward": "1000000000000",
     "ac_cc": "105",
