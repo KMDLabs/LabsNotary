@@ -85,13 +85,13 @@ daemon_stopped () {
     pidfile="$HOME/.komodo/$1/komodod.pid"
   fi
   while [[ -f $pidfile ]]; do
-    sleep 2
-    pid=$(cat $pidfile)
-    ps -p $pid | grep komodod > /dev/null 2>&1
+    pid=$(cat $pidfile 2> /dev/null)
+    ps -p $pid 2> /dev/null | grep komodod > /dev/null 2>&1
     outcome=$(echo $?)
     if [[ ${outcome} -ne 0 ]]; then
       rm $pidfile
     fi
+    sleep 2
   done
 }
 
