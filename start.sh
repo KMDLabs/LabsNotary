@@ -79,8 +79,19 @@ checksync () {
 }
 
 daemon_stopped () {
-  while [[ -f $HOME/.komodo/$1/komodod.pid ]]; do
+  if [[ $1 = "KMD" ]]; then
+    $pidfile="$HOME/.komodo/komodod.pid"
+  else
+    $pidfile="$HOME/.komodo/$1/komodod.pid"
+  fi
+  while [[ -f $pidfile ]]; do
     sleep 2
+    pid=$(cat $pidfile)
+    ps -p $pid | grep komodod > /dev/null 2>&1
+    outcome=$(echo $?)
+    if [[ ${outcome} -ne 0 ]]; then
+      rm $pidfile
+    fi
   done
 }
 
@@ -122,9 +133,7 @@ if [[ $result = "updated" ]]; then
   master_updated=1
   echo "[KMD] Stopping ..."
   komodo-cli stop > /dev/null 2>&1
-  while [[ -f $HOME/.komodo/komodod.pid ]]; do
-    sleep 2
-  done
+  daemon_stopped "KMD"
   echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
   echo -e "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
