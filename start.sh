@@ -80,9 +80,9 @@ checksync () {
 
 daemon_stopped () {
   if [[ $1 = "KMD" ]]; then
-    $pidfile="$HOME/.komodo/komodod.pid"
+    pidfile="$HOME/.komodo/komodod.pid"
   else
-    $pidfile="$HOME/.komodo/$1/komodod.pid"
+    pidfile="$HOME/.komodo/$1/komodod.pid"
   fi
   while [[ -f $pidfile ]]; do
     sleep 2
