@@ -52,7 +52,7 @@ ntrzdamt=-0.00083600
 kmdntrzaddr=RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA
 timefilter2=1525513998
 
-format="%-13s %6s %6s %7s %12.4f %6s %6s %6s"
+format="%-13s %12.4f %7s %7s %7s %7s %7s %7s %7s"
 
 outputstats ()
 {
@@ -61,16 +61,17 @@ outputstats ()
     now=$(date +"%H:%M")
 
     printf "\n\n"
-    printf "%-13s %6s %6s %7s %12s %6s %6s %6s\n" "-ASSET-" "-NOTR-" "-UTXO-" "-BLOX-" "-BALANCE-" "-LAST-" "-CNCT-";
+    printf "%-13s %12s %7s %7s %7s %7s %7s %7s %7s\n" "-ASSET-" "-BALANCE-" "-UTXO-" "-NOTR-" "-BLOX-" "-PCT-" "-LAST-" "-CNCT-";
 
     kmdinfo=$(komodo-cli getinfo)
     kmdtxinfo=$(komodo-cli listtransactions "" $txscanamount)
     kmdlastntrztime=$(echo $kmdtxinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
     printf "$format\n" "KMD" \
-            " " \
-            "$(komodo-cli listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
-            "$(echo $kmdinfo | jq .blocks)" \
             "$(printf "%12.4f" $(echo $kmdinfo | jq .balance))" \
+            "$(komodo-cli listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
+            " " \
+            "$(echo $kmdinfo | jq .blocks)" \
+	    " "\
             "$(timeSince $kmdlastntrztime)" \
             "$(echo $kmdinfo | jq .connections)" 
 
@@ -78,18 +79,20 @@ outputstats ()
         coin=($coins)
 
             info=$(komodo-cli -ac_name=${coin} getinfo)
+            blocks=$(echo $info | jq .blocks)
             txinfo=$(komodo-cli -ac_name=${coin} listtransactions "" $txscanamount)
             lastntrztime=$(echo $txinfo | jq -r --arg address "$kmdntrzaddr" '[.[] | select(.address==$address)] | sort_by(.time) | last | "\(.time)"')
             acntrzd=$(echo $txinfo | jq --arg address "$kmdntrzaddr" --arg timefilter $timefilter2 '[.[] | select(.time>=($timefilter|tonumber) and .address==$address and .category=="send")] | length')
             totalntrzd=$(( $totalntrzd + $acntrzd ))
-
+            pct=$(echo "${acntrzd}/${blocks}*100" | bc -l)
             printf "$format" "${coin[0]}" \
-                    "$acntrzd" \
-                    "$(komodo-cli -ac_name=${coin[0]} listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
-                    "$(echo $info | jq .blocks)" \
-                    "$(printf "%12.4f" $(echo $info | jq .balance))" \
-                    "$(timeSince $lastntrztime)" \
-                    "$(echo $info | jq .connections)" 
+                   "$(printf "%12.4f" $(echo $info | jq .balance))" \
+                   "$(komodo-cli -ac_name=${coin[0]} listunspent | jq --arg amt "$utxoamt" '[.[] | select(.amount==($amt|tonumber))] | length')" \
+                   "$acntrzd" \
+                   "$blocks" \
+		   "$(printf "%2.1f" $(echo $pct))%" \
+                   "$(timeSince $lastntrztime)" \
+                   "$(echo $info | jq .connections)" 
 	    echo ""
     done
 }
