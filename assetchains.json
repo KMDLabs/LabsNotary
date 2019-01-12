@@ -19,5 +19,19 @@
       "103.6.12.112"
     ],
     "freq": 5
+  },
+  {
+    "ac_name": "CFEKPOS51",
+    "ac_supply": "1000000",
+    "ac_reward": "900000001",
+    "ac_founders": "1440",
+    "ac_perc": "11111111",
+    "ac_pubkey": "035fc678bf796ad52f69e1f5759be54ec671c559a22adf27eed067e0ddf1531574"
+    "ac_staked": "51",
+    "ac_cc": "77",
+    "addnode": [
+      "103.6.12.112"
+    ],
+    "freq":5
   }
 ]
