@@ -16,8 +16,10 @@ cd ~
 mkdir .komodo
 cd .komodo
 touch komodo.conf
-echo "rpcuser=user`head -c 32 /dev/urandom | base64`" > komodo.conf
-echo "rpcpassword=password`head -c 32 /dev/urandom | base64`" >> komodo.conf
+rpcuser=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
+rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
+echo "rpcuser=$rpcuser" >> komodo.conf
+echo "rpcpassword=$rpcpassword" >> komodo.conf
 echo "daemon=1" >> komodo.conf
 echo "server=1" >> komodo.conf
 echo "txindex=1" >> komodo.conf
