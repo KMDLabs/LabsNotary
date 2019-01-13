@@ -18,7 +18,7 @@ cd .komodo
 touch komodo.conf
 rpcuser=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
 rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
-echo "rpcuser=$rpcuser" >> komodo.conf
+echo "rpcuser=$rpcuser" > komodo.conf
 echo "rpcpassword=$rpcpassword" >> komodo.conf
 echo "daemon=1" >> komodo.conf
 echo "server=1" >> komodo.conf
