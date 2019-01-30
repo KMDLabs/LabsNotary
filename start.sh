@@ -187,7 +187,7 @@ fi
 # Validate Address on KMD + AC, will poll deamon until started then check if address is imported, if not import it.
 echo "[KMD] : Waiting for KMD daemon to start..."
 ./validateaddress.sh KMD
-validateaddress=$($chain validateaddress $Radd 2> /dev/null)
+validateaddress=$(komodo-cli validateaddress $Radd 2> /dev/null)
 outcome=$(echo $?)
 if [[ ${outcome} -eq 1 ]]; then
   echo -e "\033[1;31m Starting KMD Failed: help human! \033[0m"
@@ -201,7 +201,7 @@ abort=0
   mv "$chain"_7776 iguana/coins
   echo "[$chain] : Waiting for $chain daemon to start..."
   ./validateaddress.sh $chain
-  validateaddress=$($chain validateaddress $Radd 2> /dev/null)
+  validateaddress=$(komodo-cli -ac_name=$chain validateaddress $Radd 2> /dev/null)
   outcome=$(echo $?)
   if [[ ${outcome} -eq 1 ]]; then
     echo -e "\033[1;31m Starting $chain Failed: help human! \033[0m"
