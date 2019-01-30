@@ -205,10 +205,12 @@ abort=0
   outcome=$(echo $?)
   if [[ ${outcome} -eq 1 ]]; then
     echo -e "\033[1;31m Starting $chain Failed: help human! \033[0m"
-    abort=1
+    echo "abort=1" > abort
   fi
 done
 
+source abort 2> /dev/null 
+rm abort 2> /dev/null
 if [[ $abort -eq 1 ]]; then
   exit
 fi
