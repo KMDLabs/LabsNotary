@@ -72,5 +72,21 @@
     ],
     "freq":5,
     "burntxid": "59feb2cb07ab142b108639e1ec5936dcafab20decb4aacba1af2bf358b0ceed8"
+  },
+  {
+    "ac_name": "NOTARYTEST",
+    "ac_supply": "10000",
+    "ac_reward": "1",
+    "ac_staked": "90",
+    "ac_cc": "666",
+    "ac_algo": "verushash11",
+    "ac_notarypay": "100000",
+    
+    "addnode": [
+      "103.6.12.112",
+      "195.201.137.5",
+      "195.201.20.230"
+    ],
+    "freq":5
   }
 ]
