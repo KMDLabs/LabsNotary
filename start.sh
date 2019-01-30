@@ -157,7 +157,7 @@ i=0
       daemon_stopped "${updated_chain}"
       echo "[$updated_chain] Stopped."
     elif [[ $result = "update_failed" ]]; then
-      echo -e "\033[1;31m [$branch] ABORTING!!! failed to update, Help Human! \033[0m"
+      echo -e "\033[1;31m [$branch] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
       exit
     else
       echo "[$branch] No update required"
@@ -185,25 +185,28 @@ else
 fi
 
 # Validate Address on KMD + AC, will poll deamon until started then check if address is imported, if not import it.
-echo "[KMD] : Checking your address and importing it if required."
-varesult=$(./validateaddress.sh KMD)
-if [[ $varesult = "not_started" ]]; then
+echo "[KMD] : Waiting for KMD daemon to start..."
+./validateaddress.sh KMD
+validateaddress=$($chain validateaddress $Radd 2> /dev/null)
+outcome=$(echo $?)
+if [[ ${outcome} -eq -1 ]]; then
   echo -e "\033[1;31m Starting KMD Failed: help human! \033[0m"
   exit
 fi
-echo "[KMD] : $varesult"
 
 abort=0
 ./listassetchains.py | while read chain; do
   # Move our auto generated coins file to the iguana coins dir
   chmod +x "$chain"_7776
   mv "$chain"_7776 iguana/coins
-  varesult=$(./validateaddress.sh $chain)
-  if [[ $varesult = "not_started" ]]; then
+  echo "[$chain] : Waiting for $chain daemon to start..."
+  ./validateaddress.sh $chain
+  validateaddress=$($chain validateaddress $Radd 2> /dev/null)
+  outcome=$(echo $?)
+  if [[ ${outcome} -eq -1 ]]; then
     echo -e "\033[1;31m Starting $chain Failed: help human! \033[0m"
     abort=1
   fi
-  echo "[$chain] : $varesult"
 done
 
 if [[ $abort = 1 ]]; then
