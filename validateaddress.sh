@@ -12,7 +12,7 @@ fi
 # Wait for the deamon to actually start
 started=0
 while [[ ${started} -eq 0 ]]; do
-  echo "Waiting for $chain daemon to start...."
+  echo "Waiting for daemon to start...."
   sleep 10
   validateaddress=$($chain validateaddress $Radd 2> /dev/null)
   outcome=$(echo $?)
@@ -26,7 +26,7 @@ done
 
 mine=$(echo $validateaddress | jq -r .ismine)
 if [[ $mine = "false" ]]; then
-  echo "Waiting for $chain daemon to import private key may take a LONG ASS time!"
+  echo "Waiting for daemon to import private key may take a LONG ASS time!"
   $chain importprivkey $privkey
 else
   echo $Radd
