@@ -14,7 +14,7 @@ Logout of root and login to your user to continue installing the notary repo.
 ## Install instructions
 ```shell
 cd ~
-git clone https://github.com/StakedChain/StakedNotary.git
+git clone https://github.com/KMDLabs/StakedNotary.git
 cd StakedNotary
 ```
 
