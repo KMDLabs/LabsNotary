@@ -77,6 +77,7 @@
     "ac_name": "NOTARYTEST",
     "ac_supply": "10000",
     "ac_reward": "1",
+    "ac_end": "1",
     "ac_staked": "90",
     "ac_cc": "666",
     "ac_algo": "verushash11",
