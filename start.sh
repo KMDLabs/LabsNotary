@@ -189,7 +189,7 @@ echo "[KMD] : Waiting for KMD daemon to start..."
 ./validateaddress.sh KMD
 validateaddress=$($chain validateaddress $Radd 2> /dev/null)
 outcome=$(echo $?)
-if [[ ${outcome} -eq -1 ]]; then
+if [[ ${outcome} -eq 1 ]]; then
   echo -e "\033[1;31m Starting KMD Failed: help human! \033[0m"
   exit
 fi
@@ -203,7 +203,7 @@ abort=0
   ./validateaddress.sh $chain
   validateaddress=$($chain validateaddress $Radd 2> /dev/null)
   outcome=$(echo $?)
-  if [[ ${outcome} -eq -1 ]]; then
+  if [[ ${outcome} -eq 1 ]]; then
     echo -e "\033[1;31m Starting $chain Failed: help human! \033[0m"
     abort=1
   fi
