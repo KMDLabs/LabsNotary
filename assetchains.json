@@ -10,18 +10,7 @@
       "140.82.3.117"
     ],
     "freq": 5
-  },
-  { "ac_name": "CFEKY",
-    "ac_supply": "1000000",
-    "ac_reward": "1000000000000",
-    "ac_cc": "105",
-    "addnode": [
-      "159.69.29.30",
-      "103.6.12.112",
-      "140.82.3.117"
-    ],
-    "freq": 5
-  },
+  }
   {
     "ac_name": "CFEKPOS51",
     "ac_supply": "1000000",
@@ -53,41 +42,6 @@
       "195.201.20.230",
       "195.201.137.5"
     ],
-    "freq":5
-  },
-  {
-    "ac_name": "PAYME",
-    "ac_supply": "500",
-    "ac_reward": "1",
-    "ac_end": "1",
-    "ac_founders_reward": "331200000000",
-    "ac_founders": "1440",
-    "ac_script": "a91460087a27868c871c683ec65bda5a26445b440a6187",
-    "ac_staked": "90",
-    "ac_algo": "verushash11",
-    "ac_cc": "666",
-    "addnode": [
-      "195.201.20.230",
-      "195.201.137.5"
-    ],
-    "freq":5,
-    "burntxid": "59feb2cb07ab142b108639e1ec5936dcafab20decb4aacba1af2bf358b0ceed8"
-  },
-  {
-    "ac_name": "NOTARYTEST",
-    "ac_supply": "10000",
-    "ac_reward": "1",
-    "ac_end": "1",
-    "ac_staked": "90",
-    "ac_cc": "666",
-    "ac_algo": "verushash11",
-    "ac_notarypay": "100000",
-    "addnode": [
-      "103.6.12.112",
-      "195.201.137.5",
-      "195.201.20.230"
-    ],
-    "branch": "notarytest",
     "freq":5
   }
 ]
