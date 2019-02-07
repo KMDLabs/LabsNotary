@@ -17,5 +17,20 @@
       "195.201.137.5"
     ],
     "freq":5
+  },
+  {
+    "ac_name": "LABST5",
+    "ac_supply": "2000",
+    "ac_reward": "1",
+    "ac_end": "1",
+    "ac_staked": "20",
+    "ac_cc": "667",
+    "ac_algo": "verushash11",
+    "ac_notarypay": "77777",
+    "addnode": [
+      "103.6.12.112",
+      "195.201.20.230"
+    ],
+    "freq":5
   }
 ]
