@@ -17,37 +17,5 @@
       "195.201.137.5"
     ],
     "freq":5
-  },
-  {
-    "ac_name": "LABST3",
-    "ac_supply": "10000",
-    "ac_reward": "1",
-    "ac_end": "1",
-    "ac_cc": "667",
-    "ac_notarypay": "36000",
-    "ac_staked": "20",
-    "ac_algo": "verushash11",
-    "addnode": [
-      "103.6.12.112",
-      "195.201.20.230",
-      "195.201.137.5"
-    ],
-    "freq":5
-  },
-  {
-    "ac_name": "LABST4",
-    "ac_supply": "10000",
-    "ac_reward": "1",
-    "ac_end": "1",
-    "ac_cc": "667",
-    "ac_notarypay": "36000",
-    "ac_staked": "20",
-    "ac_algo": "verushash11",
-    "addnode": [
-      "103.6.12.112",
-      "195.201.20.230",
-      "195.201.137.5"
-    ],
-    "freq":5
   }
 ]
