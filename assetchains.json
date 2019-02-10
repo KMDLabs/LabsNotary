@@ -1,24 +1,5 @@
 [
   {
-    "ac_name": "LABST2",
-    "ac_supply": "373543",
-    "ac_reward": "0,0,700000000",
-    "ac_decay": "0,100000000,100000000",
-    "ac_halving": "1",
-    "ac_staked": "51",
-    "ac_eras": "3",
-    "ac_end": "128,10208,0",
-    "ac_cc": "667",
-    "ac_ccenable": "226,236",
-    "ac_notarypay": "300000000",
-    "addnode": [
-      "103.6.12.112",
-      "195.201.20.230",
-      "195.201.137.5"
-    ],
-    "freq":5
-  },
-  {
     "ac_name": "LABST5",
     "ac_supply": "2000",
     "ac_reward": "1",
