@@ -12,7 +12,7 @@ fi
 # Wait for the deamon to actually start
 started=0
 while [[ ${started} -eq 0 ]]; do
-  sleep 1
+  sleep 5
   validateaddress=$($chain validateaddress $Radd 2> /dev/null)
   outcome=$(echo $?)
   if [[ ${outcome} -eq 0 ]]; then
