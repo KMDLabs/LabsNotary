@@ -2,7 +2,7 @@
 #Stats script for Komodo Notary Nodes
 #
 #Requires jq v1.5+ and bitcoin-cli, komodo-cli, chips-cli and gamecredits-cli installed (e.g. symlinked to /usr/local/bin)
-
+cd "${0%/*}"
 #==Options - Only Change These==
 
 #Seconds in display loop, change to false if you don't want it to loop
