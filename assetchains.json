@@ -1,43 +1,34 @@
 [
   {
-    "ac_name": "LABST5",
+    "ac_name": "CFEKDEAD",
+    "ac_supply": "20000",
+    "ac_reward": "0,0,10000000000",
+    "ac_notarypay": "64,1500000000,300000000",
+    "ac_decay": "0,100000000,100000000",
+    "ac_halving": "1",
+    "ac_eras": "3",
+    "ac_end": "128,3000,0",
+    "ac_cc": "667",    
+    "addnode": [
+      "103.6.12.112",
+      "195.201.20.230"
+    ],
+    "freq":5,
+    "branch": "notarypay_new"
+  },
+  {
+    "ac_name": "LABST6",
     "ac_supply": "2000",
     "ac_reward": "1",
     "ac_end": "1",
     "ac_staked": "20",
     "ac_cc": "667",
     "ac_algo": "verushash11",
-    "ac_notarypay": "77777",
+    "ac_notarypay": "3000000",
     "addnode": [
       "103.6.12.112",
       "195.201.20.230"
     ],
-    "freq":5
-  },
-  {
-    "ac_name": "LABSTRE",
-    "ac_supply": "20000",
-    "ac_reward": "1",
-    "ac_end": "1",
-    "ac_cc": "667",
-    "ac_notarypay": "100000",
-    "addnode": [
-      "103.6.12.112",
-      "195.201.20.230",
-      "195.201.137.5"
-    ],
-    "freq":5
-  },
-  {
-    "ac_name": "CFEKTN",
-    "ac_supply": "100000",
-    "ac_reward": "10000000000",
-    "ac_cc": "667",
-    "ac_staked": "27",    
-    "addnode": [
-      "159.69.29.30",
-      "103.6.12.112"
-    ],
-    "freq": 5
-  }
+    "freq":5,
+    "branch": "notarypay_new"
 ]
