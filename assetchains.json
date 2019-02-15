@@ -14,5 +14,27 @@
     ],
     "freq":5,
     "branch": "notarypay_new"
+  },
+  {
+    "ac_name": "CFEKDIMXY1",
+    "ac_supply": "999999",
+    "ac_reward": "10000000000",
+    "ac_cc": "514",    
+    "addnode": [
+      "195.201.20.230",
+      "195.201.137.5"
+    ],
+    "freq":5
+  },
+  {
+    "ac_name": "CFEKDIMXY2",
+    "ac_supply": "999999",
+    "ac_reward": "10000000000",
+    "ac_cc": "514",    
+    "addnode": [
+      "195.201.20.230",
+      "195.201.137.5"
+    ],
+    "freq":5
   }
 ]
