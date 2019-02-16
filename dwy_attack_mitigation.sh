@@ -4,7 +4,7 @@ addr=$(./printkey.py Radd)
   clean=0
   echo "[$coin] Cleaning Wallet"
   while [[ $clean = 0 ]]; do
-    result=$(komodo-cli -ac_name=$coin z_mergetoaddress '["ANY_TADDR"]' $addr 0.0001 0 0 1 2> /dev/null)
+    result=$(komodo-cli -ac_name=$coin z_mergetoaddress '["ANY_TADDR"]' $addr 0.0001 0 0 10000000 2> /dev/null)
     outcome=$(echo $?)
     if [[ $outcome = 6 ]]; then
       clean=1
