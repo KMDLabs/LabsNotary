@@ -20,6 +20,18 @@ bitcoin.params = CoinParams
 
 from slickrpc import Proxy
 
+def colorize(string, color):
+    colors = {
+        'blue': '\033[94m',
+        'magenta': '\033[95m',
+        'green': '\033[92m',
+        'red': '\033[91m'
+    }
+    if color not in colors:
+        return string
+    else:
+        return colors[color] + string + '\033[0m'
+
 
 # fucntion to define rpc_connection
 def def_credentials(chain):
@@ -86,10 +98,19 @@ for i in notary_keys:
     score[notary_keys[i]] = getnotarysendmany_result[i]
     #print(getnotarysendmany_result[i])
 
-#d = {"aa": 3, "bb": 4, "cc": 2, "dd": 1}
+getinfo_result = rpc_connection.getinfo()
+if 'notaryname' in getinfo_result:
+    notaryname = getinfo_result['notaryname']
+
 s = [(k, score[k]) for k in sorted(score, key=score.get, reverse=True)]
 for k, v in s:
-    print(k, v)
+    if k == notaryname:
+        myscore = str(k) + ' ' + str(v)
+        print(colorize(myscore, 'green'))
+    else:
+        print(k, v)
+
+
 
 #print(score)
 
