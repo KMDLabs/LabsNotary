@@ -66,7 +66,7 @@ def def_credentials(chain):
 
     return (Proxy("http://%s:%s@127.0.0.1:%d" % (rpcuser, rpcpassword, int(rpcport))))
 
-CHAIN = 'LABSTH'
+CHAIN = input('Please specify chain: ')
 ADDRESS = 'RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA'
 rpc_connection = def_credentials(CHAIN)
 
@@ -87,16 +87,14 @@ for block in range(2,height):
     if len(getblock_result['tx'][0]['vout']) > 1:
         vouts = getblock_result['tx'][0]['vout']
         for vout in vouts[1:]:
-            blah = vout['scriptPubKey']['addresses'][0]
-            if blah in getnotarysendmany_result:
-                getnotarysendmany_result[blah] += 1
+            addr = vout['scriptPubKey']['addresses'][0]
+            if addr in getnotarysendmany_result:
+                getnotarysendmany_result[addr] += 1
             else:
-                print('what')
+                print('BUG in the coinbase tx, please report this.')
 
 for i in notary_keys:
-    #print(notary_keys[i], i)
     score[notary_keys[i]] = getnotarysendmany_result[i]
-    #print(getnotarysendmany_result[i])
 
 getinfo_result = rpc_connection.getinfo()
 if 'notaryname' in getinfo_result:
@@ -109,12 +107,3 @@ for k, v in s:
         print(colorize(myscore, 'green'))
     else:
         print(k, v)
-
-
-
-#print(score)
-
-
-
-
-#pprint.pprint(getraw_result['result']['vin'][0])
