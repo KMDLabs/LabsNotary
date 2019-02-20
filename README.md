@@ -19,14 +19,16 @@ cd StakedNotary
 ```
 
 ### TOR Testing instuctions:
-``` Install TOR:
- sudo apt-get install tor
+```
+Install TOR:
+sudo apt-get install tor
  
- Check its working:
- curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs
+Check its working:
+curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs
  
  Create rule in firewall to route iguana traffic through tor:
- sudo iptables -t nat -A PREROUTING -p tcp --dport 9997 -j REDIRECT --to-port 9050```
+ sudo iptables -t nat -A PREROUTING -p tcp --dport 9997 -j REDIRECT --to-port 9050
+```
  
  
  ```shell
