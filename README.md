@@ -28,15 +28,15 @@ cd StakedNotary
  Create rule in firewall to route iguana traffic through tor:
  sudo iptables -t nat -A PREROUTING -p tcp --dport 9997 -j REDIRECT --to-port 9050```
  
-
-You need to build our special repo of `komodo` thanks to @libbscott and nanomsg and SuperNET for iguana. Both these scripts cover all required deps on debian based distros.
-
-```shell
+ 
+ ```shell
 cd install
 ./installSuperNET.sh
 ./buildkomodo.sh
 ./installnanomsg.sh
-```
+``` 
+
+You need to build our special repo of `komodo` thanks to @libbscott and nanomsg and SuperNET for iguana. Both these scripts cover all required deps on debian based distros.
 
 Now you need to copy the config file and edit it with our pubkey/Raddress and WIF key for KMD. There needs to be a space after the `=` sign on each line.
 
