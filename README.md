@@ -18,19 +18,8 @@ git clone https://github.com/KMDLabs/StakedNotary.git
 cd StakedNotary
 ```
 
-### TOR Testing instuctions:
-```
-Install TOR:
-sudo apt-get install tor
- 
-Check its working:
-curl --socks5 localhost:9050 --socks5-hostname localhost:9050 -s https://check.torproject.org/ | cat | grep -m 1 Congratulations | xargs
- 
- Create rule in firewall to route iguana traffic through tor:
- sudo iptables -t nat -A PREROUTING -p tcp --dport 9997 -j REDIRECT --to-port 9050
-```
- 
- 
+#### Install the relavent repos and dependancies 
+
  ```shell
 cd install
 ./installSuperNET.sh
