@@ -86,9 +86,8 @@ daemon_stopped () {
   fi
   while [[ -f $pidfile ]]; do
     pid=$(cat $pidfile 2> /dev/null)
-    ps -p $pid 2> /dev/null | grep komodod > /dev/null 2>&1
-    outcome=$(echo $?)
-    if [[ ${outcome} -ne 0 ]]; then
+    outcome=$(ps -p $pid 2> /dev/null | grep komodod)
+    if [[ ${outcome} == "" ]]; then
       rm $pidfile
     fi
     sleep 2
