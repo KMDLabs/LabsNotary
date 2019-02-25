@@ -1,4 +1,5 @@
 #!/bin/bash
+cd $HOME/StakedNotary/
 addr=$(./printkey.py Radd)
 ./listassetchains.py | while read coin; do
   clean=0
