@@ -176,7 +176,7 @@ echo "[KMD] : Starting KMD"
 $HOME/StakedNotary/komodo/master/komodod -stakednotary=1 -pubkey=$pubkey > /dev/null 2>&1 &
 
 # Start assets
-if [[ $(./assetchains) = "finished" ]]; then
+if [[ $(./assetchains $1) = "finished" ]]; then
   echo "Started Assetchains"
 else
   echo -e "\033[1;31m Starting Assetchains Failed: help human! \033[0m"
