@@ -38,7 +38,7 @@ buildkomodo () {
   git pull > /dev/null 2>&1
   git checkout $1  > /dev/null 2>&1
   git pull  > /dev/null 2>&1
-  rm -f $HOME/komodo/src/komodod $HOME/komodo/src/komodo-cli
+  rm -f $HOME/komodo/src/komodod $HOME/komodo/src/komodo-cli > /dev/null 2>&1
   #make clean > /dev/null 2>&1
   #make -j$(nproc) > /dev/null 2>&1
   ./zcutil/build.sh -j$(nproc) 2>&1
