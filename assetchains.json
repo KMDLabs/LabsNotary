@@ -27,7 +27,8 @@
       "195.201.20.230",
       "195.201.137.5"
     ],
-    "freq":5
+    "freq":5,
+    "branch": "CFEKDIMXY"
   },
   {
     "ac_name": "CFEKDIMXY2",
@@ -38,7 +39,8 @@
       "195.201.20.230",
       "195.201.137.5"
     ],
-    "freq":5
+    "freq":5,
+    "branch": "CFEKDIMXY"
   },
   {
     "ac_name": "LABSTH0",
