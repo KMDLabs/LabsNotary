@@ -41,7 +41,7 @@ buildkomodo () {
   rm -f $HOME/komodo/src/komodod $HOME/komodo/src/komodo-cli > /dev/null 2>&1
   #make clean > /dev/null 2>&1
   #make -j$(nproc) > /dev/null 2>&1
-  ./zcutil/build.sh -j$(nproc) 2>&1
+  ./zcutil/build.sh -j$(nproc) > /dev/null 2>&1
   if [[ ! -f $HOME/komodo/src/komodod ]]; then
     return 0
   fi
