@@ -102,17 +102,17 @@ privkey=$(./printkey.py wif)
 
 if [[ ${#pubkey} != 66 ]]; then
   echo -e "\033[1;31m ABORTING!!! pubkey invalid: Please check your config.ini \033[0m"
-  exit
+  exit 1
 fi
 
 if [[ ${#Radd} != 34 ]]; then
   echo -e "\033[1;31m [$1] ABORTING!!! R-address invalid: Please check your config.ini \033[0m"
-  exit
+  exit 1
 fi
 
 if [[ ${#privkey} != 52 ]]; then
   echo -e "\033[1;31m [$1] ABORTING!!! WIF-key invalid: Please check your config.ini \033[0m"
-  exit
+  exit 1
 fi
 
 ac_json=$(cat assetchains.json)
@@ -120,7 +120,7 @@ echo $ac_json | jq .[] > /dev/null 2>&1
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo -e "\033[1;31m ABORTING!!! assetchains.json is invalid, Help Human! \033[0m"
-  exit
+  exit 1
 fi
 
 # Here we will update/add the master branch of StakedNotary/komodo StakedNotary/komodo/<branch>
@@ -136,7 +136,7 @@ if [[ $result = "updated" ]]; then
   echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
   echo -e "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
-  exit
+  exit 1
 else
   echo "[master] No update required"
 fi
@@ -157,7 +157,7 @@ i=0
       echo "[$updated_chain] Stopped."
     elif [[ $result = "update_failed" ]]; then
       echo -e "\033[1;31m [$branch] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
-      exit
+      exit 1
     else
       echo "[$branch] No update required"
     fi
@@ -180,7 +180,7 @@ if [[ $(./assetchains $1) = "finished" ]]; then
   echo "Started Assetchains"
 else
   echo -e "\033[1;31m Starting Assetchains Failed: help human! \033[0m"
-  exit
+  exit 1
 fi
 
 # Validate Address on KMD + AC, will poll deamon until started then check if address is imported, if not import it.
@@ -190,7 +190,7 @@ validateaddress=$(komodo-cli validateaddress $Radd 2> /dev/null)
 outcome=$(echo $?)
 if [[ ${outcome} -eq 1 ]]; then
   echo -e "\033[1;31m Starting KMD Failed: help human! \033[0m"
-  exit
+  exit 1
 fi
 
 abort=0
@@ -211,7 +211,7 @@ done
 source abort 2> /dev/null 
 rm abort 2> /dev/null
 if [[ $abort -eq 1 ]]; then
-  exit
+  exit 1
 fi
 
 cd ~/SuperNET
@@ -258,7 +258,7 @@ if [[ $abort -eq 0 ]]; then
   echo -e "\033[1;32m ALL CHAINS SYNC'd Starting Iguana if it needs starting then adding new chains for dPoW... \033[0m"
 else
   echo -e "\033[1;31m Something went wrong, please check error messages above requiring human help and manually rectify them before starting iguana! \033[0m"
-  exit
+  exit 1
 fi
 
 ./start_iguana.sh
