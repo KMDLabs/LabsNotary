@@ -34,7 +34,7 @@ Now you need to copy the config file and edit it with our pubkey/Raddress and WI
 e.g ` btcpubkey = 02.....`
 
 ```shell
-cd ..
+cd ~/StakedNotary
 cp config_example.ini config.ini
 nano config.ini
 ```
