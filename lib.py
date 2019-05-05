@@ -295,9 +295,14 @@ def vote(rpc, option, txid):
     oracle_hex = oraclesdata_encode(option)
     try:
         oraclesdata = rpc.oraclesdata(txid, oracle_hex)
-        data_hex = oraclesdata['hex']
     except Exception as e:
         return('Error: oraclesdata rpc command failed with ' + str(e))
+
+    try:
+        data_hex = oraclesdata['hex']
+    except Exception as e:
+        return('Error: oraclesdata rpc command failed with ' + str(oraclesdata))
+
 
     yn = input('You selected \"' + option + '\" for the poll, \"' + oracleinfo['name'][:-6] + 
           '\"\nPlease confirm this is correct(y/n): ') # FIXME change to VOTE
