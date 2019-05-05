@@ -281,7 +281,6 @@ def vote_register(rpc, poll):
 
 # FIXME add check to see if already voted
 def vote(rpc, option, txid):
-
     try:
         mypk = rpc.setpubkey()['pubkey']
     except Exception as e:
@@ -289,9 +288,12 @@ def vote(rpc, option, txid):
 
     oracleinfo = rpc.oraclesinfo(txid)
     publishers = []
-    #for pub in oracleinfo['registered']:
-    #    print(pub)
-    #input('wada')
+    for pub in oracleinfo['registered']:
+        publishers.append(pub['publisher'])
+    
+    if not mypk in publishers:
+        return('Error: You must register to this poll before voting. The register txid must be confirmed as well.')
+
     oracle_hex = oraclesdata_encode(option)
     try:
         oraclesdata = rpc.oraclesdata(txid, oracle_hex)
