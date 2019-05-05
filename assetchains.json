@@ -82,5 +82,20 @@
       "103.6.12.112"
     ],
     "freq": 5
+  },
+  {
+    "ac_name": "CFEKORC",
+    "ac_supply": "1000000",
+    "ac_reward": "1000000000000",
+    "ac_cc": "102",
+    "ac_ccenable": "226,236",
+    "ac_blocktime": "1800",
+    "ac_algo": "verushash11",
+    "ac_sapling": "1",
+    "addnode": [
+      "195.201.20.230",
+      "195.201.137.5"
+    ],
+    "freq":5
   }
 ]
