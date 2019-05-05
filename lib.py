@@ -289,9 +289,9 @@ def vote(rpc, option, txid):
 
     oracleinfo = rpc.oraclesinfo(txid)
     publishers = []
-    for pub in oracleinfo['registered']:
-        print(pub)
-    input('wada')
+    #for pub in oracleinfo['registered']:
+    #    print(pub)
+    #input('wada')
     oracle_hex = oraclesdata_encode(option)
     try:
         oraclesdata = rpc.oraclesdata(txid, oracle_hex)

@@ -48,16 +48,16 @@ def vote_loop(chain, msg):
             msg = lib.list_active_polls(rpc_connection)
             vote_loop(chain, msg)
         elif int(selection) == 1:
-            msg = vote_selection(chain, '', 'register')#stakerlib.dil_listunspent(rpc_connection, 0)
+            msg = vote_selection(chain, '', 'register')
             vote_loop(chain, msg)
         elif int(selection) == 2:
-            msg = vote_selection(chain, '', 'vote')#stakerlib.dil_listunspent(rpc_connection, 0)
+            msg = vote_selection(chain, '', 'vote')
             vote_loop(chain, msg)
         elif int(selection) == 3:
-            msg = 'ok'#stakerlib.dl_external_balance(rpc_connection)
+            msg = 'ok'
             vote_loop(chain, msg)
         elif int(selection) == 4:
-            msg = lib.create_poll(rpc_connection)#stakerlib.dil_external_balance(rpc_connection)
+            msg = lib.create_poll(rpc_connection)
             vote_loop(chain, msg)
 
 def vote_selection(chain, msg, reg_or_vote):
