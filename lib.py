@@ -266,15 +266,23 @@ def vote_register(rpc, poll):
         oraclereg = rpc.oraclesregister(txid, '10000')
         oraclereg_hex = oraclereg['hex']
     except Exception as e:
+        return('Error: oraclesregister rpc command failed with ' + str(oraclereg))
+    try:
+        oraclereg_hex = oraclereg['hex']
+    except Exception as e:
         return('Error: oraclesregister rpc command failed with ' + str(e))
     reg_txid = rpc.sendrawtransaction(oraclereg_hex)
 
     # subscribe to self on poll oracle
     try:
         oraclesub = rpc.oraclessubscribe(txid, mypk, '0.00010000')
-        sub_hex = oraclesub['hex']
     except Exception as e:
         return('Error: oraclessubscribe rpc command failed with ' + str(e))
+    try:
+        sub_hex = oraclesub['hex']
+    except:
+        return('Error: oraclessubscribe rpc command failed with ' + str(oraclesub))
+
     sub_txid = rpc.sendrawtransaction(sub_hex)
     return('Success! Please wait for ' + sub_txid + ' to be confirmed before attempting to vote.')
 
