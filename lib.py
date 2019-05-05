@@ -281,29 +281,17 @@ def vote_register(rpc, poll):
 
 # FIXME add check to see if already voted
 def vote(rpc, option, txid):
-    oracleinfo = rpc.oraclesinfo(txid)
+
     try:
         mypk = rpc.setpubkey()['pubkey']
     except Exception as e:
         return('Error: -pubkey is not set' + str(e))
 
-    # register to poll oracle
-    try:
-        oraclereg = rpc.oraclesregister(txid, '10000')
-        oraclereg_hex = oraclereg['hex']
-    except Exception as e:
-        return('Error: oraclesregister rpc command failed with ' + str(e))
-    reg_txid = rpc.sendrawtransaction(oraclereg_hex)
-
-    # subscribe to self on poll oracle
-    try:
-        oraclesub = rpc.oraclessubscribe(txid, mypk, '0.00010000')
-        sub_hex = oraclesub['hex']
-    except Exception as e:
-        return('Error: oraclessubscribe rpc command failed with ' + str(e))
-    sub_txid = rpc.sendrawtransaction(sub_hex)
-
-
+    oracleinfo = rpc.oraclesinfo(txid)
+    publishers = []
+    for pub in oracleinfo['registered']:
+        print(pub)
+    input('wada')
     oracle_hex = oraclesdata_encode(option)
     try:
         oraclesdata = rpc.oraclesdata(txid, oracle_hex)
@@ -312,7 +300,7 @@ def vote(rpc, option, txid):
         return('Error: oraclesdata rpc command failed with ' + str(e))
 
     yn = input('You selected \"' + option + '\" for the poll, \"' + oracleinfo['name'][:-6] + 
-          '\"\nPlease confirm this is correct(y/n): ')
+          '\"\nPlease confirm this is correct(y/n): ') # FIXME change to VOTE
     if not yn.startswith('y'):
         return('Vote cancelled. Try again.')
     

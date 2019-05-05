@@ -10,7 +10,6 @@ def test_rpc(chain):
         dummy = rpc_connection.getbalance() # test connection
         return(rpc_connection)
     except Exception as e:
-        os.system('clear')
         print(e)
         error = 'Error: Could not connect to daemon. ' + chain + ' is not running or rpc creds not found.'
         print(error)
@@ -70,7 +69,6 @@ def vote_selection(chain, msg, reg_or_vote):
     os.system('clear')
     print_menu(active_polls, chain, 'Please select a poll to ' + reg_or_vote)
     selection = lib.user_inputInt(0,len(active_polls)-1,"make a selection:")
-    input('hold')
     if reg_or_vote == 'vote':
         msg = option_selection(chain, active_polls[selection])
     elif reg_or_vote == 'register':
