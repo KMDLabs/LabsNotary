@@ -120,7 +120,11 @@ def notary_list(rpc):
 def vote_results(rpc, poll):
     notarylist = notary_list(rpc)
     NN_pks = []
+    result = {}
+    pubkey_name = {}
     for notary in notarylist:
+        pubkey_name[notary[1]] = notary[0]
+        result[notary[0]] = 'unanswered'
         NN_pks.append(notary[1])
 
     # get batontxid for NN pubkeys that have registed
@@ -137,13 +141,16 @@ def vote_results(rpc, poll):
     for pubkey in voted:
         samples[pubkey] = rpc.oraclessamples(poll['txid'], voted[pubkey], '0')['samples']
 
+    # FIXME check deadline
     for NN in samples:
-        print(NN)
-        for sample in samples[NN]:
-            rawsampletx = rpc.getrawtransaction(sample[1], 1)
-            print(rawsampletx['blocktime'])
-    input('wadwad')
-    return(poll)
+        if samples[NN]:
+            print(samples[NN])
+            result[pubkey_name[NN]] = samples[NN][-1][0]
+        # FIXME if publisher registers too many times, it breaks oraclessamples, not sure how to remedy this atm
+        else:
+            result[pubkey_name[NN]] = 'FIXME oraclessamples bug or registered but did not vote yet' 
+
+    return(result)
 
 
 def list_active_polls(rpc):
