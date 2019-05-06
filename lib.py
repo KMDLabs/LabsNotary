@@ -117,6 +117,35 @@ def notary_list(rpc):
     return(notary_list) 
 
 
+def vote_results(rpc, poll):
+    notarylist = notary_list(rpc)
+    NN_pks = []
+    for notary in notarylist:
+        NN_pks.append(notary[1])
+
+    # get batontxid for NN pubkeys that have registed
+    voted = {}
+    oraclesinfo = rpc.oraclesinfo(poll['txid'])
+    for reg in oraclesinfo['registered']:
+        if reg['publisher'] in NN_pks:
+            if not reg['batontxid'] in voted:
+                voted[reg['publisher']] = reg['batontxid']
+
+
+    samples = {}
+    # get data for registered NN pubkeys
+    for pubkey in voted:
+        samples[pubkey] = rpc.oraclessamples(poll['txid'], voted[pubkey], '0')['samples']
+
+    for NN in samples:
+        print(NN)
+        for sample in samples[NN]:
+            rawsampletx = rpc.getrawtransaction(sample[1], 1)
+            print(rawsampletx['blocktime'])
+    input('wadwad')
+    return(poll)
+
+
 def list_active_polls(rpc):
     try:
         mypk = rpc.setpubkey()['pubkey']
@@ -208,6 +237,7 @@ def create_poll(rpc):
     description = {}
     description['question'] = question
     description['options'] = options
+    description['addr'] = mypk_addr
     print('\nname:', poll_name)
     print(description)
     yn = input('\nPlease confirm this is correct(y/n):')
@@ -222,12 +252,18 @@ def create_poll(rpc):
     except Exception as e:
         return('Error: oraclescreate rpc command failed with ' + str(e))
 
+    try:
+        create_hex = oraclescreate['hex']
+    except Exception as e:
+        return('Error: oraclescreate rpc command failed with ' + str(oraclescreate))
+
+    # FIXME don't need this, just need to fix list polls to check addr field against signed message
     #test that vout1 is change vout so creator can be determined
-    decode = rpc.decoderawtransaction(oraclescreate)
+    decode = rpc.decoderawtransaction(create_hex)
     if decode['vout'][1]['scriptPubKey']['type'] == 'nulldata':
         return('Error: Please consolidate UTXOs.') 
 
-    txid = rpc.sendrawtransaction(oraclescreate)
+    txid = rpc.sendrawtransaction(create_hex)
     return('Success! Poll created at ' + txid )
     
 def oraclesdata_encode(message):
