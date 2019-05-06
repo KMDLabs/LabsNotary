@@ -3,6 +3,7 @@ import lib
 import os
 import pprint
 import sys
+import readline
 
 def test_rpc(chain):
     try:    

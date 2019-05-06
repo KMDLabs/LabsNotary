@@ -6,6 +6,7 @@ import platform
 import sys
 import ast
 import codecs
+import readline
 from datetime import datetime
 from slickrpc import Proxy
 import bitcoin
@@ -174,9 +175,7 @@ def list_active_polls(rpc):
         oracleinfo = rpc.oraclesinfo(oracle)
         oraclecreate_decode = rpc.getrawtransaction(oracle, 2)
 
-
-        # FIXME CHANGE TO VOTE
-        if oracleinfo['name'][-5:] == 'VOTET':
+        if oracleinfo['name'][-4:] == 'VOTE':
             # check that signed message matches key
             sig = oracleinfo['description'][:88]
             msg = oracleinfo['description'][88:]
@@ -200,7 +199,7 @@ def list_active_polls(rpc):
 
             # check that the key is a notary
             if creator_pk in NN_pks:
-               vote_info['name'] = oracleinfo['name'][:-6] # FIXME CHANGE TO VOTE
+               vote_info['name'] = oracleinfo['name'][:-5]
                #desc_dict = ast.literal_eval(msg)
                vote_info['question'] = desc_dict['question']
                vote_info['options'] = desc_dict['options']
@@ -240,7 +239,7 @@ def create_poll(rpc):
     options = []
     option_count = user_inputInt(1,10, 'Please input the number of options for the poll. '
                                        'This number does not include the \"subjective\" option: ')
-    poll_name = str(input('Please input a name for this poll: ')) + '_VOTET' # FIXME CHANGE TO VOTE
+    poll_name = str(input('Please input a name for this poll: ')) + '_VOTE'
     question = input('Please input the full question you wish to ask. Be as clear and objective as possible: ')
     for i in range(option_count):
         options.append(input('Please input option ' + str(i) + ': '))
@@ -354,8 +353,8 @@ def vote(rpc, option, txid):
         return('Error: oraclesdata rpc command failed with ' + str(oraclesdata))
 
 
-    yn = input('You selected \"' + option + '\" for the poll, \"' + oracleinfo['name'][:-6] + 
-          '\"\nPlease confirm this is correct(y/n): ') # FIXME change to VOTE
+    yn = input('You selected \"' + option + '\" for the poll, \"' + oracleinfo['name'][:-5] + 
+          '\"\nPlease confirm this is correct(y/n): ')
     if not yn.startswith('y'):
         return('Vote cancelled. Try again.')
     
