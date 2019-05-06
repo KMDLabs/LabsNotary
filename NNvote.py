@@ -54,7 +54,7 @@ def vote_loop(chain, msg):
             msg = vote_selection(chain, '', 'vote')
             vote_loop(chain, msg)
         elif int(selection) == 3:
-            msg = 'ok'
+            msg = vote_selection(chain, '', 'view results')
             vote_loop(chain, msg)
         elif int(selection) == 4:
             msg = lib.create_poll(rpc_connection)
@@ -73,6 +73,8 @@ def vote_selection(chain, msg, reg_or_vote):
         msg = option_selection(chain, active_polls[selection])
     elif reg_or_vote == 'register':
         msg = lib.vote_register(rpc_connection, active_polls[selection])
+    elif reg_or_vote == 'view results':
+        msg = lib.vote_results(rpc_connection, active_polls[selection])
     vote_loop(chain, msg)
 
 def option_selection(chain, poll): 
