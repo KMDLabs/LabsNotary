@@ -244,7 +244,7 @@ def create_poll(rpc):
     description = {}
     description['question'] = question
     description['options'] = options
-    description['addr'] = mypk_addr
+    description['pk'] = mypk
     print('\nname:', poll_name)
     print(description)
     yn = input('\nPlease confirm this is correct(y/n):')
@@ -307,13 +307,12 @@ def vote_register(rpc, poll):
     # register to poll oracle
     try:
         oraclereg = rpc.oraclesregister(txid, '10000')
-        oraclereg_hex = oraclereg['hex']
     except Exception as e:
-        return('Error: oraclesregister rpc command failed with ' + str(oraclereg))
+        return('Error: oraclesregister rpc command failed with ' + str(e))
     try:
         oraclereg_hex = oraclereg['hex']
     except Exception as e:
-        return('Error: oraclesregister rpc command failed with ' + str(e))
+        return('Error: oraclesregister rpc command failed with ' + str(oraclereg))
     reg_txid = rpc.sendrawtransaction(oraclereg_hex)
 
     # subscribe to self on poll oracle
