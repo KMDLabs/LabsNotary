@@ -248,7 +248,7 @@ def create_poll(rpc):
     signed = rpc.signmessage(mypk_addr, str(description))
 
     try:
-        oraclescreate = rpc.oraclescreate(poll_name, signed + str(description), 'S')['hex']
+        oraclescreate = rpc.oraclescreate(poll_name, signed + str(description), 'S')
     except Exception as e:
         return('Error: oraclescreate rpc command failed with ' + str(e))
 
