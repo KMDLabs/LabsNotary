@@ -172,21 +172,25 @@ def list_active_polls(rpc):
         vote_info = {}
         publishers = []
         oracleinfo = rpc.oraclesinfo(oracle)
-
-        # find pubkey that created the oracle
-        # this relies on the change output from oraclescreate
         oraclecreate_decode = rpc.getrawtransaction(oracle, 2)
-        try:
-            creator_pk = oraclecreate_decode['vout'][1]['scriptPubKey']['hex'][2:][:-2]
-            creator_addr = P2PKHBitcoinAddress.from_pubkey(x(creator_pk))
-        except Exception as e:
-            continue
+
 
         # FIXME CHANGE TO VOTE
         if oracleinfo['name'][-5:] == 'VOTET':
             # check that signed message matches key
             sig = oracleinfo['description'][:88]
             msg = oracleinfo['description'][88:]
+            try:
+                desc_dict = ast.literal_eval(msg)
+            except:
+                continue
+
+            try:
+                creator_pk = desc_dict['pk']
+                creator_addr = P2PKHBitcoinAddress.from_pubkey(x(creator_pk))
+            except Exception as e:
+                continue
+
             try:
                 verify = rpc.verifymessage(str(creator_addr), sig, msg)
             except:
@@ -197,7 +201,7 @@ def list_active_polls(rpc):
             # check that the key is a notary
             if creator_pk in NN_pks:
                vote_info['name'] = oracleinfo['name'][:-6] # FIXME CHANGE TO VOTE
-               desc_dict = ast.literal_eval(oracleinfo['description'][88:])
+               #desc_dict = ast.literal_eval(msg)
                vote_info['question'] = desc_dict['question']
                vote_info['options'] = desc_dict['options']
                vote_info['created'] = oraclecreate_decode['blocktime']#datetime.utcfromtimestamp(oraclecreate_decode['blocktime']).strftime('%D %H:%M')
@@ -236,7 +240,7 @@ def create_poll(rpc):
     options = []
     option_count = user_inputInt(1,10, 'Please input the number of options for the poll. '
                                        'This number does not include the \"subjective\" option: ')
-    poll_name = input('Please input a name for this poll: ') + '_VOTET' # FIXME CHANGE TO VOTE
+    poll_name = str(input('Please input a name for this poll: ')) + '_VOTET' # FIXME CHANGE TO VOTE
     question = input('Please input the full question you wish to ask. Be as clear and objective as possible: ')
     for i in range(option_count):
         options.append(input('Please input option ' + str(i) + ': '))
@@ -264,12 +268,6 @@ def create_poll(rpc):
     except Exception as e:
         return('Error: oraclescreate rpc command failed with ' + str(oraclescreate))
 
-    # FIXME don't need this, just need to fix list polls to check addr field against signed message
-    #test that vout1 is change vout so creator can be determined
-    decode = rpc.decoderawtransaction(create_hex)
-    if decode['vout'][1]['scriptPubKey']['type'] == 'nulldata':
-        return('Error: Please consolidate UTXOs.') 
-
     txid = rpc.sendrawtransaction(create_hex)
     return('Success! Poll created at ' + txid )
     
@@ -295,7 +293,7 @@ def oraclesdata_encode(message):
     fullhex = lilend + rawhex
     return(fullhex)
 
-
+# FIXME check is registered/voted already
 def vote_register(rpc, poll):
     txid = poll['txid']
     oracleinfo = rpc.oraclesinfo(txid)
