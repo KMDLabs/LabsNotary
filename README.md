@@ -115,6 +115,14 @@ There is no need to stop any deamons at this point, if they are already running,
 Make sure some funds have been sent and everything *should* just work. :D
 
 ### Using some of the Scripts
+
+Additional dependancies required  -
+```shell
+sudo apt-get install python3-dev python3 libgnutls28-dev libssl-dev python3-pip
+
+pip3 install setuptools wheel base58 slick-bitcoinrpc requests python-bitcoinlib
+```
+
 To get a list of coins: `./listcoins.sh`
 
 To issue commands to a coin: `asset-cli <COINS_NAME> <COMMAND>`
