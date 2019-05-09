@@ -120,7 +120,7 @@ Additional dependancies required  -
 ```shell
 sudo apt-get install python3-dev python3 libgnutls28-dev libssl-dev python3-pip
 
-pip3 install setuptools wheel base58 slick-bitcoinrpc requests python-bitcoinlib
+sudo pip3 install setuptools wheel base58 slick-bitcoinrpc requests python-bitcoinlib
 ```
 
 To get a list of coins: `./listcoins.sh`
