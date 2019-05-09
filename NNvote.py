@@ -88,6 +88,6 @@ def option_selection(chain, poll):
     msg = lib.vote(rpc_connection, options[selection], poll['txid'])
     vote_loop(chain, msg)
     
-vote_menu = ['List active polls', 'Register to poll', 'Vote', 'Voting results', 'Create new poll']
+vote_menu = ['List active polls', 'Register to vote', 'Vote', 'Voting results', 'Create new poll']
 
 vote_loop('CFEKORC', '')
