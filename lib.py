@@ -128,7 +128,7 @@ def vote_results(rpc, poll):
         result[notary[0]] = 'unanswered'
         NN_pks.append(notary[1])
 
-    # get batontxid for NN pubkeys that have registered
+    # get baton address for NN pubkeys that have registered
     voted = {}
     oraclesinfo = rpc.oraclesinfo(poll['txid'])
     for reg in oraclesinfo['registered']:
@@ -167,7 +167,7 @@ def vote_results(rpc, poll):
     return(result)
 
 
-def list_active_polls(rpc):
+def list_polls(rpc, active):
     try:
         mypk = rpc.setpubkey()['pubkey']
     except:
@@ -179,7 +179,9 @@ def list_active_polls(rpc):
         NN_pks.append(notary[1])
 
     oracles = rpc.oracleslist()
-    polls = []
+    polls_done = []
+    polls_active = []
+    current_time = rpc.getinfo()['tiptime']
     for oracle in oracles:
         vote_info = {}
         publishers = []
@@ -211,19 +213,24 @@ def list_active_polls(rpc):
             # check that the key is a notary
             if creator_pk in NN_pks:
                vote_info['name'] = oracleinfo['name'][:-5]
-               #desc_dict = ast.literal_eval(msg)
                vote_info['question'] = desc_dict['question']
                vote_info['options'] = desc_dict['options']
-               vote_info['created'] = oraclecreate_decode['blocktime']#datetime.utcfromtimestamp(oraclecreate_decode['blocktime']).strftime('%D %H:%M')
-               vote_info['deadline'] = oraclecreate_decode['blocktime'] + 604800#datetime.utcfromtimestamp(oraclecreate_decode['blocktime'] + 604800).strftime('%D %H:%M')
+               vote_info['created'] = oraclecreate_decode['blocktime']
+               vote_info['deadline'] = oraclecreate_decode['blocktime'] + 604800 # 1 week, arbitrary limit could be dynamic
                vote_info['txid'] = oracle
                for i in notarylist:
                    if i[1] == creator_pk:
                        creator = i[0]
-               vote_info['creator'] = creator 
-               polls.append(vote_info)
-    #FIXME check deadline, only include active
-    return(polls)
+               vote_info['creator'] = creator
+               if current_time < vote_info['deadline']:
+                       polls_active.append(vote_info)
+               else:
+                       polls_done.append(vote_info)
+                   
+    if active:
+        return(polls_active)
+    else:
+        return(polls_done)
     
 
 
@@ -343,6 +350,11 @@ def vote(rpc, option, txid):
         mypk = rpc.setpubkey()['pubkey']
     except Exception as e:
         return('Error: -pubkey is not set' + str(e))
+
+    if option == 'subjective':
+        option += ':' + str(input('Please specify why you believe this question' +
+                           ' is subjective and should be reasked: '))
+
 
     oracleinfo = rpc.oraclesinfo(txid)
     publishers = []
