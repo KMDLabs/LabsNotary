@@ -128,28 +128,41 @@ def vote_results(rpc, poll):
         result[notary[0]] = 'unanswered'
         NN_pks.append(notary[1])
 
-    # get batontxid for NN pubkeys that have registed
+    # get batontxid for NN pubkeys that have registered
     voted = {}
     oraclesinfo = rpc.oraclesinfo(poll['txid'])
     for reg in oraclesinfo['registered']:
         if reg['publisher'] in NN_pks:
             if not reg['batontxid'] in voted:
-                voted[reg['publisher']] = reg['batontxid']
+                voted[reg['publisher']] = reg['baton']
 
 
-    samples = {}
-    # get data for registered NN pubkeys
-    for pubkey in voted:
-        samples[pubkey] = rpc.oraclessamples(poll['txid'], voted[pubkey], '0')['samples']
+    votes = {}
+    for baton_addr in voted:
+        time_sample = {}
+        times = []
+        orcl_txids = rpc.getaddresstxids(voted[baton_addr], '1')
 
-    # FIXME check deadline
-    for NN in samples:
-        if samples[NN]:
-            print(samples[NN])
-            result[pubkey_name[NN]] = samples[NN][-1][0]
-        # FIXME if publisher registers too many times, it breaks oraclessamples, not sure how to remedy this atm
-        else:
-            result[pubkey_name[NN]] = 'FIXME oraclessamples bug or registered but did not vote yet' 
+        # iterate over baton address, find oldest sample
+        for orcl_txid in orcl_txids:
+            rawtx = rpc.getrawtransaction(orcl_txid, 1)
+            if rawtx['vout'][-1]['scriptPubKey']['type'] == 'nulldata':
+                opret = rawtx['vout'][-1]['scriptPubKey']['hex']
+                decode_opret = rpc.decodeccopret(opret)
+                try:
+                    if decode_opret['OpRets'][0]['eval_code'] == 'EVAL_ORACLES' and decode_opret['OpRets'][0]['function'] == 'D':
+                        sample = rpc.oraclessamples(poll['txid'], orcl_txid, '1')
+                        if sample['samples']:
+                            if rawtx['blocktime'] < poll['deadline']:
+                                times.append(rawtx['blocktime'])
+                                times.sort()
+                                time_sample[rawtx['blocktime']] = sample['samples']
+                                votes[baton_addr] = time_sample[times[0]]
+                except Exception as e:
+                    continue
+
+    for pubkey in votes:
+        result[pubkey_name[pubkey]] = votes[pubkey][0][0]
 
     return(result)
 
@@ -164,8 +177,6 @@ def list_active_polls(rpc):
     NN_pks = []
     for notary in notarylist:
         NN_pks.append(notary[1])
-    if not mypk in NN_pks:
-        return('Error: -pubkey is not a notary pubkey.')
 
     oracles = rpc.oracleslist()
     polls = []
