@@ -136,7 +136,6 @@ def vote_results(rpc, poll):
             if not reg['batontxid'] in voted:
                 voted[reg['publisher']] = reg['baton']
 
-
     votes = {}
     for baton_addr in voted:
         time_sample = {}
@@ -145,12 +144,19 @@ def vote_results(rpc, poll):
 
         # iterate over baton address, find oldest sample
         for orcl_txid in orcl_txids:
-            rawtx = rpc.getrawtransaction(orcl_txid, 1)
+            rawtx = rpc.getrawtransaction(orcl_txid, 2)
             if rawtx['vout'][-1]['scriptPubKey']['type'] == 'nulldata':
                 opret = rawtx['vout'][-1]['scriptPubKey']['hex']
                 decode_opret = rpc.decodeccopret(opret)
                 try:
                     if decode_opret['OpRets'][0]['eval_code'] == 'EVAL_ORACLES' and decode_opret['OpRets'][0]['function'] == 'D':
+                        # additional check to prevent impersonation
+                        input_addrs = []
+                        for vin in rawtx['vin']:
+                            input_addrs.append(vin['address'])
+                        if not voted[baton_addr] in input_addrs:
+                            continue
+
                         sample = rpc.oraclessamples(poll['txid'], orcl_txid, '1')
                         if sample['samples']:
                             if rawtx['blocktime'] < poll['deadline']:
@@ -310,7 +316,7 @@ def oraclesdata_encode(message):
     fullhex = lilend + rawhex
     return(fullhex)
 
-# FIXME check is registered/voted already
+
 def vote_register(rpc, poll):
     txid = poll['txid']
     oracleinfo = rpc.oraclesinfo(txid)
@@ -341,10 +347,10 @@ def vote_register(rpc, poll):
         return('Error: oraclessubscribe rpc command failed with ' + str(oraclesub))
 
     sub_txid = rpc.sendrawtransaction(sub_hex)
-    return('Success! Please wait for ' + sub_txid + ' to be confirmed before attempting to vote.')
+    return('Success! Please wait for ' + sub_txid + ' to be confirmed.')
 
 
-# FIXME add check to see if already voted
+
 def vote(rpc, option, txid):
     try:
         mypk = rpc.setpubkey()['pubkey']
@@ -355,14 +361,14 @@ def vote(rpc, option, txid):
         option += ':' + str(input('Please specify why you believe this question' +
                            ' is subjective and should be reasked: '))
 
-
     oracleinfo = rpc.oraclesinfo(txid)
     publishers = []
     for pub in oracleinfo['registered']:
         publishers.append(pub['publisher'])
     
     if not mypk in publishers:
-        return('Error: You must register to this poll before voting. The register txid must be confirmed as well.')
+        return('Error: You must register to this poll before voting. ' + 
+               'The register txid must be confirmed as well.')
 
     oracle_hex = oraclesdata_encode(option)
     try:
@@ -384,4 +390,117 @@ def vote(rpc, option, txid):
     oraclesdata_txid = rpc.sendrawtransaction(data_hex)
 
     return('Success! You voted \"' + option + '\"\n' + 'txid: ' + oraclesdata_txid)
+
+
+def lottery_join(rpc, oracle):
+    try:
+        mypk = rpc.setpubkey()['pubkey']
+    except Exception as e:
+        return('Error: -pubkey is not set' + str(e))
+
+    oraclesinfo = rpc.oraclesinfo(oracle['txid'])
+
+    publisher_pks = []
+    for publisher in oraclesinfo['registered']:
+        publisher_pks.append(publisher['publisher'])
+
+    if not mypk in publisher_pks:
+        return('Error: Please use the \"Register for lottery\". You must also wait for at least 1 confirmation')
+
+    handle = input('Please input your name/handle. This will be used in ' + 
+                   'the source code, so please take it seriously: ')
+
+    ticket = input('Please input a message. This can be thought of ' + 
+                   'as choosing lottery numbers. It can be anything you like: ')
+    
+    oracle_payload = {handle: ticket}
+    oracle_hex = oraclesdata_encode(str(oracle_payload))
+    try:
+        oraclesdata = rpc.oraclesdata(oracle['txid'], oracle_hex)
+    except Exception as e:
+        return('Error: oraclesdata rpc command failed with ' + str(e))
+
+    try:
+        data_hex = oraclesdata['hex']
+    except Exception as e:
+        return('Error: oraclesdata rpc command failed with ' + str(oraclesdata))
+
+    print(oracle_payload)
+    yn = input('Please confirm this is correct. This cannot be changed. +
+               'Only the first entry will be considered valid(y/n): ')
+    if not yn.startswith('y'):
+        return('Cancelled. Try again.')
+
+    oraclesdata_txid = rpc.sendrawtransaction(data_hex)
+
+    return('Success! You must now use \"Create signed message\" option ' + 
+           'and post the result to both github and discord!\n' + oraclesdata_txid)
+
+
+def lottery_participants(rpc, oracle):
+    try:
+        mypk = rpc.setpubkey()['pubkey']
+    except Exception as e:
+        return('Error: -pubkey is not set' + str(e))
+
+    oraclesinfo = rpc.oraclesinfo(oracle['txid'])
+
+    pubkey_baton = {}
+    for reg in oraclesinfo['registered']:
+        pubkey_baton[reg['publisher']] = reg['baton']
+
+
+    participants = []
+    for part in pubkey_baton:
+        times = []
+        time_sample = {}
+        pk_addr = P2PKHBitcoinAddress.from_pubkey(x(part))
+        orcl_txids = rpc.getaddresstxids(pubkey_baton[part], '1')
+        for txid in orcl_txids:
+            rawtx = rpc.getrawtransaction(txid, 2)
+            try:
+                blocktime = rawtx['blocktime']
+            except:
+                continue
+            input_addrs = []
+            for vin in rawtx['vin']:
+                input_addrs.append(vin['address'])
+
+            # check that someone didn't send an oraclesdata to someone else's baton addr
+            if not str(pk_addr) in input_addrs or not pubkey_baton[part] in input_addrs:
+                continue
+
+            samples = rpc.oraclessamples(oracle['txid'], txid, '0')
+            if samples['samples']:
+                times.append(blocktime)
+                time_sample[blocktime] = samples['samples'][0][0]
+
+        times.sort()
+        participants.append([time_sample[times[0]], part])
+
+    return(participants)
+
+
+# FIXME needs a try to see if already joined
+def lottery_sign(rpc, oracle):
+    try:
+        setpubkey = rpc.setpubkey()
+        mypk = setpubkey['pubkey']
+    except Exception as e:
+        return('Error: -pubkey is not set ' + str(e))
+
+    participants = lottery_participants(rpc, oracle)
+    for part in participants:
+        print(part)
+        if mypk == part[1]:
+            try:
+                signed_msg = rpc.signmessage(setpubkey['address'], part[0])
+            except Exception as e:
+                return('Error: signmessage rpc command failed with ' + str(e))
+
+    return('The following message must be included in a pull request to the ' + 
+           'participants.json file in the StakedNotary repo.\n\n' + 
+           signed_msg + part[0])
+
+
 
