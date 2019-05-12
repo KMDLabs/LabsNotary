@@ -94,7 +94,7 @@ def lottery_loop(chain, msg):
             msg = lib.lottery_sign(rpc_connection, oracle)
             lottery_loop(chain, msg)
         elif int(selection) == 6:
-            msg = 'Verify results'
+            msg = lib.lottery_verify(rpc_connection, oracle)
             lottery_loop(chain, msg)
 
 
@@ -155,7 +155,7 @@ def option_selection(chain, poll):
 
 initial_menu = ['NN voting', 'NN lottery']
 vote_menu = ['List active polls', 'Register to vote', 'Vote', 'Voting results', 'Create new poll', 'List previous polls']
-lottery_menu = ['How to participate', 'View participants', 'Register for lottery','Join lottery', 'Create signed message','Verify results(dummy right now)']
+lottery_menu = ['How to participate', 'View participants', 'Register for lottery','Join lottery', 'Create signed message','Verify results']
 
 
 initial_loop('CFEKORC', '')
