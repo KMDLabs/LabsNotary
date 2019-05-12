@@ -13,6 +13,7 @@ import bitcoin
 from bitcoin.wallet import P2PKHBitcoinAddress
 from bitcoin.core import x
 from bitcoin.core import CoreMainParams
+import hashlib
 
 class CoinParams(CoreMainParams):
     MESSAGE_START = b'\x24\xe9\x27\x64'
@@ -413,7 +414,7 @@ def lottery_join(rpc, oracle):
     ticket = input('Please input a message. This can be thought of ' + 
                    'as choosing lottery numbers. It can be anything you like: ')
     
-    oracle_payload = {handle: ticket}
+    oracle_payload = [handle, ticket]
     oracle_hex = oraclesdata_encode(str(oracle_payload))
     try:
         oraclesdata = rpc.oraclesdata(oracle['txid'], oracle_hex)
@@ -479,7 +480,14 @@ def lottery_participants(rpc, oracle):
 
         times.sort()
         if times:
-            participants.append([time_sample[times[0]], part])
+            if times[0] < oracle['deadline']:
+                try:
+                    name_msg = ast.literal_eval(time_sample[times[0]])
+                    name = name_msg[0]
+                    msg = name_msg[1]
+                    participants.append({part: name_msg})
+                except:
+                    continue
 
     return(participants)
 
@@ -493,17 +501,56 @@ def lottery_sign(rpc, oracle):
         return('Error: -pubkey is not set ' + str(e))
 
     participants = lottery_participants(rpc, oracle)
-    for part in participants:
-        print(part)
-        if mypk == part[1]:
-            try:
-                signed_msg = rpc.signmessage(setpubkey['address'], part[0])
-            except Exception as e:
-                return('Error: signmessage rpc command failed with ' + str(e))
+
+    check_pk = 0
+    for i in participants:
+        if mypk in i:
+            check_pk = i
+    if check_pk == 0:
+       return('Error: Did not sign up for lottery. Please wait ' + 
+               'for at least 1 confirmation if you have')
+
+    print(check_pk[mypk])
+    try:
+        signed_msg = rpc.signmessage(setpubkey['address'], str(check_pk[mypk]))
+    except Exception as e:
+        return('Error: signmessage rpc command failed with ' + str(e))
 
     return('The following message must be included in a pull request to the ' + 
            'participants.json file in the StakedNotary repo.\n\n' + 
-           signed_msg + part[0])
+           signed_msg + str(check_pk[mypk]))
 
 
+def lottery_verify(rpc, oracle):
+    try:
+        setpubkey = rpc.setpubkey()
+        mypk = setpubkey['pubkey']
+    except Exception as e:
+        return('Error: -pubkey is not set ' + str(e))
+
+    blockhash = input('Please input the first BTC block\'s blockhash ' + 
+                     'after ' + str(oracle['deadline']) +
+                     '. This does not include reorgs/forks, so wait for a couple of confirmations: ')
+
+    participants = lottery_participants(rpc, oracle)
+
+    par_data = {}
+    for i in participants:
+        for msg in i:
+            par_data[i[msg][0]] = i[msg][1]
+
+    result = {}
+    lresult = []
+    for i in par_data:
+        presha = i + par_data[i] + blockhash
+        presha_encode = presha.encode('utf-8')
+        hash_obj = hashlib.sha256(presha_encode)
+        result[hash_obj.hexdigest()] = i
+        lresult.append(hash_obj.hexdigest())
+
+    lresult.sort()
+    ranks = []
+    for sha_hash in lresult:
+        ranks.append(result[sha_hash])
+    return(ranks)
 
