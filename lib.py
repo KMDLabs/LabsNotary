@@ -467,16 +467,19 @@ def lottery_participants(rpc, oracle):
                 input_addrs.append(vin['address'])
 
             # check that someone didn't send an oraclesdata to someone else's baton addr
-            if not str(pk_addr) in input_addrs or not pubkey_baton[part] in input_addrs:
+            if not str(pk_addr) in input_addrs and not pubkey_baton[part] in input_addrs:
                 continue
 
             samples = rpc.oraclessamples(oracle['txid'], txid, '0')
             if samples['samples']:
                 times.append(blocktime)
                 time_sample[blocktime] = samples['samples'][0][0]
+            else:
+                continue
 
         times.sort()
-        participants.append([time_sample[times[0]], part])
+        if times:
+            participants.append([time_sample[times[0]], part])
 
     return(participants)
 
