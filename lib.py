@@ -426,7 +426,7 @@ def lottery_join(rpc, oracle):
         return('Error: oraclesdata rpc command failed with ' + str(oraclesdata))
 
     print(oracle_payload)
-    yn = input('Please confirm this is correct. This cannot be changed. +
+    yn = input('Please confirm this is correct. This cannot be changed. ' +
                'Only the first entry will be considered valid(y/n): ')
     if not yn.startswith('y'):
         return('Cancelled. Try again.')
