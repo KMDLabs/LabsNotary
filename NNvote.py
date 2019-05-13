@@ -59,7 +59,7 @@ def initial_loop(chain, msg):
 def lottery_loop(chain, msg):
     # lottery oracle txid is hardcoded for now
     # will revist this when it's time to do another
-    oracle = {'txid': '888e3fb1a5e4b2911411ce42a463ae60ee26b322c59dd41e616b7be8c3c00f83',
+    oracle = {'txid': 'ca8849a9f75677e0ee316dd2d19db64eb1c7b61902bbf44442c197d528ef45ca',
               'deadline': 1558320334}
     os.system('clear')
     rpc_connection = test_rpc(chain)
@@ -73,9 +73,10 @@ def lottery_loop(chain, msg):
             msg = ('1. Securely create an address. This address will be your notary node address.\n' +
                   '2. Start the CFEKORC daemon with -pubkey for this address.\n'  + 
                   '3. Obtain some CFEKORC via mining or asking a community member\n' + 
-                  '4. Select \"Join lottery\". This will ask you for your handle. It will also ask you to input'  +
+                  '4. Select \"Register for lottery\". This will output a txid. Wait for this to confirm.\n' +
+                  '5. Select \"Join lottery\". This will ask you for your handle. It will also ask you to input'  +
                   ' a message. This message can be anything you choose, consider it choosing numbers for a lottery\n' +
-                  '5. Select \"Create signed message\". This will output a signed messaged.' +
+                  '6. Select \"Create signed message\". This will output a signed messaged.' +
                   ' You must add this to the participants.json file of the StakedNotary repo and send a pull request.' + 
                   ' You must also post this to the #kmdlabs'  +
                   ' channel in the KMD discord. \n\nPlease note, you must do all of this prior to the deadline.' +
