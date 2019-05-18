@@ -9,4 +9,9 @@
     "pubkey": "0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21",
     "signed_msg": "IEvhGWzhvEM86csqjeIdBPMWH6PygEzE3PuE/eBqnU+HAuUMRRQgZgiWTNqgRMMJJbNkNhEApm5PNyhXnAB9gPg=['phba2061', ':DDDDDDDDD']"
   } 
+  {
+    "handle": "strob",
+    "pubkey": "03e35f0de8a871bf4b04d09b01e686c307fadf8df9239f3ec18920106c72876fbb",
+    "signed_msg": "IPvWAr9JLZs/3mtARQ1rpzqIk3QsSsFRrEpo48CLUpKCNofP3X5oWRFFNO730g6kSjuGo8tLFFQjX68jm292QA8=['strob', 'chocolate']"
+  } 
 ]
