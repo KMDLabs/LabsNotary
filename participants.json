@@ -12,6 +12,6 @@
    {
     "handle": "Exile13",
     "pubkey": "03d14e810f3458ce760a83c2c2193cf4ac9b1df774e7267193d66238cb38c0e25c",
-    "{'03d14e810f3458ce760a83c2c2193cf4ac9b1df774e7267193d66238cb38c0e25c': ['Exile13', '13']"
+    "signed_msg": "IFX4gmHg9G/z27PT+8xOfOwo46jZlXkQQsrj7MCkxlMeNBFU6P/p3hN1eCvAyz16WpNgQGKuZl2B+euRF1emGrQ=['Exile13', '13']"
   } 
 ]
