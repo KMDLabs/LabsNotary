@@ -8,5 +8,10 @@
     "handle": "phba2061",
     "pubkey": "0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21",
     "signed_msg": "IEvhGWzhvEM86csqjeIdBPMWH6PygEzE3PuE/eBqnU+HAuUMRRQgZgiWTNqgRMMJJbNkNhEApm5PNyhXnAB9gPg=['phba2061', ':DDDDDDDDD']"
+  },
+   {
+    "handle": "Exile13",
+    "pubkey": "03d14e810f3458ce760a83c2c2193cf4ac9b1df774e7267193d66238cb38c0e25c",
+    "{'03d14e810f3458ce760a83c2c2193cf4ac9b1df774e7267193d66238cb38c0e25c': ['Exile13', '13']"
   } 
 ]
