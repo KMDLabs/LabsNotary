@@ -3,5 +3,10 @@
     "handle": "Alright_example",
     "pubkey": "0285657c689b903218c97f5f10fe1d10ace2ed6595112d9017f54fb42ea1c1dda8",
     "signed_msg": "H39G29unIOAfX9/1ldzDZ4oFOarHutA9wk8fKEHHHw8REEYzqyPsLhs1cXVT2HTjbZpd8wChyMYsGG0IzHY1GCw=['Alright_example', 'This is a test. Please ignore this.']"
-  }
+  },
+  {
+    "handle": "phba2061",
+    "pubkey": "0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21",
+    "signed_msg": "IEvhGWzhvEM86csqjeIdBPMWH6PygEzE3PuE/eBqnU+HAuUMRRQgZgiWTNqgRMMJJbNkNhEApm5PNyhXnAB9gPg=['phba2061', ':DDDDDDDDD']"
+  } 
 ]
