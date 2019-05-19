@@ -405,11 +405,7 @@ def lottery_join(rpc, oracle):
     for publisher in oraclesinfo['registered']:
         publisher_pks.append(publisher['publisher'])
 
-    print('mypk', mypk)
-    print('publishers_pks', publisher_pks)
-    input('break point ')
-
-    if not mypk in publisher_pks:
+    if not mypk.lower() in publisher_pks:
         return('Error: Please use the \"Register for lottery\". You must also wait for at least 1 confirmation')
 
     handle = input('Please input your name/handle. This will be used in ' + 
