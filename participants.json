@@ -13,10 +13,15 @@
     "handle": "Exile13",
     "pubkey": "03d14e810f3458ce760a83c2c2193cf4ac9b1df774e7267193d66238cb38c0e25c",
     "signed_msg": "IFX4gmHg9G/z27PT+8xOfOwo46jZlXkQQsrj7MCkxlMeNBFU6P/p3hN1eCvAyz16WpNgQGKuZl2B+euRF1emGrQ=['Exile13', '13']"
-  } 
+  },
   {
     "handle": "strob",
     "pubkey": "03e35f0de8a871bf4b04d09b01e686c307fadf8df9239f3ec18920106c72876fbb",
     "signed_msg": "IPvWAr9JLZs/3mtARQ1rpzqIk3QsSsFRrEpo48CLUpKCNofP3X5oWRFFNO730g6kSjuGo8tLFFQjX68jm292QA8=['strob', 'chocolate']"
-  } 
+ },
+ {
+    "handle": "mrlynch",
+    "pubkey": "02c3f0367df831822a0b21b218bc16d7126c4be1c3184d648b4fa6cfb4366af0f4",
+    "signed_msg": "IDf+UqK9MZ6evxRAYFF8KCtkr46cbUP3wcF9VX9Hey2BDlRfXcirraj0joNQuAZOY32YON/7Sq+cBO9/oXkwILM=['mrlynch', '42']"
+ }
 ]
