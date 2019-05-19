@@ -23,5 +23,10 @@
     "handle": "mrlynch",
     "pubkey": "02c3f0367df831822a0b21b218bc16d7126c4be1c3184d648b4fa6cfb4366af0f4",
     "signed_msg": "IDf+UqK9MZ6evxRAYFF8KCtkr46cbUP3wcF9VX9Hey2BDlRfXcirraj0joNQuAZOY32YON/7Sq+cBO9/oXkwILM=['mrlynch', '42']"
+ },
+ {
+    "handle": "phm87",
+    "pubkey": "02fa548f704119fb09422abf3cbff228eefe0843c496c415056cfb44e6e4320dc6",
+    "signed_msg": "IHLbdSY2wyEADhVrZBfjSzKbTNwoq0ZAHQZMoj57W4XuGa68MZYE3A5O9Kay3AhdROv7xcdMt3HYb58qv+8zAnY=['phm87', '87']"
  }
 ]
