@@ -14,56 +14,6 @@
     "freq":5
   },
   {
-    "ac_name": "CFEKDRAGON",
-    "ac_supply": "200",
-    "ac_reward": "1000000000",
-    "ac_nk": "77,3",
-    "ac_notarypay": "100000000",
-    "ac_cc": "533",
-    "addnode": [
-       "103.6.12.112",
-       "149.28.8.219",
-       "45.76.120.247"
-    ],
-    "freq":5
-  },
-  {
-    "ac_name": "CFEKHOUND",
-    "ac_supply": "200000",
-    "ac_reward": "1000000000",
-    "ac_nk": "77,3",
-    "ac_notarypay": "100000000",
-    "ac_cc": "533",
-    "addnode": [
-       "195.201.20.230",
-       "195.201.137.5",
-       "149.28.8.219",
-       "103.6.12.112",
-       "45.76.120.247"
-    ],
-    "freq":5
-  },
-  {
-    "ac_name": "CFEKPAY",
-    "ac_supply": "10000000000",
-    "ac_reward": "1",
-    "ac_end": "1",
-    "ac_cc": "2",
-    "ac_ccenables": "240",
-    "ac_algo": "verushash11",
-    "ac_snapshot": "1440",
-    "ac_founders_reward": "1000000000000000",
-    "ac_founders": "1440",
-    "ac_script": "2ea22c8020987fad30df055db6fd922c3a57e55d76601229ed3da3b31340112e773df3d0d28103120c008203000401ccb8",
-    "earlytxid": "ece9a5ecbcdedf1ec47ffa7e6fd7b7079780c1db36aa4b187e6a07f039105ae3",
-    "addnode": [
-      "195.201.20.230",
-      "195.201.137.5",
-      "103.6.12.112"
-    ],
-    "freq": 10
-   },
-   {
     "ac_name": "LABSRCTEST",
     "ac_supply": "350689",
     "ac_reward": "0,0,800000000",
