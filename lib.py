@@ -407,7 +407,7 @@ def lottery_join(rpc, oracle):
 
     print('mypk', mypk)
     print('publishers_pks', publisher_pks)
-    input('break point')
+    input('break point ')
 
     if not mypk in publisher_pks:
         return('Error: Please use the \"Register for lottery\". You must also wait for at least 1 confirmation')
