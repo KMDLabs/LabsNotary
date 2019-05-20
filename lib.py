@@ -542,7 +542,7 @@ def lottery_verify(rpc, oracle):
     result = {}
     lresult = []
     for i in par_data:
-        presha = i + par_data[i] + blockhash
+        presha = i + par_data[i] + blockhash.strip()
         presha_encode = presha.encode('utf-8')
         hash_obj = hashlib.sha256(presha_encode)
         result[hash_obj.hexdigest()] = i
