@@ -551,6 +551,6 @@ def lottery_verify(rpc, oracle):
     lresult.sort()
     ranks = []
     for sha_hash in lresult:
-        ranks.append(result[sha_hash])
+        ranks.append([result[sha_hash], sha_hash])
     return(ranks)
 
