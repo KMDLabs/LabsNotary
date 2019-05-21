@@ -44,8 +44,7 @@ sudo ufw allow 9997
 sudo ufw allow 22
 sudo ufw enable
 ```
-There is a KMD bootstrap here if you want to use this first before starting it will save a lot of time, also some VPS providers seem to be skimmping on RAM, and will crash trying to sync KMD, in this case you need to use the bootstrap. Its not ideal, but it works. 
-
+Bootstrap for KMD is here. But if possilbe please sync KMD from scratch, as we are now in production. 
 https://bootstrap.0x03.services/komodo/KMD.html
 
 After this we are ready to launch KMD and any chains that happen to be in `assetchains.json` and import our private keys to them all.
