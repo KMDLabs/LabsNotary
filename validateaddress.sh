@@ -26,7 +26,7 @@ mine=$(echo $validateaddress | jq -r .ismine)
 if [[ $mine = "false" ]]; then
   echo "[$1] : Importing Private Key..... May take a very long time."
   echo -n "[$1] : "
-  height = $($chain getblockcount)
+  height=$($chain getblockcount)
   if [[ $height -lt 10000 ]]; then 
     $chain importprivkey $privkey 
   else
