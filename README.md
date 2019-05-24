@@ -23,7 +23,7 @@ sudo apt-get install python3-dev python3 libgnutls28-dev libssl-dev python3-pip
 
 pip3 install setuptools 
 pip3 install wheel 
-pip3 base58 slick-bitcoinrpc requests python-bitcoinlib
+pip3 base58 slick-bitcoinrpc requests python-bitcoinlib configparser
 ```
 
 #### Install the relavent repos and dependancies 
