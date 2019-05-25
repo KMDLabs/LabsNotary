@@ -95,7 +95,7 @@ for block in range(2,height):
 
 for i in notary_keys:
     score[notary_keys[i]] = getnotarysendmany_result[i]
-
+notaryname = ''
 getinfo_result = rpc_connection.getinfo()
 if 'notaryname' in getinfo_result:
     notaryname = getinfo_result['notaryname']
