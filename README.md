@@ -48,7 +48,7 @@ nano config.ini
 ```
 We also need to unblock the iguana port. To find this:
 ```shell
-sudo ufw allow 9997
+sudo ufw allow 9333
 sudo ufw allow 22
 sudo ufw enable
 ```
