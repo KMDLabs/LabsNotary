@@ -169,7 +169,7 @@ def vote_results(rpc, poll):
                     continue
 
     for pubkey in votes:
-        result[pubkey_name[pubkey]] = votes[pubkey][0][0]
+        result[pubkey_name[pubkey]] = votes[pubkey][0]['data']
 
     return(result)
 
@@ -474,7 +474,7 @@ def lottery_participants(rpc, oracle):
             samples = rpc.oraclessamples(oracle['txid'], txid, '0')
             if samples['samples']:
                 times.append(blocktime)
-                time_sample[blocktime] = samples['samples'][0][0]
+                time_sample[blocktime] = samples['samples'][0]['data']
             else:
                 continue
 
