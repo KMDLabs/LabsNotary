@@ -49,10 +49,10 @@ def initial_loop(chain, msg):
         print_menu(initial_menu, chain, msg, True)
         selection = lib.user_inputInt(0,len(initial_menu)-1,"make a selection:")
         if int(selection) == 0:
-            msg = vote_loop('CFEKTT', '')
+            msg = vote_loop('LABS', '')
             vote_loop(chain, msg)
         elif int(selection) == 1:
-            msg = lottery_loop('CFEKTT', '')
+            msg = lottery_loop('LABS', '')
             vote_loop(chain, msg)
 
 
