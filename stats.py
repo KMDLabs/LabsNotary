@@ -5,6 +5,7 @@ import json
 import platform
 import os
 import bitcoin
+import sys
 from bitcoin.wallet import P2PKHBitcoinAddress
 from bitcoin.core import x
 from bitcoin.core import CoreMainParams
@@ -68,7 +69,14 @@ def def_credentials(chain):
 
 CHAIN = input('Please specify chain: ')
 ADDRESS = 'RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA'
-rpc_connection = def_credentials(CHAIN)
+
+try:
+   rpc_connection = def_credentials(CHAIN)
+except:
+   print(CHAIN + ' daemon is not running or RPC creds not found')
+   sys.exit(0)
+
+print('Please wait...')
 
 getinfo_result = rpc_connection.getinfo()
 height = getinfo_result['blocks']
@@ -100,10 +108,19 @@ getinfo_result = rpc_connection.getinfo()
 if 'notaryname' in getinfo_result:
     notaryname = getinfo_result['notaryname']
 
+total = 0
+for i in score:
+    total += score[i]
+
+average = int((total / len(score)/4))
+
 s = [(k, score[k]) for k in sorted(score, key=score.get, reverse=True)]
 for k, v in s:
     if k == notaryname:
         myscore = str(k) + ' ' + str(v)
         print(colorize(myscore, 'green'))
+    if v < average:
+        dropped_NN = str(k) + ' ' + str(v)
+        print(colorize(dropped_NN, 'red'))
     else:
         print(k, v)
