@@ -49,10 +49,10 @@ def initial_loop(chain, msg):
         print_menu(initial_menu, chain, msg, True)
         selection = lib.user_inputInt(0,len(initial_menu)-1,"make a selection:")
         if int(selection) == 0:
-            msg = vote_loop('CFEKORC', '')
+            msg = vote_loop('CFEKTT', '')
             vote_loop(chain, msg)
         elif int(selection) == 1:
-            msg = lottery_loop('CFEKORC', '')
+            msg = lottery_loop('CFEKTT', '')
             vote_loop(chain, msg)
 
 
@@ -71,12 +71,11 @@ def lottery_loop(chain, msg):
             initial_loop(chain, '')
         elif int(selection) == 1:
             msg = ('1. Securely create an address. This address will be your notary node address.\n' +
-                  '2. Start the CFEKORC daemon with -pubkey for this address.\n'  + 
-                  '3. Obtain some CFEKORC via mining or asking a community member\n' + 
-                  '4. Select \"Register for lottery\". This will output a txid. Wait for this to confirm.\n' +
-                  '5. Select \"Join lottery\". This will ask you for your handle. It will also ask you to input'  +
+                  '2. Start the LABS daemon with -pubkey for this address.\n'  + 
+                  '3. Select \"Register for lottery\". This will output a txid. Wait for this to confirm.\n' +
+                  '4. Select \"Join lottery\". This will ask you for your handle. It will also ask you to input'  +
                   ' a message. This message can be anything you choose, consider it choosing numbers for a lottery\n' +
-                  '6. Select \"Create signed message\". This will output a signed messaged.' +
+                  '5. Select \"Create signed message\". This will output a signed messaged.' +
                   ' You must add this to the participants.json file of the StakedNotary repo and send a pull request.' + 
                   ' You must also post this to the #kmdlabs'  +
                   ' channel in the KMD discord. \n\nPlease note, you must do all of this prior to the deadline.' +
@@ -131,6 +130,8 @@ def vote_selection(chain, msg, reg_or_vote):
     os.system('clear')
     rpc_connection = test_rpc(chain)
     active_polls = lib.list_polls(rpc_connection, True)
+    if not active_polls:
+        vote_loop(chain, 'Error: no polls found')
     if str(active_polls).startswith('Error'):
         vote_loop(chain, str(active_polls))
     os.system('clear')
@@ -159,4 +160,4 @@ vote_menu = ['List active polls', 'Register to vote', 'Vote', 'Voting results', 
 lottery_menu = ['How to participate', 'View participants', 'Register for lottery','Join lottery', 'Create signed message','Verify results']
 
 
-initial_loop('CFEKORC', '')
+initial_loop('LABS', '')
