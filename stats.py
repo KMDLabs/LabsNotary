@@ -119,7 +119,7 @@ for k, v in s:
     if k == notaryname:
         myscore = str(k) + ' ' + str(v)
         print(colorize(myscore, 'green'))
-    if v < average:
+    elif v < average:
         dropped_NN = str(k) + ' ' + str(v)
         print(colorize(dropped_NN, 'red'))
     else:
