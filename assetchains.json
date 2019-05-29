@@ -49,9 +49,6 @@
     "ac_algo": "verushash11",
     "ac_cc": "313",
     "ac_blocktime": "300",
-    "ac_staked": "51",
-    "ac_notarypay": "64,100000000,1000000000",
-    "ac_eras": "3",
     "addnode": [
       "195.201.20.230",
       "159.69.45.70"
