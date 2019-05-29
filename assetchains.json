@@ -20,13 +20,13 @@
     "freq": 5
   },
   {
-    "ac_name": "CFEKBET0",
+    "ac_name": "CFEKBET1",
     "ac_supply": "77777",
     "ac_reward": "700000000",
     "ac_cbopret": "7",
     "ac_cc": 313,
     "ac_ccenable": "226,236,237,240",
-    "ac_staked": "90",
+    "ac_algo": "verushash11",
     "ac_blocktime": "300",
     "ac_notarypay": "250000000",
     "ac_snapshot": "288",
@@ -34,7 +34,7 @@
     "ac_earlytxidcontract": "237",
     "ac_prices": "ETH,LTC,BNB,NEO,LRC,QTUM,OMG,ZRX,STRAT,IOTA,XVG,KMD,EOS,ZEC,DASH,XRP,STORJ,XMR,BAT,BTS,LSK,ADA,WAVES,STEEM,RVN,DCR,XEM,ICX,HOT,ENJ",
     "ac_stocks": "AAPL,ADBE,ADSK,AKAM,AMD,AMZN,ATVI,BB,CDW,CRM,CSCO,CYBR,DBX,EA,FB,GDDY,GOOG,GRMN,GSAT,HPQ,IBM,INFY,INTC,INTU,JNPR,MSFT,MSI,MU,MXL,NATI,NCR,NFLX,NTAP,NVDA,ORCL,PANW,PYPL,QCOM,RHT,S,SHOP,SNAP,SPOT,SYMC,SYNA,T,TRIP,TWTR,TXN,VMW,VOD,VRSN,VZ,WDC,XRX,YELP,YNDX,ZEN,BRK.A",
-    "earlytxid": "59b9679911c59d30572de112a34286a3c221657df7f34b398ef01361dcf62d08",
+    "earlytxid": "86618f7fb240550f8e0cca9cb0c955caa06a54e7f8b22ab37031f6161e830444",
     "addnode": [
       "195.201.20.230",
       "159.69.45.70"
