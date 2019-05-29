@@ -9,10 +9,10 @@ else:
     specific_chain = False
 
 def format_param(param, value):
-    return '-' + param + '=' + value
+    return '-' + str(param) + '=' + str(value)
 
 def format_bool(param):
-    return '-' + param
+    return '-' + str(param)
 
 script_dir = os.getcwd()
 with open(script_dir + '/assetchains.json') as file:
