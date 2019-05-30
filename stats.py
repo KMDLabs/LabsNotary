@@ -95,12 +95,14 @@ for block in range(2,height):
     if len(getblock_result['tx'][0]['vout']) > 1:
         vouts = getblock_result['tx'][0]['vout']
         for vout in vouts[1:]:
-            addr = vout['scriptPubKey']['addresses'][0]
-            if addr in getnotarysendmany_result:
-                getnotarysendmany_result[addr] += 1
-            else:
-                print('BUG in the coinbase tx, please report this.')
-
+            try:
+                addr = vout['scriptPubKey']['addresses'][0]
+                if addr in getnotarysendmany_result:
+                    getnotarysendmany_result[addr] += 1
+                else:
+                    print('BUG in the coinbase tx, please report this.')
+            except:
+                pass
 for i in notary_keys:
     score[notary_keys[i]] = getnotarysendmany_result[i]
 notaryname = ''
