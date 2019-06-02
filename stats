@@ -1,6 +1,6 @@
 #!/bin/bash
 
-myscriptDir="$( cd "$(dirname "$0")" ; pwd -P )"
+myscriptDir="$( cd "$(dirname -- "$0")" ; pwd -P )"
 cd $myscriptDir
 
 #Stats script for Komodo Notary Nodes
