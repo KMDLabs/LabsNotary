@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
-
-import re
-import json
-import platform
-import os
-import bitcoin
+import lib
 import sys
+import bitcoin
 from bitcoin.wallet import P2PKHBitcoinAddress
 from bitcoin.core import x
 from bitcoin.core import CoreMainParams
@@ -19,67 +15,21 @@ class CoinParams(CoreMainParams):
 
 bitcoin.params = CoinParams
 
-from slickrpc import Proxy
-
-def colorize(string, color):
-    colors = {
-        'blue': '\033[94m',
-        'magenta': '\033[95m',
-        'green': '\033[92m',
-        'red': '\033[91m'
-    }
-    if color not in colors:
-        return string
-    else:
-        return colors[color] + string + '\033[0m'
-
-
-# fucntion to define rpc_connection
-def def_credentials(chain):
-    rpcport = '';
-    operating_system = platform.system()
-    if operating_system == 'Darwin':
-        ac_dir = os.environ['HOME'] + '/Library/Application Support/Komodo'
-    elif operating_system == 'Linux':
-        ac_dir = os.environ['HOME'] + '/.komodo'
-    elif operating_system == 'Windows':
-        ac_dir = '%s/komodo/' % os.environ['APPDATA']
-    if chain == 'KMD':
-        coin_config_file = str(ac_dir + '/komodo.conf')
-    else:
-        coin_config_file = str(ac_dir + '/' + chain + '/' + chain + '.conf')
-    with open(coin_config_file, 'r') as f:
-        for line in f:
-            l = line.rstrip()
-            if re.search('rpcuser', l):
-                rpcuser = l.replace('rpcuser=', '')
-            elif re.search('rpcpassword', l):
-                rpcpassword = l.replace('rpcpassword=', '')
-            elif re.search('rpcport', l):
-                rpcport = l.replace('rpcport=', '')
-    if len(rpcport) == 0:
-        if chain == 'KMD':
-            rpcport = 7771
-        else:
-            print("rpcport not in conf file, exiting")
-            print("check " + coin_config_file)
-            exit(1)
-
-    return (Proxy("http://%s:%s@127.0.0.1:%d" % (rpcuser, rpcpassword, int(rpcport))))
 
 CHAIN = input('Please specify chain: ')
 ADDRESS = 'RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA'
 
 try:
-   rpc_connection = def_credentials(CHAIN)
+   rpc_connection = lib.def_credentials(CHAIN)
 except:
    print(CHAIN + ' daemon is not running or RPC creds not found')
    sys.exit(0)
 
 try:
-    block_range = int(input('Please specify amount of previous block(0 for all): '))
+    block_range = int(input('Please specify amount of previous blocks(0 for all): '))
 except:
     print('Blocks must be whole number. Exiting...')
+    sys.exit(0)
 
 print('Please wait...')
 
@@ -96,8 +46,9 @@ for notary in iguana_json['notaries']:
         notary_keys[addr] = i
 
 start_height = height - block_range
-if block_range == 0:
+if block_range == 0 or block_range > height:
     start_height = 2
+
 
 for block in range(start_height,height):
     getblock_result = rpc_connection.getblock(str(block), 2)
@@ -129,9 +80,9 @@ s = [(k, score[k]) for k in sorted(score, key=score.get, reverse=True)]
 for k, v in s:
     if k == notaryname:
         myscore = str(k) + ' ' + str(v)
-        print(colorize(myscore, 'green'))
+        print(lib.colorize(myscore, 'green'))
     elif v < average:
         dropped_NN = str(k) + ' ' + str(v)
-        print(colorize(dropped_NN, 'red'))
+        print(lib.colorize(dropped_NN, 'red'))
     else:
         print(k, v)
