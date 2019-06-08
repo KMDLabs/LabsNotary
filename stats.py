@@ -76,6 +76,11 @@ except:
    print(CHAIN + ' daemon is not running or RPC creds not found')
    sys.exit(0)
 
+try:
+    block_range = int(input('Please specify amount of previous block(0 for all): '))
+except:
+    print('Blocks must be whole number. Exiting...')
+
 print('Please wait...')
 
 getinfo_result = rpc_connection.getinfo()
@@ -90,7 +95,11 @@ for notary in iguana_json['notaries']:
         addr = str(P2PKHBitcoinAddress.from_pubkey(x(notary[i])))
         notary_keys[addr] = i
 
-for block in range(2,height):
+start_height = height - block_range
+if block_range == 0:
+    start_height = 2
+
+for block in range(start_height,height):
     getblock_result = rpc_connection.getblock(str(block), 2)
     if len(getblock_result['tx'][0]['vout']) > 1:
         vouts = getblock_result['tx'][0]['vout']
