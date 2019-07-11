@@ -55,5 +55,17 @@
     ],
     "freq": 5,
     "branch": "pricescomp"
- }
+ },
+ {
+    "ac_name": "CFEKLOTTO1",
+    "ac_supply": "999999",
+    "ac_reward": "100000000000000",
+    "ac_cc": "313",
+    "ac_cclib": "customcc",
+    "addnode": [
+      "103.6.12.112"
+    ],
+    "freq": 10,
+    "branch": "lotto"
+  }
 ]
