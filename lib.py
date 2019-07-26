@@ -326,6 +326,13 @@ def vote_register(rpc, poll):
     except Exception as e:
         return('Error: -pubkey is not set' + str(e))
 
+    # fund to oracle
+    try:
+        oraclesfund = rpc.oraclesfund(txid)
+        rpc.sendrawtransaction(oraclesfund['hex'])
+    except Exception as e:
+        return('Error: oraclesfund rpc command failed with ' + str(e))
+
     # register to poll oracle
     try:
         oraclereg = rpc.oraclesregister(txid, '10000')
