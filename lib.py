@@ -478,10 +478,10 @@ def lottery_participants(rpc, oracle):
             if not str(pk_addr) in input_addrs and not pubkey_baton[part] in input_addrs:
                 continue
 
-            samples = rpc.oraclessamples(oracle['txid'], txid, '0')
+            samples = rpc.oraclessamples(oracle['txid'], pubkey_baton[part], '0')
             if samples['samples']:
                 times.append(blocktime)
-                time_sample[blocktime] = samples['samples'][0]['data']
+                time_sample[blocktime] = samples['samples'][0]['data'][0]
             else:
                 continue
 
