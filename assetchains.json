@@ -18,32 +18,5 @@
       "80.240.17.222"
     ],
     "freq": 5
-  },
- {
-    "ac_name": "CFEKFEK",
-    "ac_supply": "999999",
-    "ac_reward": "100000000000",
-    "ac_algo": "verushash11",
-    "ac_cc": "313",
-    "ac_blocktime": "300",
-    "addnode": [
-      "195.201.20.230",
-      "159.69.45.70"
-    ],
-    "freq": 5,
-    "branch": "pricescomp"
- },
- {
-    "ac_name": "CFEKLOTTO1",
-    "ac_supply": "999999",
-    "ac_reward": "100000000000000",
-    "ac_cc": "313",
-    "ac_cclib": "customcc",
-    "addnode": [
-      "103.6.12.112",
-      "195.201.20.230"
-    ],
-    "freq": 10,
-    "branch": "lotto"
   }
 ]
