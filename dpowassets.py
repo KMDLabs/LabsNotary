@@ -60,7 +60,7 @@ def dpow(symbol, freq, iguana_rpc):
 # dpow assetchains
 for chain in assetchains:
     ac_chain = chain['ac_name']
-    ac_iguana_rpc = int(chain['iguana_rpc'])
+    ac_iguana_rpc = chain['iguana_rpc']
     for param, value in chain.items():
         if param == 'freq':
             ac_freq = chain['freq']

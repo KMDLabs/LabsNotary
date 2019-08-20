@@ -14,7 +14,7 @@ outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo "Starting iguana $json"
   # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard, it will unlock the utxos used by the other one and could cause problems. 
-  # NEED FIX PLEASE? 
+  # NEED FIX PLEASE? or offload this problem to daemon utxo cache?
   komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
   iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi

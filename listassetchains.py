@@ -3,8 +3,8 @@ import os
 import json
 import sys
 
-if len(sys.argv) > 1:
-    specific_iguana = sys.argv[1]
+if len(sys.argv) > 0:
+    specific_iguana = sys.argv[0]
 else:
     specific_iguana = False
 
