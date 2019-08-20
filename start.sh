@@ -210,6 +210,21 @@ else
   exit 1
 fi
 
+# Here we will extract all iguanas in assetchains.json and update them in the background while waiting for KMD to start
+./listlizards.py | while read branch; do
+    checkSuperNETRepo "${branch}"
+    outcome=$(echo $?)
+    if [[ ${outcome} -eq 1 ]]; then
+      rm iguana/$branch/iguana
+    fi
+
+    if [[ ! -f iguana/$branch/iguana ]]; then
+      echo "[$branch] Building iguana...."
+      ./build_iguana ${branch} &
+      pkill -15 "iguana $branch".json
+    fi
+done
+
 # Validate Address on KMD + AC, will poll deamon until started then check if address is imported, if not import it.
 echo "[KMD] : Waiting for KMD daemon to start..."
 ./validateaddress.sh KMD
@@ -241,21 +256,6 @@ if [[ $abort -eq 1 ]]; then
   exit 1
 fi
 
-# Here we will extract all iguanas in assetchains.json and update them if required. 
-./listlizards.py | while read branch; do
-    checkSuperNETRepo "${branch}"
-    outcome=$(echo $?)
-    if [[ ${outcome} -eq 1 ]]; then
-      rm iguana/$branch/iguana
-    fi
-
-    if [[ ! -f iguana/$branch/iguana ]]; then
-      echo "[$branch] Building iguana...."
-      ./build_iguana ${branch} &
-      pkill -15 "iguana $branch".json
-    fi
-done
-
 echo "Checking chains are in sync..."
 
 abort=0
@@ -265,13 +265,13 @@ if [[ $outcome = 0 ]]; then
   abort=1
 fi
 
-for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
-  checksync $row
-  outcome=$(echo $?)
-  if [[ $outcome = 0 ]]; then
-    abort=1
-  fi
-done
+#for row in $(echo "${ac_json}" | jq  -r '.[].ac_name'); do
+#  checksync $row
+#  outcome=$(echo $?)
+#  if [[ $outcome = 0 ]]; then
+#    abort=1
+#  fi
+#done
 
 iguanajson=$(cat staked.json | jq -c '.' )
 newiguanajson=$(komodo/master/komodo-cli getiguanajson | jq -c '.')
