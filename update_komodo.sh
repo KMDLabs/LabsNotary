@@ -23,6 +23,7 @@ checkRepo () {
     git remote update > /dev/null 2>&1
     remoterev=$(git rev-parse origin/$1)
     cd $prevdir
+    echo "[$1] Komodod local_commit: $localrev vs remote_commit: $remoterev"
     if [ $localrev != $remoterev ]; then
       return 1
     else
