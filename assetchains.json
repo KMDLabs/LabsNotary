@@ -17,6 +17,25 @@
       "195.201.20.230",
       "80.240.17.222"
     ],
-    "freq": 5
+    "freq": 5,
+    "iguana": "staked",
+    "iguana_rpc": "9333"
+  },
+  {
+    "ac_name": "CFEKMYLO",
+    "ac_supply": "999999",
+    "ac_reward": "800000000",
+    "ac_cc": "1337",
+    "ac_ccenable": "226,236",
+    "ac_cclib": "labs",
+    "ac_sapling": "1",
+    "addnode": [
+      "195.201.20.230",
+      "80.240.17.222"
+    ],
+    "freq": 5,
+    "branch": "utxocache",
+    "iguana": "blackjok3r",
+    "iguana_rpc": "6789"
   }
 ]

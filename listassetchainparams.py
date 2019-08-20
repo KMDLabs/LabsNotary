@@ -27,7 +27,9 @@ with open(script_dir + '/assetchains.json') as file:
                 continue
             if param == 'branch':
                 continue
-            if param == 'burntxid':
+            if param == 'iguana':
+                continue
+            if param == 'iguana_rpc':
                 continue
             if type(value) is bool:
                 params.append(format_bool(param))

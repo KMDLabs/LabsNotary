@@ -43,7 +43,7 @@ iguana_url = 'http://' + conn['iguana_ip'] + ':' + conn['iguana_port']
 btcpubkey = config[ENVIRON]['btcpubkey']
 
 # dpow
-def dpow(symbol, freq):
+def dpow(symbol, freq, iguana_rpc):
     payload = {
         "agent": "iguana",
         "method": "dpow",
@@ -51,14 +51,17 @@ def dpow(symbol, freq):
         "freq": freq,
         "pubkey": btcpubkey
     }
+    # define url's
+    iguana_url = 'http://' + conn['iguana_ip'] + ':' + iguana_rpc
     response_dpow = post_rpc(iguana_url, payload)
     print('== response_dpow ' + symbol + ' ==')
     pp.pprint(response_dpow)
 
 # dpow assetchains
 for chain in assetchains:
+    ac_chain = chain['ac_name']
+    ac_iguana_rpc = int(chain['iguana_rpc'])
     for param, value in chain.items():
-        ac_chain = chain['ac_name']
         if param == 'freq':
             ac_freq = chain['freq']
-            dpow(ac_chain,ac_freq)
+            dpow(ac_chain,ac_freq,ac_iguana_rpc)

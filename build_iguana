@@ -1,5 +1,8 @@
 #!/bin/bash
 cd ~/SuperNET/iguana/
+if [[ ! -z $1 ]]; then
+    git checkout $1
+fi
 
 # I added to command to remove iguana executable here, for simplification. Do all things related to this in one script.
 rm -f ~/StakedNotary/iguana/iguana *.o

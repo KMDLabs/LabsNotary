@@ -78,6 +78,32 @@ checksync () {
   return 1
 }
 
+checkSuperNETRepo () {
+    if [ -z $1 ]; then
+      return
+    fi
+    prevdir=${PWD}
+    if [[ ! -f iguana/$1/lastbuildcommit ]]; then
+      eval cd "$HOME/SuperNET"
+      git pull > /dev/null 2>&1
+      git checkout $1 > /dev/null 2>&1
+      localrev=$(git rev-parse HEAD)
+      mkdir -p $HOME/StakedNotary/iguana/$1
+      echo $localrev > $HOME/StakedNotary/iguana/$1/lastbuildcommit
+      cd $prevdir
+    fi
+    localrev=$(cat iguana/$1/lastbuildcommit)
+    eval cd "$HOME/SuperNET"
+    git remote update > /dev/null 2>&1
+    remoterev=$(git rev-parse origin/$1)
+    cd $prevdir
+    if [ $localrev != $remoterev ]; then
+      return 1
+    else
+      return 0
+    fi
+}
+
 daemon_stopped () {
   if [[ $1 = "KMD" ]]; then
     pidfile="$HOME/.komodo/komodod.pid"
@@ -87,7 +113,8 @@ daemon_stopped () {
   while [[ -f $pidfile ]]; do
     pid=$(cat $pidfile 2> /dev/null)
     outcome=$(ps -p $pid 2> /dev/null | grep komodod)
-    if [[ ${outcome} == "" ]]; then
+    outcome=$(echo $?)
+    if [[ ${outcome} -eq 1 ]]; then
       rm $pidfile
     fi
     sleep 2
@@ -95,7 +122,6 @@ daemon_stopped () {
 }
 
 cd /home/$USER/StakedNotary
-export LABS_FLAGS="ENABLE_LABS"
 git pull
 pubkey=$(./printkey.py pub)
 Radd=$(./printkey.py Radd)
@@ -215,20 +241,20 @@ if [[ $abort -eq 1 ]]; then
   exit 1
 fi
 
-cd ~/SuperNET
-returnstr=$(git pull)
-cd /home/$USER/StakedNotary
-if [[ $returnstr = "Already up-to-date." ]]; then
-  echo "No Iguana update detected"
-else
-  rm iguana/iguana
-fi
+# Here we will extract all iguanas in assetchains.json and update them if required. 
+./listlizards.py | while read branch; do
+    checkSuperNETRepo "${branch}"
+    outcome=$(echo $?)
+    if [[ ${outcome} -eq 1 ]]; then
+      rm iguana/$branch/iguana
+    fi
 
-if [[ ! -f iguana/iguana ]]; then
-  echo "Building iguana"
-  ./build_iguana
-  pkill -15 iguana
-fi
+    if [[ ! -f iguana/$branch/iguana ]]; then
+      echo "[$branch] Building iguana...."
+      ./build_iguana ${branch} &
+      pkill -15 "iguana $branch".json
+    fi
+done
 
 echo "Checking chains are in sync..."
 

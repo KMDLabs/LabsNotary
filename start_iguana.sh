@@ -1,36 +1,59 @@
 #!/bin/bash
-pgrep -af iguana | grep -v "$0" > /dev/null 2>&1
+branch="staked"
+json="staked.json"
+rpc=$(./printkey.py rpc)
+# ./start_iguana blackjok3r
+if [[ ! -z $1 ]]; then
+    branch=$1
+    rpc=$(cat assetchains.json | jq -r --arg branch $branch '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
+    cat staked.json | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' >> "${branch}.json"
+    json="${branch}.json"
+fi
+pgrep -af "iguana ${json}" | grep -v "$0" > /dev/null 2>&1
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
-  echo "Starting iguana"
-  # unlock any locked utxos before restarting
+  echo "Starting iguana $json"
+  # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard, it will unlock the utxos used by the other one and could cause problems. 
+  # NEED FIX PLEASE? 
   komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
-  iguana/iguana staked.json & #> iguana.log 2> error.log &
+  tries=0
+  # we set the iguanas to build in the background while waiting for chains sync. Wait until they are built, max 600s.
+  while [[ ! -f iguana/$branch/iguana ]] || [[ tries -lt 120 ]]; do 
+    sleep 5
+    tries=$(( tries +1 ))
+    if [[ tries -eq 120 ]]; then
+        echo "[$branch] Iguana failed to build... "
+        exit 1
+    fi
+  done
+  iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi
 
 myip=`curl -s4 checkip.amazonaws.com`
 sleep 4
-curl --url "http://127.0.0.1:7776" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"
+curl --url "http://127.0.0.1:$rpc" --data "{\"agent\":\"SuperNET\",\"method\":\"myipaddr\",\"ipaddr\":\"$myip\"}"
 sleep 3
 
 # addnotary method
 for i in `cat peer_ips.txt`
 do
     echo "Adding notary: $i"
-    curl -s --url "http://127.0.0.1:7776" \
-        --data "{\"agent\":\"iguana\",\"method\":\"addnotary\",\"ipaddr\":\"$i\"}"
+    curl -s --url "http://127.0.0.1:$rpc" --data "{\"agent\":\"iguana\",\"method\":\"addnotary\",\"ipaddr\":\"$i\"}"
 done
 
-# external coins.
-iguana/coins/kmd_7776
+# add KMD 
+cat iguana/coins/kmd_7776 | sed "s/:7776/:${rpc}/" > iguana/coins/kmd_$rpc
+chmod +x iguana/coins/kmd_$rpc
+/iguana/coins/kmd_$rpc
 
 # Unlock wallet.
 passphrase=$(./printkey.py wif)
-curl -s --url "http://127.0.0.1:7776" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
+curl -s --url "http://127.0.0.1:$rpc" --data "{\"method\":\"walletpassphrase\",\"params\":[\"$passphrase\", 9999999]}"
 
 # addcoin method for assetchains
-./listassetchains.py | while read chain; do
+./listassetchains.py ${branch} | while read chain; do
   coin="iguana/coins/$chain"_7776
+  sed -i "s/:7776/:${rpc}/" $coin 
   $coin
 done
 
