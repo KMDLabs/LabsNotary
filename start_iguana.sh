@@ -16,7 +16,7 @@ if [[ $outcome != 0 ]]; then
   # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard of many, it will unlock the utxos used by the others also.
   # NEED FIX PLEASE? or offload this problem to daemon utxo cache?
   komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
-  screen -S $json -m iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
+  screen -S $json -d -m iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi
 
 myip=`curl -s4 checkip.amazonaws.com`
