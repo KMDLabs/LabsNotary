@@ -253,16 +253,16 @@ abort=0
     if [[ $restart_chain == $chain ]]; then
       ./asset-cli $chain stop
       daemon_stopped $chain
+      if [[ $(./assetchains $chain ${@}) = "finished" ]]; then
+        echo "[$chain] : Waiting for $chain daemon to restart..."
+        ./validateaddress.sh $chain
+        echo "Restarted $chain with blocknotify in conf"
+      else
+        echo -e "\033[1;31m Starting $chain with blocknotify in conf failed: help human! \033[0m"
+        exit 1
+      fi
     fi
   done
-  if [[ $(./assetchains $chain ${@}) = "finished" ]]; then
-    echo "[$chain] : Waiting for $chain daemon to restart..."
-    ./validateaddress.sh $chain
-    echo "Restarted $chain with blocknotify in conf"
-  else
-    echo -e "\033[1;31m Starting $chain with blocknotify in conf failed: help human! \033[0m"
-    exit 1
-  fi
   validateaddress=$(komodo-cli -ac_name=$chain validateaddress $Radd 2> /dev/null)
   outcome=$(echo $?)
   if [[ ${outcome} -eq 1 ]]; then
