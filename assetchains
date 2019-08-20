@@ -1,12 +1,21 @@
 #!/bin/bash
 set -eo pipefail
 pubkey=$(./printkey.py pub)
-overide_args="$@"
+overide_args="$2 $3 $4 $5 $6 $7 $8 $9"
+echo "" > restart_queue
 
-./listassetchainparams.py | while read args; do
+./listassetchainparams.py $1 | while read args; do
   ac=$(echo $args | grep -o 'ac_name=[^ ,]\+')
   ac=$(echo "${ac#*=}")
   branch=$(cat assetchains.json | jq -r --arg chain $ac '.[] | select (.ac_name == $chain) | .branch')
+  iguana=$(cat assetchains.json | jq -r --arg chain $ac '.[] | select (.ac_name == $chain) | .iguana')
+  conf="$HOME/.komodo/$ac/$ac.conf"
+  if [[ $iguana == "blackjok3r" ]] && [[ -f $conf ]]; then
+    sed -i '/blocknotify/d' $conf
+    echo "blocknotify=curl -s --url \"http://127.0.0.1:7776\" --data \"{\\\"agent\\\":\\\"dpow\\\",\\\"method\\\":\\\"updatechaintip\\\",\\\"blockhash\\\":\\\"%s\\\",\\\"symbol\\\":\\\"$ac\\\"}\"" >> ${conf}
+  else
+    echo "$ac" > restart_queue
+  fi
   if [[ $branch = "null" ]]; then
     screen -S $ac -d -m $HOME/StakedNotary/komodo/master/komodod $args $overide_args -pubkey=$pubkey &
   else

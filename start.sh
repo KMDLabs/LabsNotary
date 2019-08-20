@@ -207,7 +207,7 @@ echo "[KMD] : Starting KMD"
 screen -S "KMD" -d -m $HOME/StakedNotary/komodo/master/komodod -stakednotary=1 -pubkey=$pubkey &
 
 # Start assets
-if [[ $(./assetchains $1) = "finished" ]]; then
+if [[ $(./assetchains "" ${@}) = "finished" ]]; then
   echo "Started Assetchains"
 else
   echo -e "\033[1;31m Starting Assetchains Failed: help human! \033[0m"
@@ -226,7 +226,7 @@ fi
       if [[ $firstlizard == "" ]]; then
           ./build_iguana ${branch}
       fi
-      pkill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
+      kill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
     else
         echo "[$branch] Iguana has no update.... "
     fi
@@ -249,6 +249,20 @@ abort=0
   mv "$chain"_7776 iguana/coins
   echo "[$chain] : Waiting for $chain daemon to start..."
   ./validateaddress.sh $chain
+  cat restart_queue 2> /dev/null | while read restart_chain; do
+    if [[ $restart_chain == $chain ]]; then
+      ./asset-cli $chain stop
+      daemon_stopped $chain
+    fi
+  done
+  if [[ $(./assetchains $chain ${@}) = "finished" ]]; then
+    echo "[$chain] : Waiting for $chain daemon to restart..."
+    ./validateaddress.sh $chain
+    echo "Restarted $chain with blocknotify in conf"
+  else
+    echo -e "\033[1;31m Starting $chain with blocknotify in conf failed: help human! \033[0m"
+    exit 1
+  fi
   validateaddress=$(komodo-cli -ac_name=$chain validateaddress $Radd 2> /dev/null)
   outcome=$(echo $?)
   if [[ ${outcome} -eq 1 ]]; then
@@ -260,6 +274,7 @@ done
 source abort 2> /dev/null 
 rm abort 2> /dev/null
 if [[ $abort -eq 1 ]]; then
+  rm restart_queue > /dev/null 2>&1
   exit 1
 fi
 
@@ -284,7 +299,10 @@ iguanajson=$(cat staked.json | jq -c '.' )
 newiguanajson=$(komodo/master/komodo-cli getiguanajson | jq -c '.')
 if [ "$iguanajson" != "$newiguanajson" ]; then
     echo $newiguanajson > staked.json
-    pkill -15 iguana
+    ./listlizards.py | while read branch; do
+        echo "[$branch] Stopping Iguana... "
+        kill -15 $(pgrep -af "iguana ${branch}.json" | awk '{print $1}') > /dev/null 2>&1
+    done
     sleep 2
 fi
 
@@ -292,6 +310,7 @@ if [[ $abort -eq 0 ]]; then
   echo -e "\033[1;32m ALL CHAINS SYNC'd Starting Iguana's if they need starting then adding new chains for dPoW... \033[0m"
 else
   echo -e "\033[1;31m Something went wrong, please check error messages above requiring human help and manually rectify them before starting iguana! \033[0m"
+  rm restart_queue > /dev/null 2>&1
   exit 1
 fi
 
