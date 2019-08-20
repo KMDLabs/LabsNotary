@@ -217,22 +217,22 @@ fi
 ./listlizards.py | while read branch; do
     checkSuperNETRepo "${branch}"
     outcome=$(echo $?)
-    echo "check supernet repo: $branch outcome: $outcome"
+    echo "check supernet repo: ${branch} outcome: ${outcome}"
     if [[ ${outcome} -eq 1 ]]; then
-      rm iguana/$branch/iguana
+      rm iguana/${branch}/iguana
     fi
-    if [[ ! -f iguana/$branch/iguana ]]; then
-      echo "[$branch] Building iguana...."
+    if [[ ! -f iguana/${branch}/iguana ]]; then
+      echo "[${branch}] Building iguana...."
       ./build_iguana ${branch}
-      if [[ -f iguana/$1/iguana ]]; then
+      if [[ -f iguana/${branch}/iguana ]]; then
           eval cd "$HOME/SuperNET"
           localrev=$(git rev-parse HEAD)
-          echo $localrev > $HOME/StakedNotary/iguana/$branch/lastbuildcommit
+          echo $localrev > $HOME/StakedNotary/iguana/${branch}/lastbuildcommit
           cd $HOME/StakedNotary
       fi
       kill -15 $(pgrep -af "iguana ${branch}.json" | awk '{print $1}')
     else
-        echo "[$branch] Iguana has no update.... "
+        echo "[${branch}] Iguana has no update.... "
     fi
 done
 
