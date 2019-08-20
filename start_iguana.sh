@@ -16,16 +16,6 @@ if [[ $outcome != 0 ]]; then
   # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard, it will unlock the utxos used by the other one and could cause problems. 
   # NEED FIX PLEASE? 
   komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
-  tries=0
-  # we set the iguanas to build in the background while waiting for chains sync. Wait until they are built, max 600s.
-  while [[ ! -f iguana/$branch/iguana ]] || [[ tries -lt 120 ]]; do 
-    sleep 5
-    tries=$(( tries +1 ))
-    if [[ tries -eq 120 ]]; then
-        echo "[$branch] Iguana failed to build... "
-        exit 1
-    fi
-  done
   iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi
 
