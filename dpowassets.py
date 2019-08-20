@@ -27,6 +27,11 @@ connection_options = [
     'iguana_port']
 for i in connection_options:
     conn[i] = config[ENVIRON][i]
+    
+if len(sys.argv) > 1:
+    specific_iguana = sys.argv[1]
+else:
+    specific_iguana = False
 
 # define function that posts json data to iguana
 def post_rpc(url, payload, auth=None):
@@ -65,6 +70,8 @@ for chain in assetchains:
     ac_chain = chain['ac_name']
     iguana_rpc = chain['iguana_rpc']
     iguana = chain['iguana']
+    if specific_iguana and iguana != specific_iguana:
+        continue
     for param, value in chain.items():
         if param == 'freq':
             ac_freq = chain['freq']

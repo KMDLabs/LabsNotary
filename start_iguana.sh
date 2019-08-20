@@ -52,4 +52,4 @@ done
 sleep 10
 
 # call the dpowassets python script
-./dpowassets.py
+./dpowassets.py $branch
