@@ -230,7 +230,7 @@ fi
           echo $localrev > $HOME/StakedNotary/iguana/$branch/lastbuildcommit
           cd $HOME/StakedNotary
       fi
-      kill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
+      kill -15 $(pgrep -af "iguana ${branch}.json" | awk '{print $1}')
     else
         echo "[$branch] Iguana has no update.... "
     fi
