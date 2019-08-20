@@ -13,10 +13,10 @@ pgrep -af "iguana ${json}" | grep -v "$0" > /dev/null 2>&1
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo "Starting iguana $json"
-  # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard, it will unlock the utxos used by the other one and could cause problems. 
+  # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard of many, it will unlock the utxos used by the others also.
   # NEED FIX PLEASE? or offload this problem to daemon utxo cache?
   komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
-  screen -S $json -d -m "iguana/${branch}/iguana ${json}" & #> iguana.log 2> error.log &
+  screen -S $json -m iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi
 
 myip=`curl -s4 checkip.amazonaws.com`
