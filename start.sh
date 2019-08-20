@@ -230,7 +230,7 @@ fi
           eval cd "$HOME/SuperNET"
           localrev=$(git rev-parse HEAD)
           echo $localrev > $HOME/StakedNotary/iguana/$branch/lastbuildcommit
-          cd $prevdir
+          cd $HOME/StakedNotary
       fi
       kill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
     else
