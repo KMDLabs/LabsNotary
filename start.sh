@@ -211,16 +211,16 @@ else
 fi
 
 # Here we will extract all iguanas in assetchains.json and update them in the background while waiting for KMD to start
-numlizards=0
 firstlizard=""
 ./listlizards.py | while read branch; do
     checkSuperNETRepo "${branch}"
     outcome=$(echo $?)
     if [[ ${outcome} -eq 1 ]]; then
       rm iguana/$branch/iguana
-      numlizards=$(( numlizards +1 ))
+    fi
+    if [[ ! -f iguana/$branch/iguana ]]; then
       echo "[$branch] Building iguana...."
-      if $(( numlizards == 1 )); then
+      if [[ $firstlizard == "" ]]; then
           ./build_iguana ${branch} &
           firstlizard = ${branch}
       else 
