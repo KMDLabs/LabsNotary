@@ -123,6 +123,10 @@ daemon_stopped () {
 
 cd /home/$USER/StakedNotary
 git pull
+
+#temporary
+type screen>/dev/null 2>&1 || sudo apt-get install screen
+
 pubkey=$(./printkey.py pub)
 Radd=$(./printkey.py Radd)
 privkey=$(./printkey.py wif)
