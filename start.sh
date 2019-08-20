@@ -236,6 +236,8 @@ firstlizard=""
           ./build_iguana ${branch}
       fi
       pkill -15 "iguana $branch".json
+    else
+        echo "[$branch] Iguana has no update.... "
     fi
 done
 
