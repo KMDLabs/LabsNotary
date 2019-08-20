@@ -215,7 +215,7 @@ else
   exit 1
 fi
 
-# Here we will extract all iguanas in assetchains.json and update them in the background while waiting for KMD to start
+# Here we will extract all iguanas in assetchains.json and update them if needed
 ./listlizards.py | while read branch; do
     checkSuperNETRepo "${branch}"
     outcome=$(echo $?)
@@ -226,6 +226,12 @@ fi
     if [[ ! -f iguana/$branch/iguana ]]; then
       echo "[$branch] Building iguana...."
       ./build_iguana ${branch}
+      if [[ -f iguana/$1/iguana ]]; then
+          eval cd "$HOME/SuperNET"
+          localrev=$(git rev-parse HEAD)
+          echo $localrev > $HOME/StakedNotary/iguana/$branch/lastbuildcommit
+          cd $prevdir
+      fi
       kill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
     else
         echo "[$branch] Iguana has no update.... "

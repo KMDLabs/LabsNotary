@@ -1,5 +1,5 @@
 #!/bin/bash
-rm restart_queue
+rm restart_queue > /dev/null 2>&1
 set -eo pipefail
 pubkey=$(./printkey.py pub)
 overide_args="$2 $3 $4 $5 $6 $7 $8 $9"
