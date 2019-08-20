@@ -36,6 +36,7 @@
     "freq": 5,
     "branch": "utxocache",
     "iguana": "blackjok3r",
-    "iguana_rpc": "6789"
+    "iguana_rpc": "6789",
+    "iguana_port": "8222"
   }
 ]

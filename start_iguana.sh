@@ -6,7 +6,7 @@ rpc=$(./printkey.py rpc)
 if [[ ! -z $1 || $1 != "staked" ]]; then
     branch=$1
     rpc=$(cat assetchains.json | jq -r --arg branch $branch '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
-    cat staked.json | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' >> "${branch}.json"
+    cat staked.json | sed "s/\"port\": 9333/\"port\": $p2pport/" | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' > "${branch}.json"
     json="${branch}.json"
 fi
 pgrep -af "iguana ${json}" | grep -v "$0" > /dev/null 2>&1
