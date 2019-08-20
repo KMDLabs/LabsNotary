@@ -2,19 +2,22 @@
 set -eo pipefail
 pubkey=$(./printkey.py pub)
 overide_args="$2 $3 $4 $5 $6 $7 $8 $9"
-echo "" > restart_queue
+rm > restart_queue
 
 ./listassetchainparams.py $1 | while read args; do
   ac=$(echo $args | grep -o 'ac_name=[^ ,]\+')
   ac=$(echo "${ac#*=}")
   branch=$(cat assetchains.json | jq -r --arg chain $ac '.[] | select (.ac_name == $chain) | .branch')
   iguana=$(cat assetchains.json | jq -r --arg chain $ac '.[] | select (.ac_name == $chain) | .iguana')
+  rpc=$(cat assetchains.json | jq -r --arg chain $ac '.[] | select (.ac_name == $chain) | .iguana_rpc')
   conf="$HOME/.komodo/$ac/$ac.conf"
-  if [[ $iguana == "blackjok3r" ]] && [[ -f $conf ]]; then
-    sed -i '/blocknotify/d' $conf
-    echo "blocknotify=curl -s --url \"http://127.0.0.1:7776\" --data \"{\\\"agent\\\":\\\"dpow\\\",\\\"method\\\":\\\"updatechaintip\\\",\\\"blockhash\\\":\\\"%s\\\",\\\"symbol\\\":\\\"$ac\\\"}\"" >> ${conf}
-  else
-    echo "$ac" > restart_queue
+  if [[ $iguana == "blackjok3r" ]];then 
+      if [[ -f $conf ]]; then
+        sed -i '/blocknotify/d' $conf
+        echo "blocknotify=curl -s --url \"http://127.0.0.1:$rpc\" --data \"{\\\"agent\\\":\\\"dpow\\\",\\\"method\\\":\\\"updatechaintip\\\",\\\"blockhash\\\":\\\"%s\\\",\\\"symbol\\\":\\\"$ac\\\"}\"" >> ${conf}
+      else
+        echo "$ac" > restart_queue
+      fi
   fi
   if [[ $branch = "null" ]]; then
     screen -S $ac -d -m $HOME/StakedNotary/komodo/master/komodod $args $overide_args -pubkey=$pubkey &
