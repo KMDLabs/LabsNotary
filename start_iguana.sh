@@ -14,7 +14,7 @@ if [[ ! -z $1 ]] && [[ $1 != ${branch} ]]; then
         echo -e "\033[1;31m Failed building ${branch}.json \033[0m"
     fi    
 fi
-pgrep -af "iguana ${json}" | grep -v "$0" > /dev/null 2>&1
+pgrep -af "iguana ${json}" | grep -v "$0" | grep -v "SCREEN" > /dev/null 2>&1
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo "Starting iguana $json"

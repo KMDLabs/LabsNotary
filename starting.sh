@@ -230,7 +230,7 @@ fi
           echo $localrev > $HOME/StakedNotary/iguana/${branch}/lastbuildcommit
           cd $HOME/StakedNotary
       fi
-      kill -15 $(pgrep -af "iguana ${branch}.json" | awk '{print $1}')
+      kill -15 $(pgrep -af "iguana ${json}" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}')
     else
         echo "[${branch}] Iguana has no update.... "
     fi
@@ -305,7 +305,7 @@ if [ "$iguanajson" != "$newiguanajson" ]; then
     echo $newiguanajson > staked.json
     ./listlizards.py | while read branch; do
         echo "[$branch] Updated staked.json, restarting iguana..."
-        kill -15 $(pgrep -af "iguana ${branch}.json" | awk '{print $1}') > /dev/null 2>&1
+        kill -15 $(pgrep -af "iguana ${json}" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}') > /dev/null 2>&1
     done
     sleep 2
 fi
