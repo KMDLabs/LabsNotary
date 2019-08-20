@@ -3,7 +3,7 @@ branch="staked"
 json="staked.json"
 rpc=$(./printkey.py rpc)
 # ./start_iguana blackjok3r
-if [[ ! -z $1 ]]; then
+if [[ ! -z $1 || $1 != "staked" ]]; then
     branch=$1
     rpc=$(cat assetchains.json | jq -r --arg branch $branch '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
     cat staked.json | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' >> "${branch}.json"

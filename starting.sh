@@ -165,7 +165,7 @@ if [[ $result = "updated" ]]; then
   daemon_stopped "KMD"
   echo "[KMD] Stopped."
 elif [[ $result = "update_failed" ]]; then
-  echo -e "\033[1;31m [master] ABORTING!!! failed to update, Help Human! \033[0m"
+  echo -e "\033[1;31m [$branch] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
   exit 1
 else
   echo "[master] No update required"
@@ -304,7 +304,7 @@ newiguanajson=$(komodo/master/komodo-cli getiguanajson | jq -c '.')
 if [ "$iguanajson" != "$newiguanajson" ]; then
     echo $newiguanajson > staked.json
     ./listlizards.py | while read branch; do
-        echo "[$branch] Stopping Iguana... "
+        echo "[$branch] Updated staked.json, restarting iguana..."
         kill -15 $(pgrep -af "iguana ${branch}.json" | awk '{print $1}') > /dev/null 2>&1
     done
     sleep 2
