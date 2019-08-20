@@ -32,9 +32,11 @@ do
 done
 
 # add KMD 
-cat iguana/coins/kmd_7776 | sed "s/:7776/:${rpc}/" > iguana/coins/kmd_$rpc
-chmod +x iguana/coins/kmd_$rpc
-/iguana/coins/kmd_$rpc
+if [[ ! -f iguana/coins/kmd_$rpc ]]; then
+    cat iguana/coins/kmd_7776 | sed "s/:7776/:${rpc}/" > iguana/coins/kmd_$rpc
+    chmod +x iguana/coins/kmd_$rpc
+fi
+iguana/coins/kmd_$rpc
 
 # Unlock wallet.
 passphrase=$(./printkey.py wif)

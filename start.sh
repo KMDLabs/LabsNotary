@@ -226,7 +226,7 @@ fi
       if [[ $firstlizard == "" ]]; then
           ./build_iguana ${branch}
       fi
-      pkill -15 "iguana $branch".json
+      pkill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
     else
         echo "[$branch] Iguana has no update.... "
     fi
