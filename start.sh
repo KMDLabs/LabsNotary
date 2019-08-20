@@ -97,6 +97,7 @@ checkSuperNETRepo () {
     git remote update > /dev/null 2>&1
     remoterev=$(git rev-parse origin/$1)
     cd $prevdir
+    echo "[$1] SuperNET $localrev vs $remoterev"
     if [ $localrev != $remoterev ]; then
       return 1
     else
@@ -218,14 +219,13 @@ fi
 ./listlizards.py | while read branch; do
     checkSuperNETRepo "${branch}"
     outcome=$(echo $?)
+    echo "check supernet repo: $branch outcome: $outcome"
     if [[ ${outcome} -eq 1 ]]; then
       rm iguana/$branch/iguana
     fi
     if [[ ! -f iguana/$branch/iguana ]]; then
       echo "[$branch] Building iguana...."
-      if [[ $firstlizard == "" ]]; then
-          ./build_iguana ${branch}
-      fi
+      ./build_iguana ${branch}
       kill -15 $(pgrep -af "iguana ${json}" | awk '{print $1}')
     else
         echo "[$branch] Iguana has no update.... "
