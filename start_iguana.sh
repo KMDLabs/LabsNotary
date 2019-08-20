@@ -8,7 +8,7 @@ if [[ ! -z $1 ]] && [[ $1 != ${branch} ]]; then
     rpc=$(cat assetchains.json | jq -r --arg branch $branch '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
     p2pport=$(cat assetchains.json | jq -r --arg branch $branch '[.[] | select(.iguana == $branch)] | .[0].iguana_port')
     if [[ $p2pport != "null" ]] && [[ $rpc != "null" ]]; then
-        cat staked.json | sed "s/\"port\": 9333/\"port\": $p2pport/" | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' > "${branch}.json"
+        cat staked.json | sed "s/\"port\":9333/\"port\":$p2pport/" | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' > "${branch}.json"
         json="${branch}.json"
     else 
         echo -e "\033[1;31m Failed building ${branch}.json \033[0m"
