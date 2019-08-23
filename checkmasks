@@ -1,17 +1,14 @@
 #!/bin/bash
 
-#Running with no parameter will give a summary
 #./checkmasks PORT COIN - shows masks for COIN on iguana RPC port PORT
 #./checkmasks <maskhex> - will output detail for a specific mask
 
 
 if [[ ! -z $1 ]] && [[ ! -z $2 ]]; then
     curl -s --url "http://127.0.0.1:$1" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"$2\"}" | jq  -c -r .[]
-
 elif [[ ! -z $1 ]]; then
     curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$1\"}" | jq  -c -r .
 else 
-    echo "Running with no parameter will give a summary"
     echo "./checkmasks PORT COIN - shows masks for COIN on iguana RPC port PORT"
     echo "./checkmasks <maskhex> - will output detail for a specific mask"
 fi
