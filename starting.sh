@@ -227,7 +227,7 @@ fi
           localrev=$(git rev-parse HEAD)
           echo $localrev > $HOME/StakedNotary/iguana/${branch}/lastbuildcommit
           cd $HOME/StakedNotary
-          kill -15 $(pgrep -af "iguana ${json}" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}')
+          kill -15 $(pgrep -af "iguana ${branch}.json" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}')
       fi
     else
         echo "[${branch}] Iguana has no update.... "
