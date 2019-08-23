@@ -78,5 +78,22 @@
     "iguana": "blackjok3r",
     "iguana_rpc": "6789",
     "iguana_port": "8222"
-   }
+  },
+  {
+    "ac_name": "CFEKAPOW",
+    "ac_supply": "1000000",
+    "ac_reward": "100000000000",
+    "ac_cc": "2",
+    "ac_adaptivepow": "1",
+    "addnode": [
+      "195.201.20.230",
+      "195.201.137.5",
+      "80.240.17.222"
+     ],
+    "freq": 10,
+    "branch": "nSPV2",
+    "iguana": "blackjok3r",
+    "iguana_rpc": "6789",
+    "iguana_port": "8222"
+  }
 ]
