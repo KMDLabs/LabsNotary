@@ -20,8 +20,9 @@
       "149.28.8.219"
     ],
     "freq": 5,
-    "iguana": "staked",
-    "iguana_rpc": "7776"
+    "iguana": "blackjok3r",
+    "iguana_rpc": "6789",
+    "iguana_port": "8222"
   },
   {
     "ac_name": "CFEKMYLO",
