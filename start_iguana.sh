@@ -10,9 +10,9 @@ if [[ ! -z $1 ]] && [[ $1 != ${branch} ]]; then
     if [[ $p2pport != "null" ]] && [[ $rpc != "null" ]]; then
         cat staked.json | sed "s/\"port\":9333/\"port\":$p2pport/" | jq --argjson rpc $rpc '. += {"rpc_port":$rpc}' > "${branch}.json"
         json="${branch}.json"
-    else 
+    else
         echo -e "\033[1;31m Failed building ${branch}.json \033[0m"
-    fi    
+    fi
 fi
 pgrep -af "iguana ${json}" | grep -v "$0" | grep -v "SCREEN" > /dev/null 2>&1
 outcome=$(echo $?)
@@ -21,7 +21,7 @@ if [[ $outcome != 0 ]]; then
   # unlock any locked utxos before restarting, this doesnt really work, for restarting just 1 lizard of many, it will unlock the utxos used by the others also.
   # NEED FIX PLEASE? or offload this problem to daemon utxo cache?
   komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
-  screen -S $json -d -m iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
+  iguana/${branch}/iguana ${json} & #screen -S $json -d -m iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi
 
 myip=`curl -s4 checkip.amazonaws.com`
@@ -36,7 +36,7 @@ do
     curl -s --url "http://127.0.0.1:$rpc" --data "{\"agent\":\"iguana\",\"method\":\"addnotary\",\"ipaddr\":\"$i\"}"
 done
 
-# add KMD 
+# add KMD
 if [[ ! -f iguana/coins/kmd_$rpc ]]; then
     cat iguana/coins/kmd_7776 | sed "s/:7776/:${rpc}/" > iguana/coins/kmd_$rpc
     chmod +x iguana/coins/kmd_$rpc
@@ -50,7 +50,7 @@ curl -s --url "http://127.0.0.1:$rpc" --data "{\"method\":\"walletpassphrase\",\
 # addcoin method for assetchains
 ./listassetchains.py ${branch} | while read chain; do
   coin="iguana/coins/$chain"_7776
-  sed -i "s/:7776/:${rpc}/" $coin 
+  sed -i "s/:7776/:${rpc}/" $coin
   $coin
 done
 
