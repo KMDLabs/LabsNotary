@@ -96,5 +96,19 @@
     "iguana": "blackjok3r",
     "iguana_rpc": "6789",
     "iguana_port": "8222"
+  },
+  {
+    "ac_name": "CFEKX",
+    "ac_supply": "999999",
+    "ac_cc": "2",
+    "addnode": [
+      "195.201.20.230",
+      "195.201.137.5",
+      "80.240.17.222"
+     ],
+    "freq": 10,
+    "iguana": "blackjok3r",
+    "iguana_rpc": "6789",
+    "iguana_port": "8222"
   }
 ]
