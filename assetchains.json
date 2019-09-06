@@ -63,10 +63,9 @@
     "iguana_port": "8222"
   },
   {
-    "ac_name": "CFEKMYLO9",
-    "ac_supply": "7777",
-    "ac_reward": "7777",
-    "ac_cc": "1337",
+    "ac_name": "CFEKOD",
+    "ac_supply": "77777777",
+    "ac_cc": "1336",
     "ac_sapling": "1",
     "addnode": [
       "103.6.12.112",
@@ -74,7 +73,7 @@
       "195.201.20.230",
       "80.240.17.222"
      ],
-    "freq": 5,
+    "freq": 2,
     "branch": "utxocache",
     "iguana": "blackjok3r",
     "iguana_rpc": "6789",
