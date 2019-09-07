@@ -27,6 +27,8 @@ if [[ -z "${specific_coin}" ]]; then
   echo "----------------------------------------"
 fi
 
+NN_PUBKEY="21$(./printkey.py pub)ac"
+
 ./listcoins.sh | while read coin; do
   if [[ -z "${specific_coin}" ]] || [[ "${specific_coin}" = "${coin}" ]]; then
     cli=$(./listclis.sh ${coin})
@@ -46,7 +48,7 @@ fi
     if [[ "${listunspent}" = "" ]] || [[ ${numtotal} = 0 ]]; then
       echo "[$coin] Listuspent call failed aborting!"
     else
-      utxo_count=$(echo ${listunspent} | jq '[.[] | select (.scriptPubKey | length > 60 )]' | grep 0.0001 | wc -l)
+      utxo_count=utxo=$($coin listunspent | jq '[.[] | select (.generated==false and .amount==0.0001 and .spendable==true and (.scriptPubKey == "'$NN_PUBKEY'"))] | length') #$(echo ${listunspent} | jq '[.[] | select (.scriptPubKey | length > 60 )]' | grep 0.0001 | wc -l)
       echo "[${coin}] Current UTXO count is ${utxo_count}"
       utxo_required=$(calc ${target_utxo_count}-${utxo_count})
 
