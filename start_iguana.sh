@@ -3,8 +3,8 @@ pgrep -af iguana | grep -v "$0" > /dev/null 2>&1
 outcome=$(echo $?)
 if [[ $outcome != 0 ]]; then
   echo "Starting iguana"
-  # unlock any locked utxos before restarting
-  komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
+  # unlock any locked utxos before restarting, moved to iguana itself to unlock for all added coins on start. 
+  # komodo-cli lockunspent true `komodo-cli listlockunspent | jq -c .`
   iguana/iguana staked.json & #> iguana.log 2> error.log &
 fi
 
