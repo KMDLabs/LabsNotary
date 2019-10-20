@@ -6,6 +6,7 @@ from bitcoin.wallet import P2PKHBitcoinAddress
 from bitcoin.core import x
 from bitcoin.core import CoreMainParams
 
+
 class CoinParams(CoreMainParams):
     MESSAGE_START = b'\x24\xe9\x27\x64'
     DEFAULT_PORT = 7770
@@ -13,23 +14,34 @@ class CoinParams(CoreMainParams):
                        'SCRIPT_ADDR': 85,
                        'SECRET_KEY': 188}
 
+
 bitcoin.params = CoinParams
 
+arguments = sys.argv[1:]
 
-CHAIN = input('Please specify chain: ')
+if not arguments[0]:
+    CHAIN = input('Please specify chain: ')
+else:
+    CHAIN = arguments[0]
+
 ADDRESS = 'RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA'
 
 try:
-   rpc_connection = lib.def_credentials(CHAIN)
+    rpc_connection = lib.def_credentials(CHAIN)
 except:
-   print(CHAIN + ' daemon is not running or RPC creds not found')
-   sys.exit(0)
-
-try:
-    block_range = int(input('Please specify amount of previous blocks(0 for all): '))
-except:
-    print('Blocks must be whole number. Exiting...')
+    print(CHAIN + ' daemon is not running or RPC creds not found')
     sys.exit(0)
+
+
+if not arguments[1]:
+    try:
+        block_range = int(
+            input('Please specify amount of previous blocks(0 for all): '))
+    except:
+        print('Blocks must be whole number. Exiting...')
+        sys.exit(0)
+else:
+    block_range = int(arguments[1])
 
 print('Please wait...')
 
@@ -50,7 +62,7 @@ if block_range == 0 or block_range > height:
     start_height = 2
 
 
-for block in range(start_height,height):
+for block in range(start_height, height):
     getblock_result = rpc_connection.getblock(str(block), 2)
     if len(getblock_result['tx'][0]['vout']) > 1:
         vouts = getblock_result['tx'][0]['vout']
