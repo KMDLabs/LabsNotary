@@ -180,7 +180,7 @@ fi
 # Here we will extract all branches in assetchain.json and build them and move them to StakedNotary/komodo/<branch>
 # and stop any chains that use an updated branch, including master branch above. 
 i=0
-updated_branchs = ();
+updated_branchs=()
 ./listbranches.py | while read branch; do
   if [[ $branch != "master" ]]; then
     echo "[$branch] Checking for updates and building if required..."
