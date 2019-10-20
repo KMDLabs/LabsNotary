@@ -3,5 +3,10 @@
     "handle": "ALRIGHT_IGNORE_THIS",
     "pubkey": "02b718c60a035f77b7103a507d36aed942b4f655b8d13bce6f28b8eac523944278",
     "signed_msg": "HyTG9EJ7emJLOb6lSHPspmFs+AW3x/Ci64a47yux6oMzPm6bd0Qwb7dkjCDqp4IFR3p5gIv4GZGniIdbB0Rz3Pk=['ALRIGHT_IGNORE_THIS', 'IGNORE_THIS_ENTRY']"
+  },
+  {
+    "handle": "Oszy",
+    "pubkey": "02d1dd4c5d5c00039322295aa965f9787a87d234ed4f8174231bbd6162e384eba8",
+    "signed_msg": "IPPcp0PctxvLdsuMPKHoo156QOWi+A16KDlJvy8OMOcjLSi6emmDnIUQwunmMmLvdgVLKhIEAdn1zgeR7+T8bHg=['Oszy', 'lets be a labs nn']"
   }
 ]
