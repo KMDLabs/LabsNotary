@@ -105,6 +105,16 @@ checkSuperNETRepo () {
     fi
 }
 
+stop_daemon() 
+{
+    branch=$1
+    updated_chain=$2
+    echo "[${updated_chain}] Stopping ..."
+    komodo-cli -ac_name=${updated_chain} stop > /dev/null 2>&1
+    daemon_stopped "${updated_chain}"
+    echo "[${updated_chain}] Stopped."
+}
+
 daemon_stopped () {
   if [[ $1 = "KMD" ]]; then
     pidfile="$HOME/.komodo/komodod.pid"
@@ -159,43 +169,40 @@ result=$(./update_komodo.sh master)
 if [[ $result = "updated" ]]; then
   echo "[master] Updated to latest"
   master_updated=1
-  echo "[KMD] Stopping ..."
-  komodo-cli stop > /dev/null 2>&1
-  daemon_stopped "KMD"
-  echo "[KMD] Stopped."
+  stop_daemon "KMD" 
 elif [[ $result = "update_failed" ]]; then
-  echo -e "\033[1;31m [$branch] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
+  echo -e "\033[1;31m [master] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
   exit 1
 else
   echo "[master] No update required"
 fi
 
 # Here we will extract all branches in assetchain.json and build them and move them to StakedNotary/komodo/<branch>
-# and stop any staked chains that use master branch if it was updated
+# and stop any chains that use an updated branch, including master branch above. 
 i=0
+updated_branchs = ();
 ./listbranches.py | while read branch; do
   if [[ $branch != "master" ]]; then
     echo "[$branch] Checking for updates and building if required..."
     result=$(./update_komodo.sh $branch)
+    updated_chain=$(echo "${ac_json}" | jq  -r .[${i}].ac_name)
     if [[ $result = "updated" ]]; then
-      echo "[$branch] Updated to latest"
-      updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
-      echo "[$updated_chain] Stopping ..."
-      komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
-      daemon_stopped "${updated_chain}"
-      echo "[$updated_chain] Stopped."
+      updated_branches[$i]=$branch
+      stop_daemon $branch $updated_chain
     elif [[ $result = "update_failed" ]]; then
       echo -e "\033[1;31m [$branch] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
       exit 1
     else
       echo "[$branch] No update required"
-    fi
+      for updated_branch in $updated_branchs; do
+        if [[ "$updated_branch" = "$branch" ]]; then
+          stop_daemon $branch $updated_chain
+        fi
+      done
+  fi
   elif [[ $master_updated = 1 ]]; then
-    updated_chain=$(echo "${ac_json}" | jq  -r .[$i].ac_name)
-    echo "[$updated_chain] Stopping ..."
-    komodo-cli -ac_name=$updated_chain stop > /dev/null 2>&1
-    daemon_stopped "${updated_chain}"
-    echo "[$updated_chain] Stopped."
+    echo "[$branch] Updated to latest"
+    stop_daemon $branch $updated_chain
   fi
   i=$(( $i +1 ))
 done
