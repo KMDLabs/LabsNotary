@@ -59,8 +59,8 @@ def initial_loop(chain, msg):
 def lottery_loop(chain, msg):
     # lottery oracle txid is hardcoded for now
     # will revist this when it's time to do another
-    oracle = {'txid': '2a44176ef5f9a0f6abd477d8b4334e338bd4e8209bdae2fe9809f1e9755bced2',
-              'deadline': 1564719102}
+    oracle = {'txid': '0c1102054003a742f0fe09d990c5b2f1e4ced350021e76b62eada7092dafac37',
+              'deadline': 1572202066}
     os.system('clear')
     rpc_connection = test_rpc(chain)
     while True:
