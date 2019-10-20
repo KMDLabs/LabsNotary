@@ -187,7 +187,7 @@ updated_branchs=()
     result=$(./update_komodo.sh $branch)
     updated_chain=$(echo "${ac_json}" | jq  -r .[${i}].ac_name)
     if [[ $result = "updated" ]]; then
-      updated_branches[$i]=$branch
+      updated_branchs[$i]=$branch
       stop_daemon $branch $updated_chain
     elif [[ $result = "update_failed" ]]; then
       echo -e "\033[1;31m [$branch] ABORTING!!! failed to update please build manually using ~/komodo/zcutil/build.sh to see what problem is! Help Human! \033[0m"
