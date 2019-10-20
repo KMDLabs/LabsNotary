@@ -195,7 +195,6 @@ updated_branchs=()
     else
       echo "[$branch] No update required"
       for updated_branch in "${updated_branchs[@]}"; do
-        echo "$updated_branch $branch"
         if [[ "$updated_branch" = "$branch" ]]; then
           stop_daemon $branch $updated_chain
         fi
