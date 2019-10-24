@@ -8,6 +8,11 @@
     "handle": "Oszy",
     "pubkey": "02d1dd4c5d5c00039322295aa965f9787a87d234ed4f8174231bbd6162e384eba8",
     "signed_msg": "IPPcp0PctxvLdsuMPKHoo156QOWi+A16KDlJvy8OMOcjLSi6emmDnIUQwunmMmLvdgVLKhIEAdn1zgeR7+T8bHg=['Oszy', 'lets be a labs nn']"
+  },
+  {
+    "handle": "ml777",
+    "pubkey": "03438497e857f346e91bb269fc00d3509ab2a4d9df14931de86c8ac39aa8d82507",
+    "signed_msg": "INl2b214GFImTtKeM51tX+Juq2n7S3imOBtUR9jAVh3ePS8OGOJndDMoAvbcrdGIT54Qw7f+8+8bFNn+IGFtuXQ=['ml777', '777']"
   }
     {
     "handle": "bishop",
