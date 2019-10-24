@@ -9,4 +9,9 @@
     "pubkey": "02d1dd4c5d5c00039322295aa965f9787a87d234ed4f8174231bbd6162e384eba8",
     "signed_msg": "IPPcp0PctxvLdsuMPKHoo156QOWi+A16KDlJvy8OMOcjLSi6emmDnIUQwunmMmLvdgVLKhIEAdn1zgeR7+T8bHg=['Oszy', 'lets be a labs nn']"
   }
+    {
+    "handle": "bishop",
+    "pubkey": "026acce6b8ac3f0ed44271f1e275f220bb66ab9ff628b70bccb67b1d7d2411b320",
+    "signed_msg": "ICKlwpqpww+db+enLWcmVaETQ3zOalsnHNDycBKJ0VUHKJk7Nf15N8nN//wBpwxswtTBG++cc9eeqcM+mNjhw2I=['bishop', 'takes rook 8']"
+  }
 ]
