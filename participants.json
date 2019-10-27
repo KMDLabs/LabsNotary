@@ -13,10 +13,15 @@
     "handle": "ml777",
     "pubkey": "03438497e857f346e91bb269fc00d3509ab2a4d9df14931de86c8ac39aa8d82507",
     "signed_msg": "INl2b214GFImTtKeM51tX+Juq2n7S3imOBtUR9jAVh3ePS8OGOJndDMoAvbcrdGIT54Qw7f+8+8bFNn+IGFtuXQ=['ml777', '777']"
-  }
-    {
+  },
+   {
     "handle": "bishop",
     "pubkey": "026acce6b8ac3f0ed44271f1e275f220bb66ab9ff628b70bccb67b1d7d2411b320",
     "signed_msg": "ICKlwpqpww+db+enLWcmVaETQ3zOalsnHNDycBKJ0VUHKJk7Nf15N8nN//wBpwxswtTBG++cc9eeqcM+mNjhw2I=['bishop', 'takes rook 8']"
+  },
+   {
+    "handle": "OldManPhil",
+    "pubkey": "03d0bb79578613bb8c160d0466027ce0e7dd4d0dc6777b37460ac05342cd1e6c5b",
+    "signed_msg": "81f37cd8600154e6fe069bdf5237c49aaa398bfff68f2f8479e0e4825712140cH+2JEFCwuhjjmvq0li1Vv6iHVHoRu2rvHFXgdRjr1UIwWyYY8QbKuhS2V22ZMlnIp9cvAtMwDcxreWNzQwE48CQ=['OldManPhil; daemonfox', 'OldManPhil has a LABS NN!']"
   }
 ]
