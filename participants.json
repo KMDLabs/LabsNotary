@@ -23,5 +23,10 @@
     "handle": "OldManPhil",
     "pubkey": "03d0bb79578613bb8c160d0466027ce0e7dd4d0dc6777b37460ac05342cd1e6c5b",
     "signed_msg": "H+2JEFCwuhjjmvq0li1Vv6iHVHoRu2rvHFXgdRjr1UIwWyYY8QbKuhS2V22ZMlnIp9cvAtMwDcxreWNzQwE48CQ=['OldManPhil; daemonfox', 'OldManPhil has a LABS NN!']"
+  },
+     {
+    "handle": "And1-89",
+    "pubkey": "029d9f4b320f91030da9e0d9e01df070f58414036175d03d8ae69db7c7644d7e0b",
+    "signed_msg": "ICLaugcG2FU2/McL2zE9W4IPTJM/oe0aMueNF7TysKYGD1gmeRq2u0uzrNfUVuKK5CSpLTiW588rc06eH2KpIxc=['And1-89 old key from Dwy']       
   }
 ]
