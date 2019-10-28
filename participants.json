@@ -23,5 +23,10 @@
     "handle": "OldManPhil",
     "pubkey": "03d0bb79578613bb8c160d0466027ce0e7dd4d0dc6777b37460ac05342cd1e6c5b",
     "signed_msg": "H+2JEFCwuhjjmvq0li1Vv6iHVHoRu2rvHFXgdRjr1UIwWyYY8QbKuhS2V22ZMlnIp9cvAtMwDcxreWNzQwE48CQ=['OldManPhil; daemonfox', 'OldManPhil has a LABS NN!']"
-  }
+  },
+   {
+    "handle": "phba2061",
+    "pubkey": "0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21",
+    "signed_msg": "HzG1Yq2o7wdWLDjOjZznwIanODN0B7tjz7kYw0VDrh1QaYaddzlXDEpeJJy07vkrCE+VVAYK5PD4vPo9SpXIq40=['phba2061','OLD:0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21,NEW:03f4d3b286bb3d75d0095761dcca4aef778d9eb82065f95b5f9f8b8be8cad82bc7']"
+  }  
 ]
