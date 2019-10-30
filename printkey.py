@@ -20,3 +20,5 @@ if keytoprint == 'wif':
     print(config[ENVIRON]['wifkey'])
 if keytoprint == 'Radd':
     print(config[ENVIRON]['Radd'])
+if keytoprint == 'rpc':
+    print(config[ENVIRON]['iguana_port'])

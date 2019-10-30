@@ -5,11 +5,11 @@ cd "${BASH_SOURCE%/*}" || exit
 # e.g "KMD"
 specific_coin=$1
 
-kmd_target_utxo_count=50
-kmd_split_threshold=25
+kmd_target_utxo_count=200
+kmd_split_threshold=100
 
-other_target_utxo_count=20
-other_split_threshold=10
+other_target_utxo_count=100
+other_split_threshold=50
 
 date=$(date +%Y-%m-%d:%H:%M:%S)
 
@@ -26,6 +26,8 @@ if [[ -z "${specific_coin}" ]]; then
   echo "Other split threshold: ${other_split_threshold}"
   echo "----------------------------------------"
 fi
+
+NN_PUBKEY="21$(./printkey.py pub)ac"
 
 ./listcoins.sh | while read coin; do
   if [[ -z "${specific_coin}" ]] || [[ "${specific_coin}" = "${coin}" ]]; then
@@ -46,7 +48,7 @@ fi
     if [[ "${listunspent}" = "" ]] || [[ ${numtotal} = 0 ]]; then
       echo "[$coin] Listuspent call failed aborting!"
     else
-      utxo_count=$(echo ${listunspent} | jq '[.[] | select (.scriptPubKey | length > 60 )]' | grep 0.0001 | wc -l)
+      utxo_count=$($cli listunspent | jq '[.[] | select (.generated==false and .amount==0.0001 and .spendable==true and (.scriptPubKey == "'$NN_PUBKEY'"))] | length') #$(echo ${listunspent} | jq '[.[] | select (.scriptPubKey | length > 60 )]' | grep 0.0001 | wc -l)
       echo "[${coin}] Current UTXO count is ${utxo_count}"
       utxo_required=$(calc ${target_utxo_count}-${utxo_count})
 
