@@ -14,19 +14,29 @@
     "pubkey": "03438497e857f346e91bb269fc00d3509ab2a4d9df14931de86c8ac39aa8d82507",
     "signed_msg": "INl2b214GFImTtKeM51tX+Juq2n7S3imOBtUR9jAVh3ePS8OGOJndDMoAvbcrdGIT54Qw7f+8+8bFNn+IGFtuXQ=['ml777', '777']"
   },
-   {
+  {
     "handle": "bishop",
     "pubkey": "026acce6b8ac3f0ed44271f1e275f220bb66ab9ff628b70bccb67b1d7d2411b320",
     "signed_msg": "ICKlwpqpww+db+enLWcmVaETQ3zOalsnHNDycBKJ0VUHKJk7Nf15N8nN//wBpwxswtTBG++cc9eeqcM+mNjhw2I=['bishop', 'takes rook 8']"
   },
-   {
+  {
     "handle": "OldManPhil",
     "pubkey": "03d0bb79578613bb8c160d0466027ce0e7dd4d0dc6777b37460ac05342cd1e6c5b",
     "signed_msg": "H+2JEFCwuhjjmvq0li1Vv6iHVHoRu2rvHFXgdRjr1UIwWyYY8QbKuhS2V22ZMlnIp9cvAtMwDcxreWNzQwE48CQ=['OldManPhil; daemonfox', 'OldManPhil has a LABS NN!']"
   },
    {
+    "handle": "CHMEX",
+    "pubkey": "031938a89a44b3c11d53ac332d01a465384a75394fddfe98055ca3fed00ccff236",
+    "signed_msg": "ILntfrbe3/7FeADQYqYD9VRXErPJctgrP2LszB+gZ2kwWdO+PnJdAkuWC15nSrfeRfrnlXDXgkv80t8YEs15vCk='CHMEX OLD:03ed125d1beb118d12ff0a052bdb0cee32591386d718309b2924f2c36b4e7388e6 NEW: 031938a89a44b3c11d53ac332d01a465384a75394fddfe98055ca3fed00ccff236'"
+  },
+  {
+    "handle": "phba2061",
+    "pubkey": "03f4d3b286bb3d75d0095761dcca4aef778d9eb82065f95b5f9f8b8be8cad82bc7",
+    "signed_msg": "HzG1Yq2o7wdWLDjOjZznwIanODN0B7tjz7kYw0VDrh1QaYaddzlXDEpeJJy07vkrCE+VVAYK5PD4vPo9SpXIq40=['phba2061','OLD:0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21,NEW:03f4d3b286bb3d75d0095761dcca4aef778d9eb82065f95b5f9f8b8be8cad82bc7']"
+  },
+  {
     "handle": "SHossain",
     "pubkey": "033e90f5550dfea6c61f8d26a026ec5edcb9ecf9c69230da246f9762ee9542782d",
-    "signed_msg": "IP6r5VJfF/ajEPOW6nXwihPNOMw4TTes6WaW+Fu89fgeDjeQhtohLk9yfbANI0CogkZd79vrKU8A84Py6jYfpj4=['SHossain', 'newpubkey:033e90f5550dfea6c61f8d26a026ec5edcb9ecf9c69230da246f9762ee9542782d']"
+    "signed_msg": "IP6r5VJfF/ajEPOW6nXwihPNOMw4TTes6WaW+Fu89fgeDjeQhtohLk9yfbANI0CogkZd79vrKU8A84Py6jYfpj4='newpubkey:033e90f5550dfea6c61f8d26a026ec5edcb9ecf9c69230da246f9762ee9542782d'"
   }
 ]
