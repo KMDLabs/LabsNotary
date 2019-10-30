@@ -1,37 +1,42 @@
 [
   {
-    "handle": "Alright_example",
-    "pubkey": "0285657c689b903218c97f5f10fe1d10ace2ed6595112d9017f54fb42ea1c1dda8",
-    "signed_msg": "H39G29unIOAfX9/1ldzDZ4oFOarHutA9wk8fKEHHHw8REEYzqyPsLhs1cXVT2HTjbZpd8wChyMYsGG0IzHY1GCw=['Alright_example', 'This is a test. Please ignore this.']"
+    "handle": "ALRIGHT_IGNORE_THIS",
+    "pubkey": "02b718c60a035f77b7103a507d36aed942b4f655b8d13bce6f28b8eac523944278",
+    "signed_msg": "HyTG9EJ7emJLOb6lSHPspmFs+AW3x/Ci64a47yux6oMzPm6bd0Qwb7dkjCDqp4IFR3p5gIv4GZGniIdbB0Rz3Pk=['ALRIGHT_IGNORE_THIS', 'IGNORE_THIS_ENTRY']"
+  },
+  {
+    "handle": "Oszy",
+    "pubkey": "02d1dd4c5d5c00039322295aa965f9787a87d234ed4f8174231bbd6162e384eba8",
+    "signed_msg": "IPPcp0PctxvLdsuMPKHoo156QOWi+A16KDlJvy8OMOcjLSi6emmDnIUQwunmMmLvdgVLKhIEAdn1zgeR7+T8bHg=['Oszy', 'lets be a labs nn']"
+  },
+  {
+    "handle": "ml777",
+    "pubkey": "03438497e857f346e91bb269fc00d3509ab2a4d9df14931de86c8ac39aa8d82507",
+    "signed_msg": "INl2b214GFImTtKeM51tX+Juq2n7S3imOBtUR9jAVh3ePS8OGOJndDMoAvbcrdGIT54Qw7f+8+8bFNn+IGFtuXQ=['ml777', '777']"
+  },
+  {
+    "handle": "bishop",
+    "pubkey": "026acce6b8ac3f0ed44271f1e275f220bb66ab9ff628b70bccb67b1d7d2411b320",
+    "signed_msg": "ICKlwpqpww+db+enLWcmVaETQ3zOalsnHNDycBKJ0VUHKJk7Nf15N8nN//wBpwxswtTBG++cc9eeqcM+mNjhw2I=['bishop', 'takes rook 8']"
+  },
+  {
+    "handle": "OldManPhil",
+    "pubkey": "03d0bb79578613bb8c160d0466027ce0e7dd4d0dc6777b37460ac05342cd1e6c5b",
+    "signed_msg": "H+2JEFCwuhjjmvq0li1Vv6iHVHoRu2rvHFXgdRjr1UIwWyYY8QbKuhS2V22ZMlnIp9cvAtMwDcxreWNzQwE48CQ=['OldManPhil; daemonfox', 'OldManPhil has a LABS NN!']"
+  },
+   {
+    "handle": "CHMEX",
+    "pubkey": "031938a89a44b3c11d53ac332d01a465384a75394fddfe98055ca3fed00ccff236",
+    "signed_msg": "ILntfrbe3/7FeADQYqYD9VRXErPJctgrP2LszB+gZ2kwWdO+PnJdAkuWC15nSrfeRfrnlXDXgkv80t8YEs15vCk='CHMEX OLD:03ed125d1beb118d12ff0a052bdb0cee32591386d718309b2924f2c36b4e7388e6 NEW: 031938a89a44b3c11d53ac332d01a465384a75394fddfe98055ca3fed00ccff236'"
   },
   {
     "handle": "phba2061",
-    "pubkey": "0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21",
-    "signed_msg": "IEvhGWzhvEM86csqjeIdBPMWH6PygEzE3PuE/eBqnU+HAuUMRRQgZgiWTNqgRMMJJbNkNhEApm5PNyhXnAB9gPg=['phba2061', ':DDDDDDDDD']"
-  },
-   {
-    "handle": "Exile13",
-    "pubkey": "03d14e810f3458ce760a83c2c2193cf4ac9b1df774e7267193d66238cb38c0e25c",
-    "signed_msg": "IFX4gmHg9G/z27PT+8xOfOwo46jZlXkQQsrj7MCkxlMeNBFU6P/p3hN1eCvAyz16WpNgQGKuZl2B+euRF1emGrQ=['Exile13', '13']"
+    "pubkey": "03f4d3b286bb3d75d0095761dcca4aef778d9eb82065f95b5f9f8b8be8cad82bc7",
+    "signed_msg": "HzG1Yq2o7wdWLDjOjZznwIanODN0B7tjz7kYw0VDrh1QaYaddzlXDEpeJJy07vkrCE+VVAYK5PD4vPo9SpXIq40=['phba2061','OLD:0365d9ef7a781e4f062feb5e464ab3ea1f353dfdfc5ef369cf8178de94a4ca4b21,NEW:03f4d3b286bb3d75d0095761dcca4aef778d9eb82065f95b5f9f8b8be8cad82bc7']"
   },
   {
-    "handle": "strob",
-    "pubkey": "03e35f0de8a871bf4b04d09b01e686c307fadf8df9239f3ec18920106c72876fbb",
-    "signed_msg": "IPvWAr9JLZs/3mtARQ1rpzqIk3QsSsFRrEpo48CLUpKCNofP3X5oWRFFNO730g6kSjuGo8tLFFQjX68jm292QA8=['strob', 'chocolate']"
- },
- {
-    "handle": "mrlynch",
-    "pubkey": "02c3f0367df831822a0b21b218bc16d7126c4be1c3184d648b4fa6cfb4366af0f4",
-    "signed_msg": "IDf+UqK9MZ6evxRAYFF8KCtkr46cbUP3wcF9VX9Hey2BDlRfXcirraj0joNQuAZOY32YON/7Sq+cBO9/oXkwILM=['mrlynch', '42']"
- },
- {
-    "handle": "phm87",
-    "pubkey": "02fa548f704119fb09422abf3cbff228eefe0843c496c415056cfb44e6e4320dc6",
-    "signed_msg": "IHLbdSY2wyEADhVrZBfjSzKbTNwoq0ZAHQZMoj57W4XuGa68MZYE3A5O9Kay3AhdROv7xcdMt3HYb58qv+8zAnY=['phm87', '87']"
- },
- {
-    "handle": "Anthony",
-    "pubkey": "02051b5d705db8b914e236cc498ef8340c723134cf4c6665bc9a148c76a2e59d62",
-    "signed_msg": "H8TlkYAwRIHofsq8xrbNh/DHA/dl7Au9yobEqBjCE9kpdEeqHh341fhEO4S0MEEMJ3i9qm3HyCdFHnlAPWPyAsc=['Anthony', 'willwin']"
- }
+    "handle": "SHossain",
+    "pubkey": "033e90f5550dfea6c61f8d26a026ec5edcb9ecf9c69230da246f9762ee9542782d",
+    "signed_msg": "IP6r5VJfF/ajEPOW6nXwihPNOMw4TTes6WaW+Fu89fgeDjeQhtohLk9yfbANI0CogkZd79vrKU8A84Py6jYfpj4='newpubkey:033e90f5550dfea6c61f8d26a026ec5edcb9ecf9c69230da246f9762ee9542782d'"
+  }
 ]
