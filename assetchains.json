@@ -22,7 +22,8 @@
     "freq": 5,
     "iguana": "blackjok3r",
     "iguana_rpc": "6789",
-    "iguana_port": "8222"
+    "iguana_port": "8222",
+    "branch": "testsyncfix"
   },
   {
     "ac_name": "CFEKMYLO",
@@ -41,7 +42,8 @@
     "freq": 5,
     "iguana": "blackjok3r",
     "iguana_rpc": "6789",
-    "iguana_port": "8222"
+    "iguana_port": "8222",
+    "branch": "testsyncfix"
   },
   {
     "ac_name": "CFEKMYLO6",
@@ -58,6 +60,7 @@
     "freq": 5,
     "iguana": "blackjok3r",
     "iguana_rpc": "6789",
-    "iguana_port": "8222"
+    "iguana_port": "8222",
+    "branch": "testsyncfix"
   }
 ]
