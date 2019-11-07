@@ -207,7 +207,8 @@ updated_branchs=()
   i=$(( $i +1 ))
 done
 
-# Start KMD
+# Start KMD, first remove daemon=1 from the conf, so it starts in a screen!
+sed -i '/daemon/d' "$HOME/.komodo/komodo.conf"
 echo "[KMD] : Starting KMD"
 screen -S "KMD" -d -m $HOME/StakedNotary/komodo/master/komodod -stakednotary=1 -pubkey=$pubkey &
 
