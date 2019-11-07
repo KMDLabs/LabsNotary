@@ -13,7 +13,7 @@ cd $myscriptDir
 sleepytime=false
 
 #How many transactions back to scan for notarizations
-txscanamount=77777
+txscanamount=777
 
 #==End Options==
 

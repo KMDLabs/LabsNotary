@@ -35,6 +35,7 @@ if [[ ! -z $1 ]] && [[ $1 != "KMD" ]]; then
 else
     coin="KMD"
     asset=""
+    txfee=1
 fi
 
 SPLIT_COUNT=$2
@@ -56,17 +57,18 @@ fi
 
 SPLIT_VALUE=0.0001
 SPLIT_VALUE_SATOSHI=10000
-SPLIT_TOTAL=$(jq -n "$SPLIT_VALUE*$SPLIT_COUNT")
+# add a 10k sat txfee for KMD. 
+SPLIT_TOTAL=$(jq -n "$SPLIT_VALUE*($SPLIT_COUNT+txfee)")
 
 NN_PUBKEY=$($komodoexec $asset validateaddress $NN_ADDRESS | jq -r .pubkey)
 nob58=$(decodeBase58 $NN_ADDRESS)
 NN_HASH160=$(echo ${nob58:2:-8})
 
-#Get lowest amount and valid utxo to split
-utxo=$($komodoexec $asset listunspent | jq -r --arg minsize $SPLIT_TOTAL '[.[] | select(.amount>($minsize|tonumber) and .generated==false and .rawconfirmations>0)] | sort_by(.amount)[0]')
+#Get lowest amount and valid utxo to split |||| (and .generated==false) this isnt a real limitation. 
+utxo=$($komodoexec $asset listunspent | jq -r --arg minsize $SPLIT_TOTAL '[.[] | select(.amount>($minsize|tonumber) and .rawconfirmations>0)] | sort_by(.amount)[0]')
 
 if [[ $utxo != "null" ]]; then
-
+    
     txid=$(jq -r .txid <<< $utxo)
     vout=$(jq -r .vout <<< $utxo)
     amount=$(jq -r .amount <<< $utxo)
