@@ -58,7 +58,7 @@ fi
 SPLIT_VALUE=0.0001
 SPLIT_VALUE_SATOSHI=10000
 # add a 10k sat txfee for KMD. 
-SPLIT_TOTAL=$(jq -n "$SPLIT_VALUE*($SPLIT_COUNT+txfee)")
+SPLIT_TOTAL=$(jq -n --arg txfee $txfee "$SPLIT_VALUE*($SPLIT_COUNT+$txfee)")
 
 NN_PUBKEY=$($komodoexec $asset validateaddress $NN_ADDRESS | jq -r .pubkey)
 nob58=$(decodeBase58 $NN_ADDRESS)
