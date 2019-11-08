@@ -9,6 +9,7 @@
 # e.g.   ./splitfunds OOT 50 0
 
 NN_ADDRESS=$(./printkey.py Radd)
+txfee=0
 
 #Full path to komodo-cli
 komodoexec=/usr/local/bin/komodo-cli
