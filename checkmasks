@@ -1,21 +1,19 @@
 #!/bin/bash
 
-#Running with no parameter will give a summary
-#./checkmasks all - will output detail for each node
+#./checkmasks PORT COIN - shows masks for COIN on iguana RPC port PORT
 #./checkmasks <maskhex> - will output detail for a specific mask
 
-#which notaryid to use as "seednode" reference starting at 0 to the number of STAKED NOTARIES. 
-seednode=0
 
-if [[ ! -z $1 ]]
-then
-    if [[ "$1" == "all" ]]
-    then
-        curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\"}" | jq  -c -r .[]
-    else
-        curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$1\"}" | jq  -c -r .
-    fi
-else
+if [[ ! -z $1 ]] && [[ ! -z $2 ]]; then
+    curl -s --url "http://127.0.0.1:$1" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"$2\"}" | jq  -c -r .[]
+elif [[ ! -z $1 ]]; then
+    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$1\"}" | jq  -c -r .
+else 
+    echo "./checkmasks PORT COIN - shows masks for COIN on iguana RPC port PORT"
+    echo "./checkmasks <maskhex> - will output detail for a specific mask"
+fi
+exit 1
+#else
     stakedchain=$(cat assetchains.json | jq -r .[0].ac_name)
     mynotaryid=$(komodo-cli -ac_name=$stakedchain getinfo | jq .notaryid)
 
@@ -44,4 +42,4 @@ else
     echo
     echo "My bestmask: $mybestmask"
     curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$mybestmask\"}" | jq -c -r '.set'
-fi
+#fi
