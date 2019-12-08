@@ -76,7 +76,7 @@ def lottery_loop(chain, msg):
                   '4. Select \"Join lottery\". This will ask you for your handle. It will also ask you to input'  +
                   ' a message. This message can be anything you choose, consider it choosing numbers for a lottery\n' +
                   '5. Select \"Create signed message\". This will output a signed messaged.' +
-                  ' You must add this to the participants.json file of the StakedNotary repo and send a pull request.' + 
+                  ' You must add this to the participants.json file of the LabsNotary repo and send a pull request.' + 
                   ' You must also post this to the #kmdlabs'  +
                   ' channel in the KMD discord. \n\nPlease note, you must do all of this prior to the deadline.' +
                   ' There are absolutely no exceptions to this as the deadline is when the entropy is revealed.')

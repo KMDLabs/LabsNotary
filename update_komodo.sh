@@ -1,76 +1,77 @@
 #!/bin/bash
+cd "${BASH_SOURCE%/*}" || exit
+attempt=0
+outcome=0
 
-#temporary
-type dc>/dev/null 2>&1 || sudo apt-get install dc
-
-cd $HOME/StakedNotary
 checkRepo () {
-    if [ -z $1 ]; then
-      return
+    if [ -z ${1} ]; then
+        return
     fi
     prevdir=${PWD}
-    if [[ ! -f komodo/$1/lastbuildcommit ]]; then
-      eval cd "$HOME/komodo"
-      git pull > /dev/null 2>&1
-      git checkout $1 > /dev/null 2>&1
-      localrev=$(git rev-parse HEAD)
-      mkdir -p $HOME/StakedNotary/komodo/$1
-      echo $localrev > $HOME/StakedNotary/komodo/$1/lastbuildcommit
-      cd $prevdir
+    if [[ ! -f komodo/${1}/lastbuildcommit ]]; then
+        eval cd "${HOME}/LabsNotary/LABSKomodo"
+        git pull > /dev/null 2>&1
+        git checkout ${1} > /dev/null 2>&1
+        localrev=$(git rev-parse HEAD)
+        mkdir -p ${HOME}/LabsNotary/komodo/${1}
+        echo ${localrev} > ${HOME}/LabsNotary/komodo/${1}/lastbuildcommit
+        cd ${prevdir}
     fi
-    localrev=$(cat komodo/$1/lastbuildcommit)
-    eval cd "$HOME/komodo"
+    localrev=$(cat komodo/${1}/lastbuildcommit)
+    eval cd "${HOME}/LabsNotary/LABSKomodo"
     git remote update > /dev/null 2>&1
-    remoterev=$(git rev-parse origin/$1)
-    cd $prevdir
-    if [ $localrev != $remoterev ]; then
-      return 1
+    remoterev=$(git rev-parse origin/${1})
+    cd "${prevdir}"
+    if [ "${localrev}" == "${remoterev}" ]; then
+        return 0
     else
-      return 0
+        return 1
     fi
 }
 
 buildkomodo () {
-  if [ -z $1 ]; then
-    return
-  fi
-  cd $HOME/komodo
-  git pull > /dev/null 2>&1
-  git checkout $1  > /dev/null 2>&1
-  git pull  > /dev/null 2>&1
-  rm -f $HOME/komodo/src/komodod $HOME/komodo/src/komodo-cli > /dev/null 2>&1
-  #make clean > /dev/null 2>&1
-  #make -j$(nproc) > /dev/null 2>&1
-  ./zcutil/build.sh -j$(nproc) > /dev/null 2>&1
-  if [[ ! -f $HOME/komodo/src/komodod ]]; then
+    cd ${HOME}/LabsNotary/LABSKomodo
+    loop=${2}
+    rm -f ${HOME}/LabsNotary/LABSKomodo/src/komodod ${HOME}/LabsNotary/LABSKomodo/src/komodo-cli > /dev/null 2>&1
+    if (( loop == 0 )); then
+        make clean  > /dev/null 2>&1
+        git pull > /dev/null 2>&1
+        git checkout ${1} > /dev/null 2>&1
+        git pull > /dev/null 2>&1
+        ./zcutil/build.sh -j$(nproc) > /dev/null 2>&1
+    else
+        make -j$(nproc) > /dev/null 2>&1
+    fi
+    if [[ ! -f ${HOME}/LabsNotary/LABSKomodo/src/komodod ]]; then
+        return 1
+    fi
+    if [[ ! -f ${HOME}/LabsNotary/LABSKomodo/src/komodo-cli ]]; then
+        return 1
+    fi
+    localrev=$(git rev-parse HEAD)
+    mkdir -p ${HOME}/LabsNotary/komodo/${1}
+    echo ${localrev} > ${HOME}/LabsNotary/komodo/${1}/lastbuildcommit
+    mv src/komodod ${HOME}/LabsNotary/komodo/${1}/
+    mv src/komodo-cli ${HOME}/LabsNotary/komodo/${1}/
     return 0
-  fi
-  if [[ ! -f $HOME/komodo/src/komodo-cli ]]; then
-    return 0
-  fi
-  localrev=$(git rev-parse HEAD)
-  mkdir -p $HOME/StakedNotary/komodo/$1
-  echo $localrev > $HOME/StakedNotary/komodo/$1/lastbuildcommit
-  mv src/komodod $HOME/StakedNotary/komodo/$1
-  mv src/komodo-cli $HOME/StakedNotary/komodo/$1
-  return 1
 }
 
-if [ -z $1 ]; then
-  exit
+if [[ -z ${1} ]]; then
+    exit
 fi
 
-branch=$1
+branch=${1}
+attempt=${2}
+outcome=1
 
-checkRepo $branch
-outcome=$(echo $?)
+if (( attempt == 0 )); then 
+    checkRepo "${branch}"
+    outcome=$(echo $?)
+fi
 
-if [[ $outcome = 1 ]] || [[ ! -f komodo/$1/komodod ]] || [[ ! -f komodo/$1/komodo-cli ]]; then
-  buildkomodo $branch
-  outcome=$(echo $?)
-  if [[ $outcome = 1 ]]; then
-    echo "updated"
-  else
-    echo "update_failed"
-  fi
+if (( outcome != 0 )) || [[ ! -f komodo/${branch}/komodod ]] || [[ ! -f komodo/${branch}/komodo-cli ]]; then
+    buildkomodo "${branch}" "${attempt}"
+    echo $?
+else 
+    echo 2
 fi

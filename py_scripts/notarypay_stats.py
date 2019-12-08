@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#  This script works by counting notary pay. Chains without ac_notarypay will not work, use stats.py
 import lib
 import sys
 import bitcoin
