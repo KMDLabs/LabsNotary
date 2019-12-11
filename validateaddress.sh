@@ -21,12 +21,11 @@ done
 mine=$(jq -r .ismine <<<"${validateaddress}")
 if [[ ${mine} == "false" ]]; then
     echo "[${chain}] : Importing private key and rescanning last 10,000 blocks"
-    echo -n "[${chain}] : "
     height=$(${cli} getblockcount)
     if (( height < 10000 )); then 
-        ${cli} importprivkey ${privkey} 
+        echo "[${chain}] : $(${cli} importprivkey ${privkey})"
     else
-        ${cli} importprivkey ${privkey} "" true $(( height - 10000 ))
+        echo "[${chain}] : $(${cli} importprivkey ${privkey} "" true $(( height - 10000 )))"
     fi
 else
     echo "[${chain}] : ${Radd}"

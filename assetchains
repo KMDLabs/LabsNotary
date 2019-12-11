@@ -1,4 +1,5 @@
 #!/bin/bash
+# deprecated now, still useful to start one chain... 
 cd "${BASH_SOURCE%/*}" || exit
 rm restart_queue > /dev/null 2>&1
 pubkey=$(./printkey.py pub)
