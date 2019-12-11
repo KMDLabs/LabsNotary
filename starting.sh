@@ -65,11 +65,15 @@ checksync () {
     while (( blocks < lc )); do
         sleep 60
         lc=$(longestchain ${chain})
-        outcome=$(echo $?)
+        echo $? > tmpoutcome
         blocks=$(${cli} getblockcount 2> /dev/null)
         progress=$(echo "scale=3;${blocks}/${lc}" | bc -l)
         echo "[${chain}] $(echo ${progress}*100|bc)% ${blocks} of ${lc}"
     done
+    if [[ -f tmpoutcome ]]; then 
+        outcome=$(cat tmpoutcome)
+    fi
+    rm tmpoutcome > /dev/null 2>&1
     info=$(${cli} getinfo 2> /dev/null)
     connections=$(jq -r .connections <<<"${info}")
     if (( connections == 0 )) || (( outcome != 0 )); then
@@ -109,12 +113,10 @@ stop_daemon()
 {
     chain=${1}
     echo "[kmd->${chain}] Stopping ..."
-    if [[ ${chain} == "KMD" ]]; then
-        chain=""
-    fi
-    komodo-cli -ac_name=${chain} stop > /dev/null 2>&1
-    daemon_stopped "${1}"
-    echo "[kmd->${1}] Stopped."
+    cli=$(./listclis ${chain})
+    ${cli} stop > /dev/null 2>&1
+    daemon_stopped "${chain}"
+    echo "[kmd->${chain}] Stopped."
 }
 
 daemon_stopped () {
@@ -125,11 +127,13 @@ daemon_stopped () {
     fi
     while [[ -f ${pidfile} ]]; do
         pid=$(cat ${pidfile} 2> /dev/null)
-        outcome=$(ps -p ${pid} 2> /dev/null | grep komodod)
+        pspid=$(ps -p ${pid} 2> /dev/null | grep komodod)
         outcome=$(echo $?)
-        if (( outcome == 1 )); then
+        echo -n "ps -p ${pid} grep komodod = ${pspid} "
+        if (( outcome != 0 )); then
             rm ${pidfile}
         fi
+        echo "${outcome}"
         sleep 2
     done
 }
@@ -146,14 +150,6 @@ check_chain_started ()
     ${cli} getblockcount > /dev/null 2>&1
     outcome=$(echo $?)
     return ${outcome}
-}
-
-chain_start_cmd ()
-{
-    coin="${1}"
-    branch="$(./listbranches.py "${coin}")"
-    params="$(./listassetchainparams.py "${coin}")"
-    echo ""${PWD}"/komodo/"${branch}"/komodod "${params}""
 }
 
 get_kmdbranch()
@@ -174,6 +170,14 @@ get_iguanabranch()
         branch=${attempt}
     fi
     echo ${branch}
+}
+
+chain_start_cmd ()
+{
+    chain="${1}"
+    branch=$(get_kmdbranch "${chain}")
+    params="$(./listassetchainparams.py "${chain}")"
+    echo ""${PWD}"/komodo/"${branch}"/komodod "${params}""
 }
 
 pubkey=$(./printkey.py pub)
