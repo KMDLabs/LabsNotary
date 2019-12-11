@@ -197,7 +197,7 @@ start_assetchain () {
             echo "${chain}" >> restart_queue
         fi
     fi
-    screen -S ${chain} -d -m $(chain_start_cmd) -pubkey=${pubkey} ${override_args} &
+    screen -S ${chain} -d -m $(chain_start_cmd ${chain}) -pubkey=${pubkey} ${override_args} &
 }
 
 pubkey=$(./printkey.py pub)
