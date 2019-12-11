@@ -27,6 +27,7 @@ if [[ ! -z "${1}" ]]; then
     fi
 else     
     # kill all iguanas 
+    kill -15 $(pgrep -af "iguana elected.json" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}') > /dev/null 2>&1
     while read -r branch; do
         echo "[iguana->${branch}] stopping... "
         kill -15 $(pgrep -af "iguana ${branch}.json" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}') > /dev/null 2>&1
