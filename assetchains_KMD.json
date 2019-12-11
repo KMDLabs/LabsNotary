@@ -292,7 +292,10 @@
    "ac_name": "ILN",
    "ac_supply": "10000000000",
    "ac_cc": "2",
-   "addnode": ["51.75.122.83"]
+   "addnode": [
+       "51.75.122.83"
+   ],
+   "branch": "saveit"
  },
  {
    "ac_name": "RICK",
@@ -355,11 +358,8 @@
    "addnode": [
        "18.197.20.21"
    ],
-     "freq": 2,
-     "branch": "saveit",
-     "iguana": "blackjok3r",
-     "iguana_rpc": "7776",
-     "iguana_port": "17775"
+   "freq": 2,
+   "branch": "saveit"
  },
  {
    "ac_name": "HUSH3",
@@ -381,12 +381,7 @@
        "188.165.212.101",
        "136.243.227.142",
        "5.9.224.250"
-     ],
-     "freq": 2,
-     "branch": "saveit",
-     "iguana": "blackjok3r",
-     "iguana_rpc": "7776",
-     "iguana_port": "17775"
+     ]
    },
  {
    "ac_name": "THC",
