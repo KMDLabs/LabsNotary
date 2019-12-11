@@ -7,7 +7,7 @@ GREEN="\033[32m"
 YELLOW="\033[33m"
 
 override_args=""
-notary_arg="-notary"
+notary_arg="-notary -gen -genproclimit=1"
 # first param is the notary to start, LABS or KMD. 
 if [[ ! -z "${1}" ]]; then
     notary="${1}"
