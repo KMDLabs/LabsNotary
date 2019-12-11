@@ -117,7 +117,7 @@ checkSuperNETRepo () {
 stop_daemon() {
     chain=${1}
     echo "[kmd->${chain}] Stopping ..."
-    cli=$(./listclis ${chain})
+    cli=$(./listclis.sh ${chain})
     ${cli} stop > /dev/null 2>&1
     daemon_stopped "${chain}"
     echo "[kmd->${chain}] Stopped."
