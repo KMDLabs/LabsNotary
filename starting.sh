@@ -262,7 +262,7 @@ while read -r chain; do
         stop_daemon "${chain}" &
         pids[${chain}]=$!
     fi
-done < <$(./listcoins.sh)
+done < <(./listcoins.sh)
 wait_for_last_function ${pids}
 
 # Start KMD
