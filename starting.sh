@@ -250,7 +250,8 @@ while read -r branch; do
 done < <(./listbranches.py | uniq)
 
 wait_for_last_function () {
-    for pid in ${1[*]}; do
+    waitfor=${1}
+    for pid in ${waitfor[*]}; do
         wait ${pid}
     done
 }
