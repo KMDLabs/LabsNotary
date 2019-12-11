@@ -8,7 +8,7 @@ cli=$(./listclis.sh ${chain})
 # Wait for the deamon to actually start
 started=0
 while (( started == 0 )); do
-    sleep 5
+    sleep 30
     validateaddress=$(${cli} validateaddress ${Radd} 2> /dev/null)
     outcome=$(echo $?)
     if (( outcome == 0 )); then
