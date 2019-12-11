@@ -41,8 +41,6 @@ def post_rpc(url, payload, auth=None):
     except Exception as e:
         raise Exception("Couldn't connect to " + url + ": ", e)
 
-# define url's
-iguana_url = 'http://' + conn['iguana_ip'] + ':' + conn['iguana_port']
 
 # set btcpubkey
 btcpubkey = config[ENVIRON]['btcpubkey']
@@ -68,8 +66,12 @@ def dpow(symbol, freq, iguana_rpc, iguana):
 # dpow assetchains
 for chain in assetchains:
     ac_chain = chain['ac_name']
-    iguana_rpc = chain['iguana_rpc']
-    iguana = chain['iguana']
+    iguana_rpc = conn['iguana_port']
+    iguana = "blackjok3r"
+    if iguana_rpc in chain:
+        iguana_rpc = chain['iguana_rpc']
+    if iguana in chain:
+        iguana = chain['iguana']
     if specific_iguana and iguana != specific_iguana:
         continue
     for param, value in chain.items():
