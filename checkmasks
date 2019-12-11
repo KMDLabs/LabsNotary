@@ -5,7 +5,7 @@ cd "${BASH_SOURCE%/*}" || exit
 #./checkmasks <maskhex> - will output detail for a specific mask
 
 if [[ ! -z ${1} ]]; then
-    ac_json=$(assetchains.json)
+    ac_json=$(cat assetchains.json)
     ac=$(./listcoins.sh | grep "${1}")
     rpc=7776
     if [[ "${ac}" != "" ]]; then
