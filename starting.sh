@@ -6,6 +6,23 @@ RED="\033[31m"
 GREEN="\033[32m"
 YELLOW="\033[33m"
 
+# first param is the notary to start, LABS or KMD. 
+if [[ -z "${1}" ]]; then
+    notary="${1}"
+    cp assetchains_${notary}.json assetchains.json > /dev/null 2>&1
+    ac_json=$(cat assetchains.json)
+    echo ${ac_json} | jq .[] > /dev/null 2>&1
+    outcome=$(echo $?)
+    if (( outcome != 0 )); then
+        echo -e ${RED}"[${notary}] assetchains.json is invalid, check git blame and start flame war..."${RESET}
+        exit 1
+    fi
+    override_args="${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9} ${10}"
+else 
+    echo "./starting.sh NOTARY <extra chain params>"
+    exit 1
+fi
+
 longestchain () {
     chain=$1
     if [[ ${chain} == "KMD" ]]; then
@@ -139,14 +156,6 @@ chain_start_cmd ()
     echo ""${PWD}"/komodo/"${branch}"/komodod "${params}""
 }
 
-ac_json=$(cat assetchains.json)
-echo ${ac_json} | jq .[] > /dev/null 2>&1
-outcome=$(echo $?)
-if (( outcome != 0 )); then
-    echo -e ${RED}" assetchains.json is invalid, check git blame and start flame war..."${RESET}
-    exit 1
-fi
-
 get_kmdbranch()
 {
     branch="master"
@@ -228,7 +237,7 @@ echo "[kmd->master] : Starting KMD"
 screen -S "KMD" -d -m ${HOME}/LabsNotary/komodo/master/komodod -stakednotary=1 -pubkey=${pubkey} 
 
 # Start LABS chains
-./assetchains "" "${@}" &
+./assetchains "" "${override_args}" &
 
 # We can add another start scipt for 3rd party coins here :) 
 
@@ -245,7 +254,12 @@ while read -r branch; do
             localrev=$(git rev-parse HEAD)
             echo ${localrev} > ${HOME}/LabsNotary/iguana/${branch}/lastbuildcommit
             cd ${HOME}/LabsNotary
-            kill -15 $(pgrep -af "iguana ${branch}.json" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}')
+            if [[ ${notary} == "KMD" ]]; then
+                json="elected.json"
+            else 
+                json="${branch}.json"
+            fi
+            kill -15 $(pgrep -af "iguana ${elected}" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}')
         fi
     else
         echo "[iguana->${branch}] no update"
@@ -265,7 +279,7 @@ while read -r chain; do
     outcome=$(echo $?)
     if [[ $(cat restart_queue 2> /dev/null | grep "${chain}") == "${chain}" ]]; then
         stop_daemon "${chain}"
-        ./assetchains "${chain}" "${@}"
+        ./assetchains "${chain}" "${override_args}"
         echo "[${chain}] : Waiting for ${chain} daemon to restart with blocknotify added to conf..."
         check_chain_started "${chain}"
         outcome=$(echo $?)
@@ -280,14 +294,18 @@ while read chain; do
     checksync "${chain}"
 done < <(./listcoins.sh)
 
-iguanajson=$(jq -c '.' <labs.json)
-newiguanajson=$(komodo/master/komodo-cli getiguanajson | jq -c '.')
-if [[ "${iguanajson}" != "${newiguanajson}" ]]; then
-    echo "${newiguanajson}" > labs.json
-    while read -r branch; do
-        echo "[iguana->${branch}] Updated elected notaries json, stopping iguana..."
-        kill -15 $(pgrep -af "iguana ${branch}.json" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}') > /dev/null 2>&1
-    done < <(./listlizards.py | uniq)
+if [[ ${notary} == "KMD" ]]; then
+    json="elected.json"
+else 
+    iguanajson=$(jq -c '.' <labs.json)
+    newiguanajson=$(komodo/master/komodo-cli getiguanajson | jq -c '.')
+    if [[ "${iguanajson}" != "${newiguanajson}" ]]; then
+        echo "${newiguanajson}" > labs.json
+        while read -r branch; do
+            echo "[iguana->${branch}] Updated elected notaries json, stopping iguana..."
+            kill -15 $(pgrep -af "iguana ${branch}.json" | grep -v "$0" | grep -v "SCREEN" | awk '{print $1}') > /dev/null 2>&1
+        done < <(./listlizards.py | uniq)
+    fi
 fi
 
 echo -e ${GREEN}"All chains started sucessfully, party time... "${RESET}

@@ -3,100 +3,67 @@
     "ac_name": "REVS",
     "ac_supply": "1300000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "SUPERNET",
     "ac_supply": "816061",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },  
   {
     "ac_name": "DEX",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "PANGEA",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "JUMBLR",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "BET",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "CRYPTO",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "HODL",
     "ac_supply": "9999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "MSHARK",
     "ac_supply": "1400000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "BOTS",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "MGW",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "COQUICASH",
@@ -110,139 +77,94 @@
       "78.47.108.168"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "WLC",
     "ac_supply": "210000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "KV",
     "ac_supply": "1000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "CEAL",
     "ac_supply": "366666666",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "MESH",
     "ac_supply": "1000007",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "AXO",
     "ac_supply": "200000000",
     "ac_ccactivate": "130000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "ETOMIC",
     "ac_supply": "100000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "BTCH",
     "ac_supply": "20998641",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "NINJA",
     "ac_supply": "100000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "OOT",
     "ac_supply": "216000000",
       "ac_sapling": "5000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "BNTN",
     "ac_supply": "500000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "CHAIN",
     "ac_supply": "999999",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "PRLPAY",
     "ac_supply": "500000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "DSEC",
     "ac_supply": "7000000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "EQL",
     "ac_supply": "500000000",
     "ac_ccactivate": "205000",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "ZILLA",
@@ -252,30 +174,21 @@
       "51.68.215.104"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "RFOX",
     "ac_supply": "1000000000",
     "ac_reward": "100000000",
-    "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "freq": 10,
+    "branch": "saveit" 
   },
   {
     "ac_name": "SEC",
     "ac_supply": "1000000000",
     "ac_cc": "333",
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "CCL",
@@ -289,10 +202,7 @@
       "195.201.22.89"
       ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "PIRATE",
@@ -304,10 +214,7 @@
       "136.243.102.225"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
     {
     "ac_name": "PGT",
@@ -317,10 +224,7 @@
       "190.114.254.104"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
  {
     "ac_name": "DION",
@@ -333,10 +237,7 @@
       "51.75.124.34"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
      "ac_name": "KMDICE",
@@ -385,10 +286,7 @@
      "37.187.225.231"
  ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
  {
    "ac_name": "ILN",
@@ -407,10 +305,7 @@
      "95.217.44.58"
  ],
    "freq": 2,
-   "branch": "saveit",
-   "iguana": "blackjok3r",
-   "iguana_rpc": "7776",
-   "iguana_port": "17775"
+   "branch": "saveit" 
  },
  {
    "ac_name": "MORTY",
@@ -423,10 +318,7 @@
      "95.217.44.58"
    ],
    "freq": 2,
-   "branch": "saveit",
-   "iguana": "blackjok3r",
-   "iguana_rpc": "7776",
-   "iguana_port": "17775"
+   "branch": "saveit" 
  },
  {
    "ac_name": "KOIN",
@@ -435,10 +327,7 @@
        "3.0.32.10"
    ],
    "freq": 2,
-   "branch": "saveit",
-   "iguana": "blackjok3r",
-   "iguana_rpc": "7776",
-   "iguana_port": "17775"
+   "branch": "saveit" 
   },
  {
    "ac_name": "ZEXO",
@@ -456,10 +345,7 @@
      "80.240.17.222"
    ],
    "freq": 2,
-   "branch": "saveit",
-   "iguana": "blackjok3r",
-   "iguana_rpc": "7776",
-   "iguana_port": "17775"
+   "branch": "saveit" 
  },
  {
    "ac_name": "K64",
@@ -522,10 +408,7 @@
       "165.22.52.123"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "COMMOD",
@@ -542,10 +425,7 @@
       "34.251.151.148"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   },
   {
     "ac_name": "WLC21",
@@ -558,9 +438,6 @@
       "51.38.38.134"
     ],
     "freq": 2,
-    "branch": "saveit",
-    "iguana": "blackjok3r",
-    "iguana_rpc": "7776",
-    "iguana_port": "17775"
+    "branch": "saveit" 
   }
 ]

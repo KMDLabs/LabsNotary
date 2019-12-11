@@ -1,5 +1,6 @@
 {
 "port": 17775,
+"rpc_port": 7776,
 "BTCminsigs": 13,
 "minsigs": 13,
 "seeds": [
