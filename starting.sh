@@ -7,7 +7,7 @@ GREEN="\033[32m"
 YELLOW="\033[33m"
 
 # first param is the notary to start, LABS or KMD. 
-if [[ -z "${1}" ]]; then
+if [[ ! -z "${1}" ]]; then
     notary="${1}"
     cp assetchains_${notary}.json assetchains.json > /dev/null 2>&1
     ac_json=$(cat assetchains.json)
