@@ -30,11 +30,7 @@ fi
 
 longestchain () {
     chain=$1
-    if [[ ${chain} == "KMD" ]]; then
-        cli="komodo-cli"
-    else
-        cli="komodo-cli -ac_name=${chain}"
-    fi
+    cli=$(./listclis.sh ${chain})
     tries=0
     lc=0
     while (( lc == 0 )); do
@@ -59,34 +55,21 @@ longestchain () {
 
 checksync () {
     chain=$1
-    if [[ ${chain} == "KMD" ]]; then
-        cli="komodo-cli"
-    else
-        cli="komodo-cli -ac_name=${chain}"
-    fi
+    cli=$(./listclis.sh ${chain})
     lc=$(longestchain $1)
-    outcome=$(echo $?)
     blocks=$(${cli} getblockcount 2> /dev/null)
     while (( blocks < lc )); do
         sleep 60
         lc=$(longestchain ${chain})
-        echo $? > tmpoutcome
         blocks=$(${cli} getblockcount 2> /dev/null)
         progress=$(echo "scale=3;${blocks}/${lc}" | bc -l)
         echo "[${chain}] $(echo ${progress}*100|bc)% ${blocks} of ${lc}"
+        info=$(${cli} getnetworkinfo 2> /dev/null)
+        connections=$(jq -r .connections <<<"${info}")
+        if (( connections == 0 )); then 
+            break 
+        fi
     done
-    if [[ -f tmpoutcome ]]; then 
-        outcome=$(cat tmpoutcome)
-    fi
-    rm tmpoutcome > /dev/null 2>&1
-    info=$(${cli} getinfo 2> /dev/null)
-    connections=$(jq -r .connections <<<"${info}")
-    if (( connections == 0 )) || (( outcome != 0 )); then
-        echo -e ${RED}" [kmd->$chain] has a problem.... fix it :P"${RESET}
-        chain_start_cmd "${chain}"
-        echo ""
-        return 1
-    fi
     echo "[${chain}] Synced on block: ${lc}"
     return 0
 }
@@ -144,16 +127,12 @@ daemon_stopped () {
 
 check_chain_started () {
     chain=${1}
-    if [[ ${chain} == "KMD" ]]; then
-        cli="komodo-cli"
-    else
-        cli="komodo-cli -ac_name=${chain}"
-    fi
+    cli=$(./listclis.sh ${chain})
     echo "[${chain}] : Waiting for ${chain} daemon to start..."
     ./validateaddress.sh ${chain}
     ${cli} getblockcount > /dev/null 2>&1
     outcome=$(echo $?)
-    if (( outcome != 0 )); then
+    if (( outcome == 1 )); then
         echo -e ${RED}"Starting ${chain} failed. fix it! "${RESET}
         exit 1
     fi
