@@ -58,19 +58,19 @@ def dpow(symbol, freq, iguana_rpc, iguana):
     iguana_url = 'http://' + conn['iguana_ip'] + ':' + iguana_rpc
     try:
         response_dpow = post_rpc(iguana_url, payload)
-        print('== response_dpow ' + symbol + ' ==')
+        print('== response_dpow ' + iguana + ' : ' + symbol + ' ==')
         pp.pprint(response_dpow)
     except Exception as e:
-        print('== response_dpow ' + iguana + ' FAILED TO START! ==')
+        print('== response_dpow ' + iguana + ' : ' + str(e) + ' ==')
 
 # dpow assetchains
 for chain in assetchains:
     ac_chain = chain['ac_name']
     iguana_rpc = conn['iguana_port']
     iguana = "blackjok3r"
-    if iguana_rpc in chain:
+    if 'iguana_rpc' in chain:
         iguana_rpc = chain['iguana_rpc']
-    if iguana in chain:
+    if 'iguana' in chain:
         iguana = chain['iguana']
     if specific_iguana and iguana != specific_iguana:
         continue

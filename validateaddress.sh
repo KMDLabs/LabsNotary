@@ -7,20 +7,25 @@ cli=$(./listclis.sh ${chain})
 
 # Wait for the deamon to actually start
 started=0
+timewaited=0
 while (( started == 0 )); do
-    sleep 30
+    sleep 10
+    timewaited=$(( timewaited +10 ))
+    if (( ((timewaited % 30)) == 0 )); then
+        echo "[${chain}] : waited ... ${timewaited}s ... errcode: ${outcome}"
+    fi
     validateaddress=$(${cli} validateaddress ${Radd} 2> /dev/null)
     outcome=$(echo $?)
     if (( outcome == 0 )); then
         started=1
-    elif (( outcome == 1 )); then
+    elif (( outcome == 1 )) && (( timewaited > 30 )); then
         exit
     fi
 done
 
 mine=$(jq -r .ismine <<<"${validateaddress}")
 if [[ ${mine} == "false" ]]; then
-    echo "[${chain}] : Importing private key and rescanning last 10,000 blocks"
+    echo "[${chain}] : Importing private key and rescanning last 10,000 blocks..."
     height=$(${cli} getblockcount)
     if (( height < 10000 )); then 
         echo "[${chain}] : $(${cli} importprivkey ${privkey})"
