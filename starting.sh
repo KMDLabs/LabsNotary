@@ -300,7 +300,7 @@ while read -r chain; do
         check_chain_started "${chain}" &
         pids[${chain}]=$!
     fi
-done < <(./listassetchains.py) # to add 3rd party coins use listcoins.sh 
+done < <(./listcoins.sh) 
 wait_for_last_function ${pids}
 
 pids=()
@@ -314,7 +314,7 @@ if [[ ${notary} == "KMD" ]]; then
     json="elected.json"
 else 
     iguanajson=$(jq -c '.' <labs.json)
-    newiguanajson=$(komodo/master/komodo-cli getiguanajson | jq -c '.')
+    newiguanajson=$(komodo/master/komodo-cli -ac_name=LABS getiguanajson | jq -c '.')
     if [[ "${iguanajson}" != "${newiguanajson}" ]]; then
         echo "${newiguanajson}" > labs.json
         while read -r branch; do
