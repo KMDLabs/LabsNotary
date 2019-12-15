@@ -4,6 +4,7 @@ cd "${BASH_SOURCE%/*}" || exit
 # ./start_iguana <branch> 
 # eg, start LABS blackjok3r iguana branch
 # ./start_iguana blackjok3r
+# does not work for KMD notary!
 
 # LABS notaries as default
 branch="staked"

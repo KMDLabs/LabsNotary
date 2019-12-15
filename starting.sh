@@ -13,7 +13,7 @@ notary_arg="labsnotary=1"
 
 if [[ ! -z "${1}" ]]; then
     notary="${1}"
-    if [[ "${notary}"== "KMD" ]]; then 
+    if [[ "${notary}" == "KMD" ]]; then 
         notary_arg="-notary -gen -genproclimit=1"
     fi
 fi
