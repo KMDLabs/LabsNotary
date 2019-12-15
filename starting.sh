@@ -9,7 +9,7 @@ YELLOW="\033[33m"
 # default to LABS. 
 override_args=""
 notary="LABS"
-notary_arg="labsnotary=1"
+notary_arg="-labsnotary=1"
 
 if [[ ! -z "${1}" ]]; then
     notary="${1}"
