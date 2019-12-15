@@ -6,6 +6,4 @@
 
 cd "${BASH_SOURCE%/*}" || exit
 git pull
-if [[ ! -z ${1} ]]; then
-    ./starting.sh "${@}"
-fi
+./starting.sh "${@}"
