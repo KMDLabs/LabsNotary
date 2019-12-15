@@ -109,8 +109,7 @@ done
 # sort confirmed and unconfirmed and wait until all tx are confirmed before clearing wallet.dat of tx history.
 declare -a unconfirmed=() confirmed=() tmpunconf=()
 let i=0
-while : 
-do
+while (( 1 == 1 )); do
     tmpunconf=()
     if (( i == 0 )); then
         tmpunconf="${txids[@]}"

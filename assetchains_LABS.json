@@ -1,5 +1,5 @@
 [
-  {
+    {
         "ac_name": "LABS",
         "ac_supply": "350689",
         "ac_reward": "0,0,800000000",
@@ -21,10 +21,10 @@
         ],
         "freq": 5,
         "iguana": "blackjok3r",
-        "iguana_rpc": "6789",
-        "iguana_port": "8222"
-  },
-  {
+            "iguana_rpc": "6789",
+            "iguana_port": "8222"
+    },
+    {
         "ac_name": "CFEKPOS1",
         "ac_supply": "100000",
         "ac_reward": "100000000000",
@@ -36,8 +36,8 @@
         "ac_founders": "10",
         "addnode": [
           "80.240.17.222",
-          "195.201.20.230",
-          "103.6.12.112"
+              "195.201.20.230",
+              "103.6.12.112"
         ],
         "branch": "saveit",
         "freq": 5,
@@ -65,41 +65,41 @@
         "iguana_port": "8222"
     },
     {
-    "ac_name": "CFEKMYLO",
-    "ac_supply": "999999",
-    "ac_reward": "800000000",
-    "ac_cc": "1337",
-    "ac_ccenable": "226,236",
-    "ac_cclib": "labs",
-    "ac_sapling": "1",
-    "addnode": [
-      "103.6.12.112",
-      "149.28.8.219",
-      "195.201.20.230",
-      "80.240.17.222"
-    ],
-    "freq": 5,
-    "iguana": "blackjok3r",
-    "iguana_rpc": "6789",
-    "iguana_port": "8222",
-    "branch": "pos64"
-  },
-  {
-    "ac_name": "CFEKMYLO6",
-    "ac_supply": "7777",
-    "ac_reward": "7777",
-    "ac_cc": "1337",
-    "ac_sapling": "1",
-    "addnode": [
-      "103.6.12.112",
-      "149.28.8.219",
-      "195.201.20.230",
-      "80.240.17.222"
-    ],
-    "freq": 5,
-    "iguana": "blackjok3r",
-    "iguana_rpc": "6789",
-    "iguana_port": "8222",
-    "branch": "pos64"
-  }
+        "ac_name": "CFEKMYLO",
+        "ac_supply": "999999",
+        "ac_reward": "800000000",
+        "ac_cc": "1337",
+        "ac_ccenable": "226,236",
+        "ac_cclib": "labs",
+        "ac_sapling": "1",
+        "addnode": [
+          "103.6.12.112",
+          "149.28.8.219",
+          "195.201.20.230",
+          "80.240.17.222"
+        ],
+        "freq": 5,
+        "iguana": "blackjok3r",
+        "iguana_rpc": "6789",
+        "iguana_port": "8222",
+        "branch": "pos64"
+    },
+    {
+        "ac_name": "CFEKMYLO6",
+        "ac_supply": "7777",
+        "ac_reward": "7777",
+        "ac_cc": "1337",
+        "ac_sapling": "1",
+        "addnode": [
+          "103.6.12.112",
+          "149.28.8.219",
+          "195.201.20.230",
+          "80.240.17.222"
+        ],
+        "freq": 5,
+        "iguana": "blackjok3r",
+        "iguana_rpc": "6789",
+        "iguana_port": "8222",
+        "branch": "pos64"
+    }
 ]

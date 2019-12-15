@@ -4,12 +4,10 @@ cd "${BASH_SOURCE%/*}" || exit
 # ./start_iguana <branch> 
 # eg, start LABS blackjok3r iguana branch
 # ./start_iguana blackjok3r
-# start KMD iguana
-# ./start_iguana 
 
-# KMD notaries as default
-branch="blackjok3r"
-json="elected.json"
+# LABS notaries as default
+branch="staked"
+json="labs.json"
 rpc=$(./printkey.py rpc)
 
 if [[ ! -z ${1} ]] && [[ ${1} != ${branch} ]]; then

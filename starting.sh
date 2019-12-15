@@ -6,27 +6,28 @@ RED="\033[31m"
 GREEN="\033[32m"
 YELLOW="\033[33m"
 
+# default to LABS. 
 override_args=""
-notary_arg="-notary -gen -genproclimit=1"
-# first param is the notary to start, LABS or KMD. 
+notary="LABS"
+notary_arg="labsnotary=1"
+
 if [[ ! -z "${1}" ]]; then
     notary="${1}"
-    if [[ "${notary}" != "KMD" ]]; then 
-        notary_arg="labsnotary=1"
+    if [[ "${notary}"== "KMD" ]]; then 
+        notary_arg="-notary -gen -genproclimit=1"
     fi
-    cp assetchains_${notary}.json assetchains.json > /dev/null 2>&1
-    ac_json=$(cat assetchains.json)
-    echo ${ac_json} | jq .[] > /dev/null 2>&1
-    outcome=$(echo $?)
-    if (( outcome != 0 )); then
-        echo -e ${RED}"[${notary}] assetchains.json is invalid, check git blame and start flame war..."${RESET}
-        exit 1
-    fi
-    override_args="${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9} ${10}"
-else 
-    echo "./starting.sh NOTARY <extra chain params>"
+fi
+
+echo "Starting ${notary}... "
+cp assetchains_${notary}.json assetchains.json > /dev/null 2>&1
+ac_json=$(cat assetchains.json)
+echo ${ac_json} | jq .[] > /dev/null 2>&1
+outcome=$(echo $?)
+if (( outcome != 0 )); then
+    echo -e ${RED}"[${notary}] assetchains.json is invalid, check git blame and start flame war..."${RESET}
     exit 1
 fi
+override_args="${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9} ${10}"
 
 longestchain () {
     chain=$1
