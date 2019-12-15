@@ -117,7 +117,7 @@ daemon_stopped () {
         pid=$(cat ${pidfile} 2> /dev/null)
         pspid=$(ps -p ${pid} 2> /dev/null | grep komodod)
         outcome=$(echo $?)
-        echo -n "ps -p ${pid} grep komodod = ${pspid} "
+        #echo -n "ps -p ${pid} grep komodod = ${pspid} "
         if (( outcome != 0 )); then
             rm ${pidfile}
         fi
