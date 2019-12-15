@@ -1,5 +1,19 @@
 # LABS Notary Control Scripts
 
+#-------=== TO UPDATE FROM StakedNotary ===-------
+```shell 
+cd ~ 
+mv StakedNotary StakedNotary.old 
+git clone https://github.com/blackjok3rtt/LabsNotary.git -b blackjok3r 
+cp ~/StakedNotary.old/config.ini ~/LabsNotary/
+cd LabsNotary/install
+./buildkomodo.sh
+cd .. 
+./start.sh
+``` 
+#-------=== TO UPDATE FROM StakedNotary ===-------
+
+
 ## Setting up your VPS
 You need a new user, you cannot use `root`
 
