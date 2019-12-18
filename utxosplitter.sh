@@ -60,7 +60,7 @@ while read -r chain; do
                     echo "[${chain}] Split TXID: ${txid}"
                 else
                     printf "[${chain}] Error: $(jq -r '.error' <<<"${json}")\n Trying iguana splitfunds method.... \n"
-                    branch=$(./listlizards ${chain})
+                    branch=$(./listlizards.py ${chain})
                     iguana_port=$(cat assetchains.json | jq -r --arg branch ${branch} '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
                     curl "http://127.0.0.1:${iguana_port}" --silent --data "{\"chain\":\"${chain}\",\"agent\":\"iguana\",\"method\":\"splitfunds\",\"satoshis\":${utxo_size},\"sendflag\":1,\"duplicates\":${duplicates}}"
                 fi
