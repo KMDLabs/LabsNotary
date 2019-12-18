@@ -5,6 +5,13 @@ import bitcoin
 from bitcoin.wallet import P2PKHBitcoinAddress
 from bitcoin.core import x
 from bitcoin.core import CoreMainParams
+import argparse
+
+parser = argparse.ArgumentParser(description='Display notarization stats for a running LABS Smart Chain.')
+parser.add_argument('--name', type=str, help='Name of the Smart Chain.')
+parser.add_argument('--number', type=int, help='Number of previous blocks.(0 for all)')
+
+args = parser.parse_args()
 
 class CoinParams(CoreMainParams):
     MESSAGE_START = b'\x24\xe9\x27\x64'
@@ -15,23 +22,32 @@ class CoinParams(CoreMainParams):
 
 bitcoin.params = CoinParams
 
+if not args.name:
+    CHAIN = input('Please specify chain: ')
+else:
+    CHAIN = args.name
 
-CHAIN = input('Please specify chain: ')
 ADDRESS = 'RXL3YXG2ceaB6C5hfJcN4fvmLH2C34knhA'
 
 try:
-   rpc_connection = lib.def_credentials(CHAIN)
+    rpc_connection = lib.def_credentials(CHAIN)
 except:
-   print(CHAIN + ' daemon is not running or RPC creds not found')
-   sys.exit(0)
-
-try:
-    block_range = int(input('Please specify amount of previous blocks(0 for all): '))
-except:
-    print('Blocks must be whole number. Exiting...')
+    print(CHAIN + ' daemon is not running or RPC creds not found')
     sys.exit(0)
 
+
+if not args.number:
+    try:
+        block_range = int(
+            input('Please specify amount of previous blocks(0 for all): '))
+    except:
+        print('Blocks must be whole number. Exiting...')
+        sys.exit(0)
+else:
+    block_range = args.number
+
 print('Please wait...')
+
 
 getinfo_result = rpc_connection.getinfo()
 height = getinfo_result['blocks']
