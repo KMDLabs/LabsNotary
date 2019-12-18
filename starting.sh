@@ -134,7 +134,8 @@ check_chain_started () {
     ${cli} getblockcount > /dev/null 2>&1
     outcome=$(echo $?)
     if (( outcome == 1 )); then
-        echo -e ${RED}"Starting ${chain} failed. fix it! "${RESET}
+        echo -e ${RED}"Starting ${chain} failed. fix it! ${RESET}
+                chain_start_cmd ${chain}"
         exit 1
     fi
 }
