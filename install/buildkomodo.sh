@@ -23,6 +23,7 @@ echo "rpcuser=$rpcuser" > komodo.conf
 echo "rpcpassword=$rpcpassword" >> komodo.conf
 echo "server=1" >> komodo.conf
 echo "txindex=1" >> komodo.conf
+echo "rpcallowip=127.0.0.1" >> komodo.conf
 chmod 0600 komodo.conf
 sudo ln -sf /home/$USER/LabsNotary/komodo/master/komodo-cli /usr/local/bin/komodo-cli
 sudo ln -sf /home/$USER/LabsNotary/komodo/master/komodod /usr/local/bin/komodod
