@@ -9,7 +9,10 @@ else:
     specific_chain = False
 
 def format_param(param, value):
-    return '-' + param + '=' + value
+    return '-' + str(param) + '=' + str(value)
+
+def format_bool(param):
+    return '-' + str(param)
 
 script_dir = os.getcwd()
 with open(script_dir + '/assetchains.json') as file:
@@ -21,6 +24,17 @@ with open(script_dir + '/assetchains.json') as file:
         params = []
         for param, value in chain.items():
             if param == 'freq':
+                continue
+            if param == 'branch':
+                continue
+            if param == 'iguana':
+                continue
+            if param == 'iguana_rpc':
+                continue
+            if param == 'iguana_port':
+                continue
+            if type(value) is bool:
+                params.append(format_bool(param))
                 continue
             if isinstance(value, list):
                 for dupe_value in value:

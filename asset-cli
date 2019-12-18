@@ -1,7 +1,19 @@
 #!/bin/bash
-cd ~/StakedNotary
-if [[ -z $1 ]]; then
-  echo "asset-cli <ASSETCHAIN_NAME> commands"
-  exit
+cd "${BASH_SOURCE%/*}" || exit
+
+if [[ -z ${1} ]]; then
+    echo "asset-cli <ASSETCHAIN_NAME> commands"
+    exit
 fi
-komodo-cli -ac_name=${@}
+
+branch()
+{
+    branch="master"
+    attempt=$(jq -r --arg chain ${1} '.[] | select (.ac_name == $chain) | .branch' <"assetchains.json")
+    if [[ ${attempt} != "null" ]] && [[ ${attempt} != "" ]]; then
+        branch=${attempt}
+    fi
+    echo ${branch}
+}
+
+komodo/$(branch ${1})/komodo-cli -ac_name="${@}"

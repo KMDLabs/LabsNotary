@@ -1,11 +1,21 @@
 #!/bin/bash
-cd ~/StakedNotary
-if [[ -z $1 ]]; then
-  echo "assets-cli commands"
-  exit
+cd "${BASH_SOURCE%/*}" || exit
+if [[ -z ${1} ]]; then
+    echo "assets-cli commands"
+    exit
 fi
 
-./listassetchains.py | while read coin; do
-  echo $coin
-  komodo-cli -ac_name=$coin ${@}
-done
+branch()
+{
+    branch="master"
+    attempt=$(jq -r --arg chain ${1} '.[] | select (.ac_name == $chain) | .branch' <"assetchains.json")
+    if [[ ${attempt} != "null" ]] && [[ ${attempt} != "" ]]; then
+        branch=${attempt}
+    fi
+    echo ${branch}
+}
+
+while read -r chain; do
+    echo "${chain}"
+    komodo/$(branch ${chain})/komodo-cli -ac_name="${chain}" "${@}"
+done < <(./listassetchains.py)

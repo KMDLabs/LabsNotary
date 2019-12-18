@@ -1,0 +1,20 @@
+#!/bin/bash
+cd "${BASH_SOURCE%/*}" || exit
+
+#./checkmasks COIN - shows masks for COIN on iguana RPC port PORT
+#./checkmasks <maskhex> - will output detail for a specific mask
+
+if [[ ! -z ${1} ]]; then
+    ac_json=$(cat assetchains.json)
+    ac=$(./listcoins.sh | grep "${1}")
+    rpc=7776
+    if [[ "${ac}" != "" ]]; then
+        rpc=$(jq -r --arg chain ${ac} '.[] | select (.ac_name == $chain) | .iguana_rpc' <<<"${ac_json}")
+        curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"${ac}\"}" #| jq  -c -r .[]
+    else 
+        curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"${1}\"}" #| jq  -c -r .
+    fi
+else 
+    echo "./checkmasks COIN - shows masks for specfic smartchain"
+    echo "./checkmasks <maskhex> - will output detail for a specific mask, copy/paste from iguana stdout"
+fi

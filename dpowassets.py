@@ -27,6 +27,11 @@ connection_options = [
     'iguana_port']
 for i in connection_options:
     conn[i] = config[ENVIRON][i]
+    
+if len(sys.argv) > 1:
+    specific_iguana = sys.argv[1]
+else:
+    specific_iguana = False
 
 # define function that posts json data to iguana
 def post_rpc(url, payload, auth=None):
@@ -36,14 +41,12 @@ def post_rpc(url, payload, auth=None):
     except Exception as e:
         raise Exception("Couldn't connect to " + url + ": ", e)
 
-# define url's
-iguana_url = 'http://' + conn['iguana_ip'] + ':' + conn['iguana_port']
 
 # set btcpubkey
 btcpubkey = config[ENVIRON]['btcpubkey']
 
 # dpow
-def dpow(symbol, freq):
+def dpow(symbol, freq, iguana_rpc, iguana):
     payload = {
         "agent": "iguana",
         "method": "dpow",
@@ -51,14 +54,27 @@ def dpow(symbol, freq):
         "freq": freq,
         "pubkey": btcpubkey
     }
-    response_dpow = post_rpc(iguana_url, payload)
-    print('== response_dpow ' + symbol + ' ==')
-    pp.pprint(response_dpow)
+    # define url's
+    iguana_url = 'http://' + conn['iguana_ip'] + ':' + iguana_rpc
+    try:
+        response_dpow = post_rpc(iguana_url, payload)
+        print('== response_dpow ' + iguana + ' : ' + symbol + ' ==')
+        pp.pprint(response_dpow)
+    except Exception as e:
+        print('== response_dpow ' + iguana + ' : ' + str(e) + ' ==')
 
 # dpow assetchains
 for chain in assetchains:
+    ac_chain = chain['ac_name']
+    iguana_rpc = conn['iguana_port']
+    iguana = "blackjok3r"
+    if 'iguana_rpc' in chain:
+        iguana_rpc = chain['iguana_rpc']
+    if 'iguana' in chain:
+        iguana = chain['iguana']
+    if specific_iguana and iguana != specific_iguana:
+        continue
     for param, value in chain.items():
-        ac_chain = chain['ac_name']
         if param == 'freq':
             ac_freq = chain['freq']
-            dpow(ac_chain,ac_freq)
+            dpow(ac_chain,ac_freq,iguana_rpc,iguana)

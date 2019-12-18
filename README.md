@@ -1,77 +1,128 @@
-# Staked Notary Control Scripts
+# LABS Notary Control Scripts
+
+#-------=== TO UPDATE FROM StakedNotary ===-------
+```shell 
+cd ~ 
+mv StakedNotary StakedNotary.old 
+git clone https://github.com/blackjok3rtt/LabsNotary.git -b blackjok3r 
+cp ~/StakedNotary.old/config.ini ~/LabsNotary/
+cd LabsNotary/install
+./buildkomodo.sh
+cd .. 
+./start.sh
+``` 
+#-------=== TO UPDATE FROM StakedNotary ===-------
+
+
+## Setting up your VPS
+You need a new user, you cannot use `root`
+
+For ubuntu 16.04 login as root and create a user: `adduser`
+
+Add your user to sudo: `gpasswd -a <user> sudo`
+
+Its reccomended to install an SSH key to this user. https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
+
+Logout of root and login to your user to continue installing the notary repo.
 
 ## Install instructions
 ```shell
 cd ~
-git clone https://github.com/StakedChain/StakedNotary.git
-cd StakedNotary
+git clone https://github.com/blackjok3rtt/LabsNotary.git
+cd LabsNotary
 ```
 
+#### Install the relavent repos and dependancies 
 You need to build our special repo of `komodo` thanks to @libbscott and nanomsg and SuperNET for iguana. Both these scripts cover all required deps on debian based distros.
-
-```shell
+ ```shell
 cd install
 ./installSuperNET.sh
 ./buildkomodo.sh
 ./installnanomsg.sh
+``` 
+
+If you want/need the python stuff install these:
+```shell
+sudo apt-get install python3-dev python3 libgnutls28-dev libssl-dev python3-pip
+
+pip3 install setuptools 
+pip3 install wheel 
+pip3 install base58 slick-bitcoinrpc requests python-bitcoinlib configparser
 ```
 
 Now you need to copy the config file and edit it with our pubkey/Raddress and WIF key for KMD.
 
 ```shell
-cd ..
+cd ~/LabsNotary
 cp config_example.ini config.ini
 nano config.ini
 ```
 
-After this we are ready to launch KMD and any chains that happen to be in `assetchains.json`. If KMD is not already synced this will take many hours, I wold advise syncing KMD first to make the process a bit faster.
+e.g ` btcpubkey = 02.....`
+
+We also need to unblock the iguana port. To find this look in `assetchains.json` for iguana_port (default is below):
+```shell
+sudo ufw allow 8222
+sudo ufw allow 22
+sudo ufw enable
+```
+After this we are ready to launch KMD and any chains that happen to be in `assetchains.json` and import our private keys to them all.
+
 ```shell
 ./start.sh
 ```
+To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 5 to 10 hours.The sync progress is printed to the terminal you started `start.sh` at.
 
-Once this is done, you have all the required things to launch iguana, there are some coins files in `iguana/coins` and iguana binary has been built from the SuperNET repo in your home folder and copied to `iguana` folder. Also the `staked.json` file containing all the info for the Notary Network has been fetched from github.
-
-To start your notary node and connect to the network simply run:
-```shell
-./start_iguana.sh
-```
-There is one thing that notary nodes depend on more than anything else and that is the UTXO's. Once iguana has started we need to run @LukeChilds excellent UTXO splitter.
+Once iguana has started we need to run a now heavily modified excellent UTXO splitter by @lukechilds
 ```shell
 ./utxosplitter.sh
 ```
-You also will want to put this UTXO splitter on a cron job every 15 minutes.
+You also will want to put this UTXO splitter on a cron job once an hour.
 ```shell
 crontab -e
 ```
 Enter this into the cron tab:
 ```
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
-*/15 * * * * /home/<your_username>/StakedNotary/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
+33 * * * * /home/<your_username>/LabsNotary/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
 ```
 
-## Alright's instructions
-There is the file `staked.json` in this repo, the pubkeys and IP's of our selected notaries need to go in this file. If you change it everyone needs to update. The `minsigs` parameter is how many notaries a notarization requires. The number of IP's in this file must always be exactly 8 or iguana will crash, you can use some more than once if needed.
+## Using features of LabsNotary komodod.
+### Wallet filter 
+Add as many address as you like to the filter, by default it is off and lets all tx though, by whitelisting an address it allows it to send you funds when the filter is active. The address in the filter are saved to a text file in the coin datadir and reloaded on daemon start. 
+ 
+Specify address for whilelisting with either the command line param or conf file setting:
 
-The file `start_iguana.sh` contains an area called `ADD NOTARY AREA` you need to add every notaries IP to this part, copy paste the curl call and change the IP. Its not great having to have everyones IP recorded in a central place, but the network seems to break otherwise, especially if they are changed at some point.
+`-whitelistaddress=RTVti13NP4eeeZaCCmQxc2bnPdHxCJFP9x`
 
-I have set the port to `9999` this is the only port that NEEDS to be open on the notary node's unless you want them to seed the assetchains aswell. I would advise having seperate seeds if possibe.
+RPCS: 
 
-Of couse each pubkey will need some KMD and some of the AC being notarized. Make sure you send some, if they have UTXO splitter on cron, it will take car of everything, as soon as funds arrive the node will split and start notarizing.
+    `addwhitelistaddress` address
+    `removewhitelistaddress` address
+    `setwalletfilter` true/false 
+    `getwalletfilterstatus` 
 
-I advise we also change the pubkey from the 4 I have for scaletest, we should have new ones. Iguana can use a WIF, I tested it. No need for a passphrase.
+
+### Wallet transaction cleaner
+`cleanwallettransactions` <txid>
+
+-> Provide a txid to delete all tx in the wallet except the tx specified. The walletreset.sh script does this all for you.
+
+-> Running without a txid specified will clean all transaction history in the wallet older than the last unspent utxo. 
+
+### dpowlistunspent RPC 
+-> Special RPC for iguana, it caches and returns unspent utxos very quickly. Needing a lean wallet.dat is now thing of the past. 
 
 ### Adding New Coins
-This is the coolest part, super happy about it. Simply add the coins params to `assetchains.json` (make sure you have the `freq` param it is required!) and submit a PR and merge it. Then have ALL operators:
+Add the chain params to `assetchains.json` (make sure you have the `freq` param it is required!)
 ```shell
-pkill -15 iguana
 ./start.sh
-./start_iguana.sh
 ```
+
 Make sure some funds have been sent and everything *should* just work. :D
 
-NOTE: *freq is the frequency of notarizations anything less than 10 is unlikley to work without changes to iguana*
-
 ### Using some of the Scripts
+
 To get a list of coins: `./listcoins.sh`
 
 To issue commands to a coin: `asset-cli <COINS_NAME> <COMMAND>`
@@ -80,10 +131,37 @@ To issue commands to all assetchains: `assets-cli <COMMAND>`
 
 To kill everything: `./stop.sh`
 
+To HARD reset a coins wallet: `./walletreset.sh <coin>`
+
+Hard reset will send the entire balance to yourself, then remove all transactions that are not this transaction from the wallet after it has been confirmed. 
+
+To SOFT reset a KMDs wallet (works with ac by specifying -ac_name=): `komodo-cli cleanwallettransactions`
+
+For stats you have multiple options:
+    -> `stats.sh` based off webworker01's script 
+    
+    -> `py_scripts/stats.py` this uses getNotarisationsFromBlock RPC, thansk to smk762 and Alright. 
+    
+    -> `py_scripts/notarypay_stats.py` this tallys notarypay coinbase payments, works on ac_notarypay chains only. 
+    
+To list internal iguana information such as revcmask and bestmask use:
+    `checkmasks <chain> or <maskhex>`
+
 The install scripts come with the tools:
 
 `htop`: To monitor system load
 
 `slurm`: To monitor network load
 
-`tmux`: To make panes, so you can run these tools and iguana console logs at he same time and detach/reattach when you login/out of the notary node. Google is your friend.
+`tmux`: To make panes, so you can run these tools and iguana console logs at he same time and detach/reattach when you login/out of the notary node.
+ 
+    -> https://github.com/gpakosz/.tmux
+    
+    -> https://leanpub.com/the-tao-of-tmux/read
+    
+    -> https://hackernoon.com/a-gentle-introduction-to-tmux-8d784c404340
+        
+`screen`: used for daemons, and iguana if we run more than one, to attach a coin:
+    `screen -r <coin>` 
+    To attach an iguana:
+    `screen -r <branch>`
