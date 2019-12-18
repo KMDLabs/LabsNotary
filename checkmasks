@@ -1,45 +1,21 @@
 #!/bin/bash
+cd "${BASH_SOURCE%/*}" || exit
 
-#./checkmasks PORT COIN - shows masks for COIN on iguana RPC port PORT
+#./checkmasks COIN - shows masks for COIN on iguana RPC port PORT
 #./checkmasks <maskhex> - will output detail for a specific mask
 
-
-if [[ ! -z $1 ]] && [[ ! -z $2 ]]; then
-    curl -s --url "http://127.0.0.1:$1" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"$2\"}" | jq  -c -r .[]
-elif [[ ! -z $1 ]]; then
-    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$1\"}" | jq  -c -r .
+if [[ ! -z ${1} ]]; then
+    ac_json=$(cat assetchains.json)
+    ac=$(./listcoins.sh | grep "${1}")
+    rpc=7776
+    if [[ "${ac}" != "" ]]; then
+        rpc=$(jq -r --arg chain ${ac} '.[] | select (.ac_name == $chain) | .iguana_rpc' <<<"${ac_json}")
+        curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"${ac}\"}" | jq  -c -r .[]
+    else 
+        echo "currently crashes iguana, please do not use."
+        #curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"${1}\"}" | jq  -c -r .
+    fi
 else 
-    echo "./checkmasks PORT COIN - shows masks for COIN on iguana RPC port PORT"
-    echo "./checkmasks <maskhex> - will output detail for a specific mask"
+    echo "./checkmasks COIN - shows masks for specfic smartchain"
+    echo "./checkmasks <maskhex> - will output detail for a specific mask, copy/paste from iguana stdout"
 fi
-exit 1
-#else
-    stakedchain=$(cat assetchains.json | jq -r .[0].ac_name)
-    mynotaryid=$(komodo-cli -ac_name=$stakedchain getinfo | jq .notaryid)
-
-    bestmaskdata=$(curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\"}")
-
-    seedrecvmask=$(echo $bestmaskdata | jq --arg seedid $seednode '.[$seedid|tonumber] | .recvmask' | sed 's/"//g' | awk '{$1=$1};1')
-    echo "Seed recvmask: $seedrecvmask"
-    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$seedrecvmask\"}" | jq -c -r '. | del(.maskhex) | del(.tag) | .set' 
-    echo "not:"
-    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$seedrecvmask\"}" | jq -c -r '. | del(.maskhex) | del(.tag) | .not' 
-
-    myrecvmask=$(echo $bestmaskdata | jq --arg nodeid $mynotaryid '.[$nodeid|tonumber].recvmask' | sed 's/"//g' | awk '{$1=$1};1')
-    echo
-    echo "My recvmask: $myrecvmask"
-    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$myrecvmask\"}" | jq -c -r '.set'
-
-    bestmask=$(echo $bestmaskdata | jq -c 'group_by(.bestmask) | del(.[] | select(.[0].bestmask == "               0" )) | del(.[] | select(.[0].bestmask == " 0" )) | map ({ "total":length, "bestmask":.[0].bestmask }) | sort_by(.total) | reverse')
-    bestmaskmask=$(echo $bestmask | jq .[0].bestmask | sed 's/"//g' | awk '{$1=$1};1')
-    bestmaskcount=$(echo $bestmask | jq .[0].total | sed 's/"//g')
-
-    echo
-    echo "Best bestmask: $bestmaskmask [$bestmaskcount agree]"
-    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$bestmaskmask\"}" | jq -c -r '.set'
-
-    mybestmask=$(echo $bestmaskdata | jq --arg nodeid $mynotaryid '.[$nodeid|tonumber].bestmask' | sed 's/"//g' | awk '{$1=$1};1')
-    echo
-    echo "My bestmask: $mybestmask"
-    curl -s --url "http://127.0.0.1:7776" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"$mybestmask\"}" | jq -c -r '.set'
-#fi

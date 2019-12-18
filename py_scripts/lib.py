@@ -524,7 +524,7 @@ def lottery_sign(rpc, oracle):
         return('Error: signmessage rpc command failed with ' + str(e))
 
     return('The following message must be included in a pull request to the ' + 
-           'participants.json file in the StakedNotary repo.\n\n' + 
+           'participants.json file in the LabsNotary repo.\n\n' + 
            signed_msg + str(check_pk[mypk]))
 
 

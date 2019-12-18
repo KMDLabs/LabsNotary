@@ -1,4 +1,5 @@
 #!/bin/bash
+cd "${BASH_SOURCE%/*}" || exit
 # Local split version by webworker01
 # Original version by Decker (c) 2018 <https://github.com/DeckerSU/komodo_scripts/blob/master/split_nn_sapling.sh>
 #
@@ -11,8 +12,10 @@
 NN_ADDRESS=$(./printkey.py Radd)
 txfee=0
 
-#Full path to komodo-cli
-komodoexec=/usr/local/bin/komodo-cli
+# fetch this coins cli path
+if [[ ! -z $1 ]]; then
+    cli=$(./listclis.sh | grep ${1})
+fi
 
 #Do not change below for any reason!
 
@@ -30,14 +33,6 @@ decodeBase58() {
     while read line; do echo -n ${line/\\/}; done
 }
 
-if [[ ! -z $1 ]] && [[ $1 != "KMD" ]]; then
-    coin=$1
-    asset=" -ac_name=$1"
-else
-    coin="KMD"
-    asset=""
-    txfee=1
-fi
 
 SPLIT_COUNT=$2
 #Splits > 252 are not allowed
@@ -61,12 +56,12 @@ SPLIT_VALUE_SATOSHI=10000
 # add a 10k sat txfee for KMD. 
 SPLIT_TOTAL=$(jq -n --arg txfee $txfee "$SPLIT_VALUE*($SPLIT_COUNT+$txfee)")
 
-NN_PUBKEY=$($komodoexec $asset validateaddress $NN_ADDRESS | jq -r .pubkey)
+NN_PUBKEY=$(${cli} validateaddress $NN_ADDRESS | jq -r .pubkey)
 nob58=$(decodeBase58 $NN_ADDRESS)
 NN_HASH160=$(echo ${nob58:2:-8})
 
 #Get lowest amount and valid utxo to split |||| (and .generated==false) this isnt a real limitation. 
-utxo=$($komodoexec $asset listunspent | jq -r --arg minsize $SPLIT_TOTAL '[.[] | select(.amount>($minsize|tonumber) and .rawconfirmations>0)] | sort_by(.amount)[0]')
+utxo=$(${cli} listunspent | jq -r --arg minsize $SPLIT_TOTAL '[.[] | select(.amount>($minsize|tonumber) and .rawconfirmations>0)] | sort_by(.amount)[0]')
 
 if [[ $utxo != "null" ]]; then
     
@@ -109,10 +104,10 @@ if [[ $utxo != "null" ]]; then
         rawtx=$rawtx"000000000000000000000000000000" # sapling end of tx
     fi
 
-    signedtx=$($komodoexec $asset signrawtransaction $rawtx | jq -r '.hex')
+    signedtx=$(${cli} signrawtransaction $rawtx | jq -r '.hex')
 
     if [[ ! -z $signedtx ]]; then
-        txid=$($komodoexec $asset sendrawtransaction $signedtx)
+        txid=$(${cli} sendrawtransaction $signedtx)
         echo '{"txid":"'"$txid"'"}'
     else
         echo '{"error":"failed to sign tx"}'
