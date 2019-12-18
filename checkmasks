@@ -10,9 +10,10 @@ if [[ ! -z ${1} ]]; then
     rpc=7776
     if [[ "${ac}" != "" ]]; then
         rpc=$(jq -r --arg chain ${ac} '.[] | select (.ac_name == $chain) | .iguana_rpc' <<<"${ac_json}")
-        curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"${ac}\"}" #| jq  -c -r .[]
+        curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"symbol\":\"${ac}\"}" | jq  -c -r .[]
     else 
-        curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"${1}\"}" #| jq  -c -r .
+        echo "currently crashes iguana, please do not use."
+        #curl --url "http://127.0.0.1:${rpc}" --data "{\"agent\":\"dpow\",\"method\":\"active\",\"maskhex\":\"${1}\"}" | jq  -c -r .
     fi
 else 
     echo "./checkmasks COIN - shows masks for specfic smartchain"
