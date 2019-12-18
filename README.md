@@ -4,9 +4,10 @@
 ```shell 
 cd ~ 
 mv StakedNotary StakedNotary.old 
-git clone https://github.com/blackjok3rtt/LabsNotary.git -b blackjok3r 
+git clone https://github.com/KMDLabs/LabsNotary.git 
 cp ~/StakedNotary.old/config.ini ~/LabsNotary/
 cd LabsNotary/install
+you may need to remove ~/komodo due to disk space requirements 
 ./buildkomodo.sh
 cd .. 
 ./start.sh
@@ -28,7 +29,7 @@ Logout of root and login to your user to continue installing the notary repo.
 ## Install instructions
 ```shell
 cd ~
-git clone https://github.com/blackjok3rtt/LabsNotary.git
+git clone https://github.com/KMDLabs/LabsNotary.git
 cd LabsNotary
 ```
 
