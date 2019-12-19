@@ -24,7 +24,7 @@ chain=$1
 cli=$(./listclis.sh ${chain})
 Addy=$(./printkey.py Radd)
 
-echo "[${chain}] Resetting ${chain} wallet - ${date}"
+echo "[${chain}] \"fixing\" wallet - ${date}"
 
 # arrays for sent transactions. 
 declare -a unconfirmed=() confirmed=() tmpunconf=()
@@ -117,18 +117,23 @@ while (( ${#unconfirmed[@]} > 0 )); do
     for txid in ${tmpunconf[@]}; do
         rawtx=$(${cli} getrawtransaction "${txid}" 1 2> /dev/null )
         confs=$(jq -r .confirmations <<<"${rawtx}")
+        rawconfs=$(jq -r .rawconfirmations <<<"${rawtx}")
         if [[ "${confs}" == "null" ]]; then
             unconfirmed+=("${txid}")
-            if (( RANDOM % 33  == 0 )); then
+            # 1/3 of the time rebroadcast unconfirmed txns
+            if (( RANDOM % 100  < 33 )); then
                 txhex=$(jq -r .hex <<<"${rawtx}")
                 echo "[${chain} Rebroadcasting: $(echo -e "$txhex" | ${cli} -stdin sendrawtransaction)"
             fi
+        # change else below to wait for notarized confirm, using dpowconfs or 10 confs. 
+        # elif (( confs > 1 )) || (( rawconfs > 10 )); then 
         else 
             confirmed+=("${txid}")
-            echo "[${chain}] txid: ${txid} confs: ${confs}"
+            echo "[${chain}] txid: ${txid} confs: ${confs} rawconfs: ${rawconfs}"
         fi
-        sleep 1
     done
+    # wait between 30-60s before rechecking remaining unconfirmed txns
+    sleep $(( RANDOM % 30 + 30 ))
     echo "[${chain}] Confirmed txns: ${#confirmed[@]} Unconfirmed txns: ${#unconfirmed[@]}"
 done
 

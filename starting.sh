@@ -135,7 +135,7 @@ check_chain_started () {
     outcome=$(echo $?)
     if (( outcome == 1 )); then
         echo -e ${RED}"Starting ${chain} failed. fix it! ${RESET}
-                chain_start_cmd ${chain}"
+                $(chain_start_cmd ${chain})"
         exit 1
     fi
 }
