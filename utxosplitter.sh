@@ -61,8 +61,11 @@ while read -r chain; do
                 else
                     printf "[${chain}] Error: $(jq -r '.error' <<<"${json}")\n Trying iguana splitfunds method.... \n"
                     branch=$(./listlizards.py ${chain})
-                    iguana_port=$(cat assetchains.json | jq -r --arg branch ${branch} '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
-                    curl "http://127.0.0.1:${iguana_port}" --silent --data "{\"chain\":\"${chain}\",\"agent\":\"iguana\",\"method\":\"splitfunds\",\"satoshis\":${utxo_size},\"sendflag\":1,\"duplicates\":${duplicates}}"
+                    iguana_rpc=$(cat assetchains.json | jq -r --arg branch ${branch} '[.[] | select(.iguana == $branch)] | .[0].iguana_rpc')
+                    if [[ "${iguana_rpc}" == "null" ]] || [[ "${iguana_rpc}" == "" ]]; then 
+                        iguana_rpc=$(./printkey.py rpc)
+                    fi
+                    curl "http://127.0.0.1:${iguana_rpc}" --silent --data "{\"chain\":\"${chain}\",\"agent\":\"iguana\",\"method\":\"splitfunds\",\"satoshis\":${utxo_size},\"sendflag\":1,\"duplicates\":${duplicates}}"
                 fi
             fi
         fi

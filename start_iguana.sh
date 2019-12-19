@@ -4,7 +4,7 @@ cd "${BASH_SOURCE%/*}" || exit
 # ./start_iguana <branch> 
 # eg, start LABS blackjok3r iguana branch
 # ./start_iguana blackjok3r
-# does not work for KMD notary!
+# does not work for KMD notary at this stage!
 
 # LABS notaries as default
 branch="staked"
@@ -25,7 +25,7 @@ if [[ ! -z ${1} ]] && [[ ${1} != ${branch} ]]; then
 fi
 pgrep -af "iguana ${json}" | grep -v "$0" | grep -v "SCREEN" > /dev/null 2>&1
 outcome=$(echo $?)
-if [[ $outcome != 0 ]]; then
+if [[ "${outcome}" != "0" ]]; then
     echo "Starting iguana ${json}"
     iguana/${branch}/iguana ${json} & #screen -S $json -d -m iguana/${branch}/iguana ${json} & #> iguana.log 2> error.log &
 fi

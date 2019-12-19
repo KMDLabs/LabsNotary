@@ -1,18 +1,18 @@
 # LABS Notary Control Scripts
 
-#-------=== TO UPDATE FROM StakedNotary ===-------
+### -------=== TO UPDATE FROM StakedNotary ===-------
+You may need to remove ~/komodo if you are low on disk space, use `df -h` to check. 
 ```shell 
 cd ~ 
 mv StakedNotary StakedNotary.old 
 git clone https://github.com/KMDLabs/LabsNotary.git 
 cp ~/StakedNotary.old/config.ini ~/LabsNotary/
 cd LabsNotary/install
-you may need to remove ~/komodo due to disk space requirements 
 ./buildkomodo.sh
 cd .. 
 ./start.sh
 ``` 
-#-------=== TO UPDATE FROM StakedNotary ===-------
+### -------=== TO UPDATE FROM StakedNotary ===-------
 
 
 ## Setting up your VPS
@@ -72,17 +72,17 @@ After this we are ready to launch KMD and any chains that happen to be in `asset
 ```shell
 ./start.sh
 ```
-To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 5 to 10 hours.The sync progress is printed to the terminal you started `start.sh` at.
+To keep an eye on komodods sync status run: `tail -f ~/.komodo/debug.log` This could take a while. 5 to 10 hours.The sync progress is also printed to the terminal you started `start.sh` at.
 
-Once iguana has started we need to run a now heavily modified excellent UTXO splitter by @lukechilds
+Once iguana has started we need to run the utxo splitter (based on @lukechilds work) 
 ```shell
 ./utxosplitter.sh
 ```
-You also will want to put this UTXO splitter on a cron job once an hour.
+You need put this UTXO splitter on a cron job. 
 ```shell
 crontab -e
 ```
-Enter this into the cron tab:
+Enter this into the cron tab, to run the splitter at 33min past each hour:
 ```
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 33 * * * * /home/<your_username>/LabsNotary/utxosplitter.sh >> /home/<your_username>/utxo_split.log 2>&1
@@ -107,12 +107,11 @@ RPCS:
 ### Wallet transaction cleaner
 `cleanwallettransactions` <txid>
 
--> Provide a txid to delete all tx in the wallet except the tx specified. The walletreset.sh script does this all for you.
-
--> Running without a txid specified will clean all transaction history in the wallet older than the last unspent utxo. 
+    Provide a txid to delete all tx in the wallet except the tx specified. The walletreset.sh script does this all for you.
+    Running without a txid specified will clean all transaction history in the wallet older than the last unspent utxo. 
 
 ### dpowlistunspent RPC 
--> Special RPC for iguana, it caches and returns unspent utxos very quickly. Needing a lean wallet.dat is now thing of the past. 
+Special RPC for iguana, it caches and returns unspent utxos very quickly. Needing a lean wallet.dat is now thing of the past. Should also allow for staking and mining on notary nodes without slowing down notarizations. 
 
 ### Adding New Coins
 Add the chain params to `assetchains.json` (make sure you have the `freq` param it is required!)
@@ -139,30 +138,25 @@ Hard reset will send the entire balance to yourself, then remove all transaction
 To SOFT reset a KMDs wallet (works with ac by specifying -ac_name=): `komodo-cli cleanwallettransactions`
 
 For stats you have multiple options:
-    -> `stats.sh` based off webworker01's script 
     
-    -> `py_scripts/stats.py` this uses getNotarisationsFromBlock RPC, thansk to smk762 and Alright. 
+    `stats.sh` based off webworker01's script, only counts from the wallet.dat, 777 tx deep only.
+    `py_scripts/stats.py` this uses getNotarisationsFromBlock RPC, thansk to smk762 and Alright. 
+    `py_scripts/notarypay_stats.py` this tallys notarypay coinbase payments, works on ac_notarypay chains only, thanks to Alright. 
     
-    -> `py_scripts/notarypay_stats.py` this tallys notarypay coinbase payments, works on ac_notarypay chains only. 
-    
-To list internal iguana information such as revcmask and bestmask use:
+
+To list internal iguana information such as revcmask and bestmask use (maskhex is disabled, not really useful now all dpowed chains can be returned, and can crash iguana):
     `checkmasks <chain> or <maskhex>`
 
 The install scripts come with the tools:
-
-`htop`: To monitor system load
-
-`slurm`: To monitor network load
-
-`tmux`: To make panes, so you can run these tools and iguana console logs at he same time and detach/reattach when you login/out of the notary node.
- 
-    -> https://github.com/gpakosz/.tmux
-    
-    -> https://leanpub.com/the-tao-of-tmux/read
-    
-    -> https://hackernoon.com/a-gentle-introduction-to-tmux-8d784c404340
+    `htop`: To monitor system load
+    `slurm` and `nload`: To monitor network load
+    `tmux`: To make panes, so you can run these tools and iguana console logs at he same time and detach/reattach when you login/out of the notary node, some useful links to get you started: 
         
-`screen`: used for daemons, and iguana if we run more than one, to attach a coin:
-    `screen -r <coin>` 
-    To attach an iguana:
-    `screen -r <branch>`
+        https://github.com/gpakosz/.tmux    
+        https://leanpub.com/the-tao-of-tmux/read
+        https://hackernoon.com/a-gentle-introduction-to-tmux-8d784c404340
+        
+    `screen`: used for daemons, and iguana if we run more than one, to attach a coin:
+        `screen -r <coin>` 
+        To attach an iguana (noty currently used, because we only run the 1 iguana):
+        `screen -r <branch>`

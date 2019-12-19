@@ -16,7 +16,7 @@ GREEN="\033[32m"
 YELLOW="\033[33m"
 
 if [[ -z "$1" ]]; then
-    echo "Specify a chain, fool!2"
+    echo "Specify a chain, fool!"
     exit
 fi
 
@@ -25,6 +25,9 @@ cli=$(./listclis.sh ${chain})
 Addy=$(./printkey.py Radd)
 
 echo "[${chain}] Resetting ${chain} wallet - ${date}"
+
+# arrays for sent transactions. 
+declare -a unconfirmed=() confirmed=() tmpunconf=()
 
 # Send the entire balance to ourself with genies script, it will merge any number of utxo given enough time :D 
 enabled="y"
@@ -103,38 +106,30 @@ for ((tlc = 0; tlc <= $LoopsCount; tlc++)); do
     vouts=("${vouts[@]:$maxInc}")
     amounts=("${amounts[@]:$maxInc}")
     RawOut="[" OutAmount="0"
+    unconfirmed+=("$lasttx")
     sleep 10
 done
 
 # sort confirmed and unconfirmed and wait until all tx are confirmed before clearing wallet.dat of tx history.
-declare -a unconfirmed=() confirmed=() tmpunconf=()
-let i=0
-while (( 1 == 1 )); do
-    tmpunconf=()
-    if (( i == 0 )); then
-        tmpunconf="${txids[@]}"
-    elif (( ${#unconfirmed[@]} > 0 )); then
-        tmpunconf="${unconfirmed[@]}"
-        unconfirmed=()
-    else 
-        break
-    fi
+while (( ${#unconfirmed[@]} > 0 )); do
+    tmpunconf="${unconfirmed[@]}"
+    unconfirmed=()
     for txid in ${tmpunconf[@]}; do
         rawtx=$(${cli} getrawtransaction "${txid}" 1 2> /dev/null )
         confs=$(jq -r .confirmations <<<"${rawtx}")
-        if (( confs == 0 )); then
-            unconfirmed+="${txid}"
+        if [[ "${confs}" == "null" ]]; then
+            unconfirmed+=("${txid}")
             if (( RANDOM % 33  == 0 )); then
-                echo "rebroadcast: $(${cli} sendrawtransaction ${rawtx})"
+                txhex=$(jq -r .hex <<<"${rawtx}")
+                echo "[${chain} Rebroadcasting: $(echo -e "$txhex" | ${cli} -stdin sendrawtransaction)"
             fi
         else 
-            confirmed+="${txid}"
+            confirmed+=("${txid}")
             echo "[${chain}] txid: ${txid} confs: ${confs}"
         fi
         sleep 1
     done
     echo "[${chain}] Confirmed txns: ${#confirmed[@]} Unconfirmed txns: ${#unconfirmed[@]}"
-    ((++i))
 done
 
 echo "[${chain}] All our txns are confirmed, running wallet cleaner RPC to wipe transaction history..."

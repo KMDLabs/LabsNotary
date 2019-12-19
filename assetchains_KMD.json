@@ -2,68 +2,57 @@
   {
     "ac_name": "REVS",
     "ac_supply": "1300000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "SUPERNET",
     "ac_supply": "816061",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },  
   {
     "ac_name": "DEX",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "PANGEA",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "JUMBLR",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "BET",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "CRYPTO",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "HODL",
     "ac_supply": "9999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "MSHARK",
     "ac_supply": "1400000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "BOTS",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "MGW",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "COQUICASH",
@@ -74,121 +63,103 @@
     "ac_cc": "2",
     "ac_ccenable": "227,235,236,241",
     "addnode": [
-      "78.47.108.168"
+        "78.47.108.168"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "WLC",
     "ac_supply": "210000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "KV",
     "ac_supply": "1000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "CEAL",
     "ac_supply": "366666666",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "MESH",
     "ac_supply": "1000007",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "AXO",
     "ac_supply": "200000000",
     "ac_ccactivate": "130000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "ETOMIC",
     "ac_supply": "100000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "BTCH",
     "ac_supply": "20998641",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "NINJA",
     "ac_supply": "100000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "OOT",
     "ac_supply": "216000000",
-      "ac_sapling": "5000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "ac_sapling": "5000000",
+    "freq": 2 
   },
   {
     "ac_name": "BNTN",
     "ac_supply": "500000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "CHAIN",
     "ac_supply": "999999",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "PRLPAY",
     "ac_supply": "500000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "DSEC",
     "ac_supply": "7000000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "EQL",
     "ac_supply": "500000000",
     "ac_ccactivate": "205000",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "ZILLA",
     "ac_supply": "11000000",
     "ac_sapling": "5000000",
     "addnode": [
-      "51.68.215.104"
+        "51.68.215.104"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "RFOX",
     "ac_supply": "1000000000",
     "ac_reward": "100000000",
-    "freq": 10,
-    "branch": "saveit" 
+    "freq": 10 
   },
   {
     "ac_name": "SEC",
     "ac_supply": "1000000000",
     "ac_cc": "333",
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "CCL",
@@ -198,11 +169,10 @@
     "addressindex": "1",
     "spentindex": "1",
     "addnode": [
-      "142.93.136.89",
-      "195.201.22.89"
-      ],
-    "freq": 2,
-    "branch": "saveit" 
+        "142.93.136.89",
+        "195.201.22.89"
+     ],
+    "freq": 2 
   },
   {
     "ac_name": "PIRATE",
@@ -211,20 +181,18 @@
     "ac_halving": "77777",
     "ac_private": "1",
     "addnode": [
-      "136.243.102.225"
+        "136.243.102.225"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
     {
     "ac_name": "PGT",
     "ac_supply": "10000000",
     "ac_end": "1",
     "addnode": [
-      "190.114.254.104"
+        "190.114.254.104"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
  {
     "ac_name": "DION",
@@ -234,10 +202,9 @@
     "ac_cc": "1",
     "ac_end": "4300000000",
     "addnode": [
-      "51.75.124.34"
+        "51.75.124.34"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
      "ac_name": "KMDICE",
@@ -248,13 +215,9 @@
      "addressindex": "1",
      "spentindex": "1",
      "addnode": [
-       "144.76.217.232"
-   ],
-     "freq": 2,
-     "branch": "saveit",
-     "iguana": "blackjok3r",
-     "iguana_rpc": "7776",
-     "iguana_port": "17775"
+         "144.76.217.232"
+     ],
+     "freq": 2
    },
    {
      "ac_name": "KSB",
@@ -262,13 +225,9 @@
      "ac_end": "1",
      "ac_public": "1",
      "addnode": [
-       "37.187.225.231"
+         "37.187.225.231"
      ],
-     "freq": 2,
-     "branch": "saveit",
-     "iguana": "blackjok3r",
-     "iguana_rpc": "7776",
-     "iguana_port": "17775"
+     "freq": 2
  },
  {
    "ac_name": "OUR",
@@ -281,12 +240,11 @@
    "ac_pubkey": "02652a3f3e00b3a1875a918314f0bac838d6dd189a346fa623f5efe9541ac0b98c",
    "ac_public": "1",
    "addnode": [
-     "51.255.195.65",
-     "217.182.129.38",
-     "37.187.225.231"
- ],
-    "freq": 2,
-    "branch": "saveit" 
+       "51.255.195.65",
+       "217.182.129.38",
+       "37.187.225.231"
+    ],
+    "freq": 2 
   },
  {
    "ac_name": "ILN",
@@ -295,7 +253,7 @@
    "addnode": [
        "51.75.122.83"
    ],
-   "branch": "saveit"
+   "freq": 2
  },
  {
    "ac_name": "RICK",
@@ -304,11 +262,10 @@
    "ac_cc": "3",
    "ac_staked": "10",
    "addnode": [
-     "138.201.136.145",
-     "95.217.44.58"
- ],
-   "freq": 2,
-   "branch": "saveit" 
+       "138.201.136.145",
+       "95.217.44.58"
+    ],
+   "freq": 2 
  },
  {
    "ac_name": "MORTY",
@@ -317,11 +274,10 @@
    "ac_cc": "3",
    "ac_staked": "10",
    "addnode": [
-     "138.201.136.145",
-     "95.217.44.58"
-   ],
-   "freq": 2,
-   "branch": "saveit" 
+       "138.201.136.145",
+       "95.217.44.58"
+    ],
+   "freq": 2 
  },
  {
    "ac_name": "KOIN",
@@ -329,8 +285,7 @@
    "addnode": [
        "3.0.32.10"
    ],
-   "freq": 2,
-   "branch": "saveit" 
+   "freq": 2 
   },
  {
    "ac_name": "ZEXO",
@@ -344,11 +299,10 @@
    "ac_pubkey": "02713bd85e054db923694b6b7a85306264edf4d6bd6d331814f2b40af444b3ebbc",
    "ac_public": "1",
    "addnode": [
-     "195.201.20.230",
-     "80.240.17.222"
+       "195.201.20.230",
+       "80.240.17.222"
    ],
-   "freq": 2,
-   "branch": "saveit" 
+   "freq": 2 
  },
  {
    "ac_name": "K64",
@@ -358,8 +312,7 @@
    "addnode": [
        "18.197.20.21"
    ],
-   "freq": 2,
-   "branch": "saveit"
+   "freq": 2
  },
  {
    "ac_name": "HUSH3",
@@ -381,7 +334,8 @@
        "188.165.212.101",
        "136.243.227.142",
        "5.9.224.250"
-     ]
+   ],
+   "freq": 2
    },
  {
    "ac_name": "THC",
@@ -399,11 +353,10 @@
    "ac_sapling": "1",
    "earlytxid": "7e4a76259e99c9379551389e9f757fc5f46c33ae922a8644dc2b187af2a6adc1",
    "addnode": [
-      "157.230.45.184",
-      "165.22.52.123"
+       "157.230.45.184",
+       "165.22.52.123"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "COMMOD",
@@ -416,11 +369,10 @@
     "ac_cc": "777",
     "ac_public": "1",
     "addnode": [
-      "34.246.186.176",
-      "34.251.151.148"
+        "34.246.186.176",
+        "34.251.151.148"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   },
   {
     "ac_name": "WLC21",
@@ -429,10 +381,9 @@
     "ac_staked": "90",
     "ac_public": "1",
     "addnode": [
-      "37.187.225.231",
-      "51.38.38.134"
+        "37.187.225.231",
+        "51.38.38.134"
     ],
-    "freq": 2,
-    "branch": "saveit" 
+    "freq": 2 
   }
 ]
