@@ -97,7 +97,7 @@ if [[ $utxo != "null" ]]; then
 
     rawtx=$rawtx"1976a914"$NN_HASH160"88ac" # len OP_DUP OP_HASH160 len hash OP_EQUALVERIFY OP_CHECKSIG
 
-    nlocktime=$(printf "%08x" $(date +%s) | dd conv=swab 2> /dev/null | rev)
+    nlocktime="00000000"
     rawtx=$rawtx$nlocktime
 
     if (( sapling > 0 )); then
