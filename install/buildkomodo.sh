@@ -14,7 +14,7 @@ echo ${localrev} > ${HOME}/LabsNotary/komodo/master/lastbuildcommit
 mv src/komodod ${HOME}/LabsNotary/komodo/master
 mv src/komodo-cli ${HOME}/LabsNotary/komodo/master
 mkdir -p ${HOME}/.komodo
-cd .${HOME}/.komodo
+cd ${HOME}/.komodo
 if [[ ! -f komodo.conf ]]; then 
     touch komodo.conf
     rpcuser=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
