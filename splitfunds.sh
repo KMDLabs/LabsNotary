@@ -14,7 +14,7 @@ txfee=0
 
 # fetch this coins cli path
 if [[ ! -z $1 ]]; then
-    cli=$(./listclis.sh | grep ${1})
+    cli=$(./listclis.sh ${1})
 fi
 
 #Do not change below for any reason!
