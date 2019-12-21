@@ -92,12 +92,12 @@ outputstats ()
             ntrzd=$(jq --arg address "${kmdntrzaddr}" --arg timefilter ${timefilter2} '[.[] | select(.time>=($timefilter|tonumber) and .address==$address and .category=="send")] | length' <<<"${txinfo}")
             totalntrzd=$(( totalntrzd + ntrzd ))
             # this now shows the % of possible notarizations in the range of blocks scanned, was innaccurate before as the entire chain is not scanned. 
-			if [[ "${coin}" = "KMD" ]]; then
-				printpct=""
-			else
-				pct=$(echo "${ntrzd}/(${txscanamount}/${freq})*100" | bc -l)
-				printpct="$(printf "%2.1f" $(echo ${pct}))%"
-			fi
+            if [[ "${coin}" = "KMD" ]]; then
+                printpct=""
+            else
+	        pct=$(echo "${ntrzd}/(${txscanamount}/${freq})*100" | bc -l)
+		printpct="$(printf "%2.1f" $(echo ${pct}))%"
+            fi
             printf "${format}" "${coin}" \
                 "$(printf "%12.4f" $(jq .balance <<<"${info}"))" \
                 "$(${cli} getwalletinfo | jq .txcount)" \
