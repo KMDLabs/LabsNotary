@@ -44,8 +44,7 @@ cd install
 
 If you want/need the python stuff install these:
 ```shell
-sudo apt-get install python3-dev python3 libgnutls28-dev libssl-dev python3-pip
-
+sudo apt-get install python3-dev python3 libgnutls28-dev libssl-dev python3-pip libcurl4-gnutls-dev
 pip3 install setuptools 
 pip3 install wheel 
 pip3 install base58 slick-bitcoinrpc requests python-bitcoinlib configparser
