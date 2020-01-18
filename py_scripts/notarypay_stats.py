@@ -61,7 +61,7 @@ for block in range(start_height,height):
                 if addr in getnotarysendmany_result:
                     getnotarysendmany_result[addr] += 1
                 else:
-                    print('BUG in the coinbase tx, please report this.')
+                    print('BUG in the coinbase tx [block '+str(block)+'], please report this.')
             except:
                 pass
 for i in notary_keys:
