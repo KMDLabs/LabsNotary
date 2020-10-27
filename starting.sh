@@ -219,7 +219,7 @@ while read -r branch; do
             break
         elif (( i == 3 )); then
             echo -e ${RED}"[kmd->${branch}] Failed to update 3 times! Build manually or fix the problem." ${RESET}"
-                cd KomodoPlatform 
+                cd LABSKomodo 
                 git checkout ${branch} 
                 ./zcutil/build.sh -j""$(nproc)"
             exit 1
